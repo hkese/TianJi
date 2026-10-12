@@ -1,6 +1,6 @@
 # Requirement traceability
 
-Source paths are relative to this repository; Kotlin class files reside under each module’s `src/.../kotlin/com/tianji/` package. Current evidence is in TEST_RESULTS.md. Version 0.2.1 passes Android 16 / API 36 device tests, including real keyboard/Save positioning and system Back; evidence and actual screenshots are in docs/evidence/android16/. Device and unit results are recorded separately; passing software checks do not validate traditional computation.
+Source paths are relative to this repository; Kotlin class files reside under each module’s `src/.../kotlin/com/tianji/` package. Current evidence is in TEST_RESULTS.md. Versions 0.2.1 and 0.2.2 pass Android 16 / API 36 device tests, including real keyboard/Save positioning and system Back; evidence and actual screenshots are in docs/evidence/android16/. Device and unit results are recorded separately; passing software checks do not validate traditional computation.
 
 | ID | Priority | Code / evidence | Validation | Status and limits |
 |---|---|---|---|---|
@@ -36,6 +36,8 @@ Source paths are relative to this repository; Kotlin class files reside under ea
 
 | Feedback | Implementation | Verification |
 |---|---|---|
-| Choose time zone without typing codes | `core-ui/TimeZonePicker.kt`, `core-domain/TimeZones.kt`, onboarding/settings | TimeZonesTest covers Chinese/English aliases, valid presets, Pacific DST boundary and Hong Kong offsets; expanded JourneyTest pending device run |
-| Chinese instructions and status | `core-ui/GuideScreen.kt`, `Labels.kt`, `docs/USER_GUIDE_ZH_HK.md`, feature screens | Expanded JourneyTest covers guide navigation, Chinese date dialog, status labels and persistent language choice; pending device run |
+| Choose time zone without typing codes | `core-ui/TimeZonePicker.kt`, `core-domain/TimeZones.kt`, onboarding/settings | TimeZonesTest covers Chinese/English aliases, valid presets, Pacific DST boundary and Hong Kong offsets; expanded JourneyTest passes on Android 16 |
+| Chinese instructions and status | `core-ui/GuideScreen.kt`, `Labels.kt`, `docs/USER_GUIDE_ZH_HK.md`, feature screens | Expanded JourneyTest covers guide navigation, Chinese date dialog, status labels and persistent language choice; passed on Android 16 |
 | Blank chart looks broken | `feature-chart/ChartScreen.kt` | Clear unavailable state, practical planning CTA, optional fixed position legend and Chinese verification details; zero invented chart data |
+
+Final 0.2.2 evidence: `docs/evidence/022/` and https://github.com/hkese/TianJi/actions/runs/38233591473 . 27 Kotlin tests, 20 Python tests, lint (0 errors/6 warnings), 3 Room tests and 1 full UI journey pass. The initial visual-review finding in the date picker was corrected and regression-tested before delivery.

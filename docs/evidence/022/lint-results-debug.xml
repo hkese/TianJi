@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 8.11.1">
+
+    <issue
+        id="ApplySharedPref"
+        severity="Warning"
+        message="Consider using `apply()` instead; `commit` writes its data to persistent storage immediately, whereas `apply` will handle it in the background"
+        category="Correctness"
+        priority="6"
+        summary="Use `apply()` on `SharedPreferences`"
+        explanation="Consider using `apply()` instead of `commit` on shared preferences. Whereas `commit` blocks and writes its data to persistent storage immediately, `apply` will handle it in the background."
+        errorLine1=" fun deleteAll()=perform{ReminderWorker.configure(app,false);repo.deleteAll();vault.clear();app.getSharedPreferences(&quot;research-pseudonym&quot;,0).edit().clear().commit();provider.value=AiProviderConfig();prefs.save(state.value.settings.copy(reminders=false));messages.send(text(&quot;本機資料已刪除&quot;,&quot;Local data deleted&quot;))}"
+        errorLine2="                                                                                                                                                            ~~~~~~~~">
+        <location
+            file="/workspace/scratch/0cebb87356aa/TianJi/android/app/src/main/kotlin/com/tianji/app/AppModel.kt"
+            line="41"
+            column="157"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        severity="Warning"
+        message="A newer version of androidx.core:core-ktx than 1.16.0 is available: 1.19.1"
+        category="Correctness"
+        priority="4"
+        summary="Obsolete Gradle Dependency"
+        explanation="This detector looks for usages of libraries where the version you are using is not the current stable release. Using older versions is fine, and there are cases where you deliberately want to stick with an older version. However, you may simply not be aware that a more recent version is available, and that is what this lint check helps find."
+        errorLine1="implementation(&quot;androidx.core:core-ktx:1.16.0&quot;)"
+        errorLine2="               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/workspace/scratch/0cebb87356aa/TianJi/android/app/build.gradle.kts"
+            line="16"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        severity="Warning"
+        message="A newer version of androidx.activity:activity-compose than 1.10.1 is available: 1.13.0"
+        category="Correctness"
+        priority="4"
+        summary="Obsolete Gradle Dependency"
+        explanation="This detector looks for usages of libraries where the version you are using is not the current stable release. Using older versions is fine, and there are cases where you deliberately want to stick with an older version. However, you may simply not be aware that a more recent version is available, and that is what this lint check helps find."
+        errorLine1="implementation(&quot;androidx.activity:activity-compose:1.10.1&quot;)"
+        errorLine2="               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/workspace/scratch/0cebb87356aa/TianJi/android/app/build.gradle.kts"
+            line="21"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        severity="Warning"
+        message="A newer version of androidx.test.ext:junit than 1.2.1 is available: 1.3.0"
+        category="Correctness"
+        priority="4"
+        summary="Obsolete Gradle Dependency"
+        explanation="This detector looks for usages of libraries where the version you are using is not the current stable release. Using older versions is fine, and there are cases where you deliberately want to stick with an older version. However, you may simply not be aware that a more recent version is available, and that is what this lint check helps find."
+        errorLine1="androidTestImplementation(&quot;androidx.test.ext:junit:1.2.1&quot;)"
+        errorLine2="                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/workspace/scratch/0cebb87356aa/TianJi/android/app/build.gradle.kts"
+            line="38"
+            column="27"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        severity="Warning"
+        message="A newer version of org.jetbrains.kotlinx:kotlinx-serialization-json than 1.8.0 is available: 1.11.0"
+        category="Correctness"
+        priority="4"
+        summary="Newer Library Versions Available"
+        explanation="This detector checks with a central repository to see if there are newer versions available for the dependencies used by this project. This is similar to the `GradleDependency` check, which checks for newer versions available in the Android SDK tools and libraries, but this works with any MavenCentral dependency, and connects to the library every time, which makes it more flexible but also **much** slower."
+        errorLine1="implementation(&quot;org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0&quot;)"
+        errorLine2="               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/workspace/scratch/0cebb87356aa/TianJi/android/app/build.gradle.kts"
+            line="14"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        severity="Warning"
+        message="A newer version of io.insert-koin:koin-android than 4.0.4 is available: 4.2.2"
+        category="Correctness"
+        priority="4"
+        summary="Newer Library Versions Available"
+        explanation="This detector checks with a central repository to see if there are newer versions available for the dependencies used by this project. This is similar to the `GradleDependency` check, which checks for newer versions available in the Android SDK tools and libraries, but this works with any MavenCentral dependency, and connects to the library every time, which makes it more flexible but also **much** slower."
+        errorLine1="implementation(&quot;io.insert-koin:koin-android:4.0.4&quot;)"
+        errorLine2="               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/workspace/scratch/0cebb87356aa/TianJi/android/app/build.gradle.kts"
+            line="33"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        severity="Warning"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        category="Productivity"
+        priority="6"
+        summary="Use KTX extension function"
+        explanation="The Android KTX libraries decorates the Android platform SDK as well as various libraries with more convenient extension functions available from Kotlin, allowing you to use default parameters, named parameters, and more."
+        errorLine1="  repo.consent(&quot;research-export&quot;);val local=app.getSharedPreferences(&quot;research-pseudonym&quot;,0);val subject=local.getString(&quot;id&quot;,null)?:UUID.randomUUID().toString().also{check(local.edit().putString(&quot;id&quot;,it).commit())};val data=repo.snapshot()"
+        errorLine2="                                                                                                                                                                             ~~~~~~~~~~~~">
+        <location
+            file="/workspace/scratch/0cebb87356aa/TianJi/android/app/src/main/kotlin/com/tianji/app/AppModel.kt"
+            line="36"
+            column="174"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        severity="Warning"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        category="Productivity"
+        priority="6"
+        summary="Use KTX extension function"
+        explanation="The Android KTX libraries decorates the Android platform SDK as well as various libraries with more convenient extension functions available from Kotlin, allowing you to use default parameters, named parameters, and more."
+        errorLine1=" fun deleteAll()=perform{ReminderWorker.configure(app,false);repo.deleteAll();vault.clear();app.getSharedPreferences(&quot;research-pseudonym&quot;,0).edit().clear().commit();provider.value=AiProviderConfig();prefs.save(state.value.settings.copy(reminders=false));messages.send(text(&quot;本機資料已刪除&quot;,&quot;Local data deleted&quot;))}"
+        errorLine2="                                                                                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/workspace/scratch/0cebb87356aa/TianJi/android/app/src/main/kotlin/com/tianji/app/AppModel.kt"
+            line="41"
+            column="93"/>
+    </issue>
+
+</issues>

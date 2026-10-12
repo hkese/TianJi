@@ -7,7 +7,7 @@
 | M2 Verified Qimen Core | BLOCKED | Deterministic interface/provenance/cache are implemented; authoritative conventions and independent fixtures missing, **0/100** |
 | M3 AI Options | Implemented with external test blocked | Keystore, per-request consent, strict structured adapter; TLS mock tests pass; no real provider credentials supplied |
 | M4 Research Lab | Implemented | 20 tests pass; Ruff passes; CPU synthetic A/B/C/calendar/shuffle evaluation completed |
-| M5 Polish / APK | Verified debug APK delivered | Latest debug build and v2 signature pass; lint 0 errors / 8 warnings; complete offline UI test passed, including replan, persistence, English and dark mode |
+| M5 Polish / APK | Verified debug APK delivered | Latest debug build and v2 signature pass; lint 0 errors / 6 warnings; complete offline UI test passed, including replan, persistence, English and dark mode |
 | M6 Advanced optional | Deferred | Requires enough consented real data and valid benchmarks; no executable model deployment |
 | GitHub publication | Published | Full source is at https://github.com/hkese/TianJi; Kotlin/Python/lint/build CI passes; all 4 Android 16 device tests and screenshot collection pass |
 
@@ -21,4 +21,4 @@ Android 16 follow-up: API 36 complete offline journey and 3 Room/Keystore tests 
 Final Android 16 CI: https://github.com/hkese/TianJi/actions/runs/38227645836 (both jobs passed). Verified app source: `b8b83c07816a28623bc5c14432f358908e21fd65`. Documentation-only publication after this run does not alter app or test code.
 
 ## 0.2.2 usability follow-up
-The user supplied an installed-app screenshot: installation is confirmed, but actual Qimen remains blocked. Added offline city timezone selection (Chinese/English search, device shortcut and DST-aware labels), Chinese guide with navigation, localized states/theme/date picker and explicit unavailable-chart UI. Existing records and preferences are retained. Local build, 27 Kotlin unit tests, APK signature and lint pass. Android 16 device validation is pending; prior 0.2.1 evidence does not verify these changes.
+The user supplied an installed-app screenshot: installation is confirmed, but actual Qimen remains blocked. Added offline city timezone selection (Chinese/English search, device shortcut and DST-aware labels), Chinese guide with navigation, localized states/theme/date picker and explicit unavailable-chart UI. Existing records and preferences are retained. Local build, 27 Kotlin unit tests, APK signature and lint pass. Final Android 16 validation passes (3 Room tests plus 1 expanded UI journey). Visual QA caught and fixed the calendar dialog locale; the final screenshot and new Chinese-month assertion confirm it. CI: https://github.com/hkese/TianJi/actions/runs/38233591473 . Source: `32456b58c5f31b9c37799a859ad87737cec900dc`.

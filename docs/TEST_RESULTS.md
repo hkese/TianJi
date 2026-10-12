@@ -1,3 +1,24 @@
+# Version 0.2.2 — Chinese usability update
+
+Date: 2026-10-12. Source commit: `32456b58c5f31b9c37799a859ad87737cec900dc`.
+
+Local validation:
+- `:android:core-domain:test :android:core-qimen:test :android:core-data:testDebugUnitTest :android:app:lintDebug :android:app:assembleDebug :android:app:assembleDebugAndroidTest`: **BUILD SUCCESSFUL**.
+- 27 Kotlin unit tests pass (4 timezone tests, 7 planner, 8 Core contract, 6 AI validation, 2 TLS provider).
+- Lint: 0 errors, 6 warnings.
+- Final test-selector compilation: `:android:app:assembleDebugAndroidTest` passes.
+- APK v2 signature verifies; certificate matches delivered 0.2.1. Package `com.tianji.navigator`, versionCode 4, versionName 0.2.2, minSdk 28, targetSdk 36.
+- SHA-256: `608e0d3d14164fcd21f2362b4ed1ef23382fe5324a84b031bea59c5e52dd371d`.
+- Evidence: `docs/evidence/022/`.
+
+Android 16 device run: **PASS**, https://github.com/hkese/TianJi/actions/runs/38233591473 . All 3 Room/Keystore tests pass (2.068s suite), and the expanded offline UI journey passes (22.467s suite). GitHub verify also passes, including 20 Python tests and Ruff. No 0.2.2 physical-phone claim. The owner's screenshot confirms the previous APK was installed; the chart's missing calculations were an existing product limitation, not a loading state.
+
+Changes: city timezone picker with DST-aware offsets, Chinese aliases and device shortcut; Chinese guide in Home/Settings; translated theme, outcome and goal status labels; localized date picker; explicit unavailable-chart page instead of a prominent empty grid. UTC event storage and existing preferences/records are preserved. Qimen remains 0/100 independently checked fixtures; no predictions were added.
+
+Visual QA caught a remaining English calendar month/headline after the first successful device run. The dialog now reapplies the app locale inside its Android composition root, with a regression assertion that the month contains Chinese text and the English headline is absent. The final local rebuild/lint/instrumentation compilation and Android 16 regression test pass. The final date-picker screenshot shows Chinese headline, month and weekdays on the English-system emulator. Other reviewed screenshots cover guide, chart status, settings, planner and Save above the real keyboard.
+
+---
+
 # Android 16 update — 0.2.1
 
 - GitHub source: https://github.com/hkese/TianJi

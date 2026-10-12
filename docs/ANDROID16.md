@@ -26,3 +26,6 @@ No physical Samsung/One UI validation or 16KB-page runtime test has been perform
 - https://github.com/ReactiveCircus/android-emulator-runner/blob/v2/action.yml
 
 APK SHA-256: `56d521cafbb24eb56a9b163240f91e63ec710518a14ebec54a8a056ec1568723`.
+
+## 0.2.2 Chinese usability follow-up
+City timezone selection, Chinese guide/status labels and a correctly localized date dialog pass the expanded Android 16 journey. Final CI: https://github.com/hkese/TianJi/actions/runs/38233591473 . Source: `32456b58c5f31b9c37799a859ad87737cec900dc`. Current APK hash and test evidence are in `docs/evidence/022/`. App minimum/target SDKs and update signing certificate are unchanged; versionCode is 4.
