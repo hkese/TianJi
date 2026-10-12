@@ -1,6 +1,13 @@
 # Current revision 0.4.0 — goal-to-action navigation
 
-Implementation complete; validation in progress (do not infer a pass from this entry).
+Implemented and verified. Source commit `75eca621ee280abc11b83484b2d7743d8c8c7f40`; CI https://github.com/hkese/TianJi/actions/runs/38322606240 passes both jobs.
+
+- 46 Kotlin unit tests, 21 Python tests, Ruff and Android lint/build gate pass.
+- Android 16 (API 36), 360dp, Wi-Fi/data disabled: 4 Room/backup/Keystore tests and complete 30.99-second UI journey pass.
+- Initial device run exposed a replan IME/Back race; explicit focus dismissal and synchronized system-Back test fixed it. The failing initial XML is retained alongside the passing result.
+- Reviewed native screenshots for navigation steps, selected first action and AI handoff. Android's temporary clipboard preview appears on two captures; it is system UI, not clipped app content.
+- Deliverable: 0.4.0 debug APK, 33,603,063 bytes, SHA-256 `52086ecdf68c5e179d8c0996c25970140cab0eddedb2f4693e6476c36f235e7e`. APK v2/v3 signature and 16 KB ZIP alignment pass.
+- APK was compiled by the verified CI run, then re-signed with the privately retained daily-app debug key. Every non-signature ZIP entry is byte-identical to the CI artifact. Local 46 unit tests passed; the redundant local full build was stopped after CI verification. No local emulator or physical-device pass is claimed.
 
 - Purpose picker: work, study, communication and everyday goals.
 - Three concrete offline recipes per purpose, each with three steps, completion evidence and an actual chart-derived optional direction, door/star/deity.

@@ -46,7 +46,7 @@ Final 0.2.2 evidence: `docs/evidence/022/` and https://github.com/hkese/TianJi/a
 
 `TraditionalCoreTest`, `ReadingTest`, `RepositoryTest` and the expanded `JourneyTest` cover the real offline core, sourced interpretation, center hosting, civil-time boundaries, Chinese date/time pickers, stored charts, legacy/current backup coexistence and tampered-symbol rejection. 37 Kotlin unit tests, 21 Python tests, lint and all 5 Android 16 instrumented tests pass. See `docs/evidence/030/` and CI run 38241131970. No scientific prediction or 100-human-golden completion claim.
 
-## 0.4 navigation continuation (validation pending)
+## 0.4 navigation continuation (verified in CI 38322606240)
 
 | Requirement | Implementation | Verification |
 |---|---|---|

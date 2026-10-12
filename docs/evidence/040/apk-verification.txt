@@ -1,0 +1,17 @@
+Verifies
+Verified using v1 scheme (JAR signing): false
+Verified using v2 scheme (APK Signature Scheme v2): true
+Verified using v3 scheme (APK Signature Scheme v3): true
+Verified using v3.1 scheme (APK Signature Scheme v3.1): false
+Verified using v4 scheme (APK Signature Scheme v4): false
+Verified for SourceStamp: false
+Number of signers: 1
+Signer #1 certificate DN: CN=TianJi Daily Debug, O=TianJi, C=HK
+Signer #1 certificate SHA-256 digest: e262754c09f6cef572c56aaa785debffa3e62e09ff87f93f87f0394e2e9de240
+Signer #1 certificate SHA-1 digest: 6af1c29b9f72b2f7eaca02a2094a0e5360b7237b
+Signer #1 certificate MD5 digest: 3e9e06bb209387b8f46e14e3ebc98aa2
+Signer #1 key algorithm: RSA
+Signer #1 key size (bits): 2048
+Signer #1 public key SHA-256 digest: 472ac65036cab30abcb6fe6b5256b6df998c0312589763244e62c46845e4e120
+Signer #1 public key SHA-1 digest: 3cc0007dbec838047624fe2475a3367381cd3297
+Signer #1 public key MD5 digest: c6dffc29324ec8e3f5d9b27a03f424dd

@@ -1,0 +1,14 @@
+{
+  "source_commit": "75eca621ee280abc11b83484b2d7743d8c8c7f40",
+  "ci_run": 38322606240,
+  "ci_artifact": 11778909340,
+  "ci_artifact_zip_sha256": "9f70ee85ba38f7cd00c93e6f87046bbe448f3bd05d6dbca1d20ed737035641bb",
+  "apk_sha256": "52086ecdf68c5e179d8c0996c25970140cab0eddedb2f4693e6476c36f235e7e",
+  "apk_bytes": 33603063,
+  "zipalign_16kb": "passed",
+  "code_and_resource_entries_unchanged_by_resigning": true,
+  "package": "com.tianji.navigator.daily",
+  "version": "0.4.0",
+  "version_code": 6,
+  "certificate_sha256": "e262754c09f6cef572c56aaa785debffa3e62e09ff87f93f87f0394e2e9de240"
+}

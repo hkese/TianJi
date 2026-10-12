@@ -1,3 +1,37 @@
+# 0.4.0 — goal-to-action navigation
+
+Source: `75eca621ee280abc11b83484b2d7743d8c8c7f40`.
+CI: https://github.com/hkese/TianJi/actions/runs/38322606240 — both jobs successful.
+
+| Gate | Observed result |
+|---|---|
+| Kotlin JVM/unit | 46 tests, 0 failures/errors; XML in `evidence/040` |
+| Navigation coverage | 9 new tests: 96 purpose/time combinations, published-chart direction, deadlines, frozen history, old payload defaults, full-chart prompt/selection/privacy, delimiter escape and invalid linkage/blocked-chart rejection |
+| Research Lab | 21 passed; Ruff passed; existing Starlette deprecation warning retained in CI |
+| Android lint + APK build | CI Gradle successful; lint gate passed (warning count not separately collected) |
+| API 36 data | 4 tests passed in 2.807 s |
+| API 36 UI | 1 complete offline journey passed in 30.99 s at 720×1440 / 320dpi; Wi-Fi/data disabled |
+| UI scope | Chinese city picker, goal purpose, three actions/directions, full prompt review and clipboard contents, selected first step, journal, restart, replan/IME/system Back, English/dark mode, Chinese chart/date/time details and saved chart replay |
+| Visual QA | Native navigation, selected-step and AI-handoff views reviewed locally. Long text wraps; selected first step and outcome CTA are readable. Temporary Android clipboard overlay is visible on two captures. Public evidence here is text-only; automatic approval review rejected publishing a screenshot because it might contain private goal data. |
+| APK signature / packaging | v2 and v3 verification passed (`apksigner verify --min-sdk-version 24` exercises both schemes; the app manifest still requires API 28); zipalign `-c -P 16 4` passed |
+
+The first CI run `38321883691` passed build/unit/data checks but failed the UI test waiting for Back after replan. Logs identified an IME race; the app now clears focus/hides the keyboard on replan, and the test waits for hidden IME and drains the shell Back command. Final run passes. This failure was not reported as a successful journey.
+
+## Delivered package and reproduction
+
+- Filename: `TianJi-Navigator-0.4.0-debug.apk`; build-output copy: `android/app/build/outputs/apk/debug/app-debug.apk`.
+- Application: `com.tianji.navigator.daily`, label `天機・行動導航`, versionCode 6, minSdk 28, target/compileSdk 36.
+- Size: 33,603,063 bytes.
+- SHA-256: `52086ecdf68c5e179d8c0996c25970140cab0eddedb2f4693e6476c36f235e7e`.
+- Certificate SHA-256: `e262754c09f6cef572c56aaa785debffa3e62e09ff87f93f87f0394e2e9de240`.
+- CI artifact ID 11778909340, original ZIP SHA-256 `9f70ee85ba38f7cd00c93e6f87046bbe448f3bd05d6dbca1d20ed737035641bb`. Download checksum verified; re-signed locally using the retained daily-app debug key. All non-signature ZIP entry digests match the original CI APK.
+- Local build recovery required JDK 17 (the preinstalled runtime lacked javac) and correcting a nested API 36 SDK directory. 46 local unit tests passed; redundant local packaging/lint work was stopped after the exact source passed CI and its compiled artifact was obtained. Do not describe that interrupted command as a successful local full build.
+- New package installs alongside former `com.tianji.navigator`; former signer private key was lost in workspace cleanup. No same-signature update claim. Keep the old app, export its JSON, then import into the new app before adding new records. Signing recovery material is stored privately, never committed to GitHub.
+- No physical Samsung/One UI, 16 KB runtime, screen-reader or large-font device test claim. ZIP alignment is not a 16 KB runtime test. External ChatGPT/Codex response quality and real configured provider remain unverified.
+- Core ruleset unchanged from 0.3: simplified traditional interpretation, no full-pattern synthesis and no predictive-validation claim. The 100 human golden-chart target remains incomplete.
+
+---
+
 # Version 0.3.0 — basic offline Qimen
 
 Date: 2026-10-12. App source commit: `88365df07dbccc17aba2492779f003112600fd12`.

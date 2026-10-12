@@ -24,7 +24,7 @@ Recovery incident: automated scratch cleanup removed the original source after t
 1. Diagnose disconnected goal/planner/chart flow — completed.
 2. Implement frozen goal context and 12 purpose-specific offline recipes (three per purpose), actual chart door/star/deity/direction, selected next step and outcome/replan loop — implemented.
 3. Add reviewed manual ChatGPT/Codex handoff with full chart/context and concrete-action prompt; no automatic transmission or response import — implemented.
-4. Verify backward-compatible backup decoding, exact chart linkage, constrained time/cost, prompt privacy, Android 16 offline clipboard/user journey, build/lint/APK signing — in progress.
-5. Publish source and a signed installable debug APK; preserve signing material privately for future upgrades — pending evidence.
+4. Verify backward-compatible backup decoding, exact chart linkage, constrained time/cost, prompt privacy, Android 16 offline clipboard/user journey, build/lint/APK signing — passed; evidence in docs/TEST_RESULTS.md.
+5. Publish source and a signed installable debug APK; preserve signing material privately for future upgrades — completed; APK and signing recovery material saved, source and evidence published on GitHub.
 
 Installation recovery choice: prior private debug signer was lost with the temporary workspace. Keep old app/data intact; new daily-navigation package installs alongside it. Old JSON backups are accepted by the new app. This is an explicit package transition, not a same-signature upgrade.
