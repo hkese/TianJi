@@ -3,8 +3,9 @@
 - Ruleset/reference selection complete; native offline calculation and sourced basic Chinese interpretations implemented.
 - Core checks passed: 1 independent published worked chart, 351 cross-implementation charts (9 predeclared whole-day-term convention exclusions), 12 HKO major terms, 4,380 full-year structural checks, civil zone/DST/23:00 boundaries.
 - Human-golden target: incomplete. These counts are distinct and do not validate predictions.
-- Chinese chart/date/time/city pickers, palace details, saved charts and backup compatibility implemented; full Android build/device verification in progress.
-- Python: 21 tests and Ruff pass.
+- Chinese chart/date/time/city pickers, palace details, saved charts and backup compatibility implemented; full Android build and Android 16 device verification passed (4 data tests + 1 offline journey).
+- 37 Kotlin unit tests, 21 Python tests and Ruff pass; lint 0 errors / 7 warnings.
+- Same-signature 0.3.0 debug APK delivered; source commit `88365df07dbccc17aba2492779f003112600fd12`, CI https://github.com/hkese/TianJi/actions/runs/38241131970 passed.
 
 The earlier milestone record follows for history; current results are in docs/TEST_RESULTS.md.
 

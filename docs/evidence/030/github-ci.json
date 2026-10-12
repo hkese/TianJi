@@ -1,0 +1,8 @@
+{
+  "run": "https://github.com/hkese/TianJi/actions/runs/38241131970",
+  "head_sha": "88365df07dbccc17aba2492779f003112600fd12",
+  "verify": "success",
+  "android16_device": "success",
+  "artifact_id": 11743195177,
+  "artifact_sha256": "20fd415be96f9b3ede06cb2c20de649979cc6719ac7c473f8240802967fa9283"
+}

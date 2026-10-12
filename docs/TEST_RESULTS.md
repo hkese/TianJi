@@ -1,3 +1,23 @@
+# Version 0.3.0 — basic offline Qimen
+
+Date: 2026-10-12. App source commit: `88365df07dbccc17aba2492779f003112600fd12`.
+
+- Local clean build, 37 Kotlin unit tests, both instrumentation APK compilations and lint: **BUILD SUCCESSFUL** (3m48s). Lint: 0 errors, 7 warnings (preferences style, dependency-version notices and Kotlin extension suggestions).
+- Python: **21 tests passed**, Ruff passed. The real `TRADITIONAL` chart validates against Pydantic / JSON Schema and retains its status and hosted stems in position-aware research tokens. Legacy blocked fixtures remain supported.
+- Independent worked reference: the published 2027-02-06 10:00 Shanghai chart matches day/hour/year/month, Dun/Ju/Yuan/duty symbols and all eight outer palaces' main stems/doors/stars/deities. Hosted center fields are separately asserted from the documented convention.
+- Cross-implementation regression: **351 charts** match an independently implemented MIT reference engine; **9** predeclared whole-day solar-term convention differences are listed in the fixture. Both use the 6tail calendar family, so these are not independent ephemeris checks or human goldens.
+- Calendar: **12** published 2026 HKO major solar terms checked within 90 seconds; tests cover the exact computed boundary, DST gaps/overlaps, civil-zone independence, leap day and 23:00 rollover. Full 2026 structure checks cover **4,380** two-hour timestamps including all center cases. Reading checks cover 720 times and all eight doors.
+- APK: package `com.tianji.navigator`, versionCode **5**, versionName **0.3.0**, minSdk 28 / targetSdk 36. v2 signature and 16KB ZIP alignment pass. Certificate matches the delivered 0.2.2 APK.
+- APK SHA-256: `d5a4af67915f119e6546920a9d58fdff1d783b9f8b589701759a7d63dd487eb5`.
+- GitHub verify job: **PASS**, https://github.com/hkese/TianJi/actions/runs/38241131970 . Android 16 device job: **PASS**, 4 Room/migration/backup/Keystore tests and 1 expanded offline journey. The journey exercises Chinese chart date/time pickers, real grid details, saving/recreation, and the existing goal/journal/replan/keyboard/language/theme flow. Five chart screenshots were visually reviewed at 360dp width.
+- Evidence: `docs/evidence/030/`. No physical Samsung or scientific-prediction validation is claimed.
+
+The basic mode is explicitly `TRADITIONAL`. The 100 independently adjudicated human-golden goal remains incomplete; 351 software comparisons cannot be relabeled as 351 expert-verified charts. Advanced opportunity calendar / comprehensive pattern judgments are not implemented.
+
+Build recovery: a Compose dialog delimiter error was corrected, then a stale incremental class-bundle conflict was resolved by cleaning only generated app/chart build outputs. The final full command above passes; no failed build is presented as successful.
+
+---
+
 # Version 0.2.2 — Chinese usability update
 
 Date: 2026-10-12. Source commit: `32456b58c5f31b9c37799a859ad87737cec900dc`.

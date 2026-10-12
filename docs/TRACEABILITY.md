@@ -6,7 +6,7 @@ Source paths are relative to this repository; Kotlin class files reside under ea
 |---|---|---|---|---|
 | NAV-001 | P0 | `android/app/MainActivity.kt` | JourneyTest: device pass | Implemented; 1 tap default start; no account/GPS |
 | NAV-002 | P0 | `android/feature-home` | JourneyTest: device pass | Implemented; offline state and next action |
-| NAV-003 | P0 | `android/feature-chart` | CoreTest | Basic calculated grid, palace details and traditional readings implemented; 0.3.0 device verification pending |
+| NAV-003 | P0 | `android/feature-chart` | CoreTest | Basic calculated grid, palace details and traditional readings implemented; 0.3.0 Android 16 device flow passed |
 | NAV-004 | P0 | `android/feature-goals; android/core-data` | RepositoryTest: device pass | Implemented; CRUD, deadlines, constraints, milestones, persistence |
 | NAV-005 | P0 | `android/core-domain/Planner` | PlannerTest: 7 tests pass | 3 alternatives; enforced minutes/deadline/zero cost; text constraints need user review |
 | NAV-006 | P0 | `android/feature-journal` | RepositoryTest: device pass | Implemented; linked action → plan + chart; unknown distinct |
@@ -41,3 +41,7 @@ Source paths are relative to this repository; Kotlin class files reside under ea
 | Blank chart looks broken | `feature-chart/ChartScreen.kt` | Clear unavailable state, practical planning CTA, optional fixed position legend and Chinese verification details; zero invented chart data |
 
 Final 0.2.2 evidence: `docs/evidence/022/` and https://github.com/hkese/TianJi/actions/runs/38233591473 . 27 Kotlin tests, 20 Python tests, lint (0 errors/6 warnings), 3 Room tests and 1 full UI journey pass. The initial visual-review finding in the date picker was corrected and regression-tested before delivery.
+
+## 0.3.0 basic chart delivery
+
+`TraditionalCoreTest`, `ReadingTest`, `RepositoryTest` and the expanded `JourneyTest` cover the real offline core, sourced interpretation, center hosting, civil-time boundaries, Chinese date/time pickers, stored charts, legacy/current backup coexistence and tampered-symbol rejection. 37 Kotlin unit tests, 21 Python tests, lint and all 5 Android 16 instrumented tests pass. See `docs/evidence/030/` and CI run 38241131970. No scientific prediction or 100-human-golden completion claim.
