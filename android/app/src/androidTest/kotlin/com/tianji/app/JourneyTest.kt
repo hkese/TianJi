@@ -67,7 +67,7 @@ class JourneyTest {
         compose.onNodeWithTag("language-zh").assertIsSelected()
         compose.onNodeWithTag("timezone-selector").performScrollTo().performClick()
         compose.onNodeWithTag("timezone-device").assertExists()
-        compose.onNodeWithTag("timezone-search").performTextInput("Seattle")
+        compose.onNodeWithTag("timezone-search").performClick().performTextInput("Seattle")
         compose.onNodeWithTag("timezone-America/Los_Angeles").assertIsDisplayed()
         capture("timezone-search.png")
         compose.onNodeWithTag("timezone-America/Los_Angeles").performClick()
@@ -87,6 +87,9 @@ class JourneyTest {
         compose.onNodeWithText("ACTIVE").assertDoesNotExist()
         compose.onNodeWithTag("deadline-picker").performScrollTo().performClick()
         compose.onNodeWithText("選擇限期").assertExists()
+        compose.onNodeWithText("Selected date").assertDoesNotExist()
+        assertTrue("Calendar month must be Chinese even when Android is English",
+            compose.onAllNodesWithText("月", substring = true).fetchSemanticsNodes().isNotEmpty())
         capture("date-picker-zh.png")
         compose.onNode(hasText("取消") and hasAnyAncestor(isDialog())).performClick()
         compose.onNodeWithText("目標名稱").performScrollTo().performClick().performTextInput("Read one page")

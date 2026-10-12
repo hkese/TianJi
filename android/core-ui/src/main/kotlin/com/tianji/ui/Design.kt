@@ -58,7 +58,11 @@ fun displayTime(value:String?,zone:String):String=value?.let{runCatching{Instant
      };show=false
     }){Text(t("確定","Confirm"))}
    },dismissButton={TextButton(onClick={show=false}){Text(t("取消","Cancel"))}}){
-    DatePicker(state,title={Text(t("選擇限期","Choose deadline"),Modifier.padding(start=24.dp,top=16.dp))})
+    // Dialog creates a new Android composition root. Reapply the app locale
+    // inside it so Material's month, weekdays and accessibility strings agree.
+    CompositionLocalProvider(LocalContext provides localizedContext,LocalConfiguration provides localized){
+     DatePicker(state,title={Text(t("選擇限期","Choose deadline"),Modifier.padding(start=24.dp,top=16.dp))})
+    }
    }
   }
  }
