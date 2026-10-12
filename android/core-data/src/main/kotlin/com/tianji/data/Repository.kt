@@ -38,8 +38,8 @@ suspend fun deleteGoal(id:String)=dao.deleteGoal(id)
 suspend fun newPlan(goalId:String,zone:String,reason:String):PlanVersion=db.withTransaction {
  val b=snapshot(); val goal=b.goals.single{it.id==goalId}; val now=Instant.now(); val c=core.calculateChart(now,zone)
  val chart=ChartSnapshot(c.chart_id,c.input.instant_utc,c.input.timezone,c.ruleset.id,c.ruleset.version,core.canonical(c),c.input_hash)
- val plan=PlanVersion(goalId=goalId,parentVersionId=b.plans.filter{it.goalId==goalId}.maxByOrNull{it.createdAt}?.id,reason=reason,version=(b.plans.filter{it.goalId==goalId}.maxOfOrNull{it.version}?:0)+1)
- val actions=Planner.candidates(goal,plan,chart,now)
+ val plan=PlanVersion(goalId=goalId,parentVersionId=b.plans.filter{it.goalId==goalId}.maxByOrNull{it.createdAt}?.id,reason=reason,goalSnapshot=goal,version=(b.plans.filter{it.goalId==goalId}.maxOfOrNull{it.version}?:0)+1)
+ val actions=Navigator.candidates(goal,plan,chart,now)
  put(chart);put(plan);actions.forEach{put(it)};plan
 }
 suspend fun choose(action:ActionCandidate)=db.withTransaction {

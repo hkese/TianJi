@@ -26,9 +26,14 @@ import com.tianji.ui.*
 }
 @OptIn(ExperimentalLayoutApi::class)
 @Composable private fun GoalEditor(original:Goal?,zone:String,onSave:(Goal)->Unit,onCancel:()->Unit){
+ var purpose by remember{mutableStateOf(original?.purpose?:"GENERAL")}
  var title by remember{mutableStateOf(original?.title?:"")};var criteria by remember{mutableStateOf(original?.successCriteria?:"")};var description by remember{mutableStateOf(original?.description?:"")};var minutes by remember{mutableStateOf((original?.constraints?.minutes?:20).toString())};var cost by remember{mutableStateOf((original?.constraints?.maxCost?:0.0).toString())};var notes by remember{mutableStateOf(original?.constraints?.notes?:"")};var deadline by remember{mutableStateOf(original?.deadline)};var priority by remember{mutableIntStateOf(original?.priority?:2)};var status by remember{mutableStateOf(original?.status?:"ACTIVE")};var error by remember{mutableStateOf("")}
  Page(t("設定目標","Edit goal")){
   Text(t("先填名稱同完成標準，其他可以用預設值。例如：讀一頁書，寫低一句重點。","Start with a title and success criteria; keep the other defaults. Example: read one page and write one takeaway."),style=MaterialTheme.typography.bodyMedium)
+  Text(t("今次主要想做甚麼？", "What is this goal mainly about?"))
+  FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp)){
+   listOf("GENERAL" to t("其他／日常","Everyday"),"WORK" to t("工作／求職","Work"),"STUDY" to t("學習／練習","Learning"),"TALK" to t("溝通／關係","Communication")).forEach{(id,label)->FilterChip(purpose==id,{purpose=id},label={Text(label)})}
+  }
   Field(title,t("目標名稱","Goal title"),{title=it});Field(criteria,t("怎樣算完成？","Success criteria"),{criteria=it});Field(description,t("描述","Description"),{description=it},single=false);DateField(deadline,zone,{deadline=it})
   Field(minutes,t("每次分鐘（5–240）","Minutes per action (5–240)"),{minutes=it});Field(cost,t("最高支出","Maximum cost"),{cost=it});Field(notes,t("其他限制（請自行核對）","Other constraints (review yourself)"),{notes=it},single=false)
   Text(t("優先次序","Priority"));Row(horizontalArrangement=Arrangement.spacedBy(8.dp)){(1..3).forEach{n->FilterChip(priority==n,{priority=n},label={Text(when(n){1->t("一般","Normal");2->t("重要","Important");else->t("最優先","Highest")})})}}
@@ -36,7 +41,7 @@ import com.tianji.ui.*
   ErrorText(error)
   val requiredError=t("請填寫目標名稱及完成標準。","Enter a goal title and success criteria.")
   val inputError=t("請檢查分鐘（5–240）、支出及限期。","Check duration (5–240 minutes), cost and deadline.")
-  ActionButton(t("儲存目標","Save goal")){runCatching{val g=(original?:Goal(title=title,successCriteria=criteria)).copy(title=title,description=description,successCriteria=criteria,deadline=deadline,priority=priority,status=status,constraints=Constraints(minutes.toInt(),cost.toDouble(),notes));validateGoal(g);g}.onSuccess(onSave).onFailure{error=if(title.isBlank()||criteria.isBlank())requiredError else inputError}}
+  ActionButton(t("儲存目標","Save goal")){runCatching{val g=(original?:Goal(title=title,successCriteria=criteria)).copy(title=title,purpose=purpose,description=description,successCriteria=criteria,deadline=deadline,priority=priority,status=status,constraints=Constraints(minutes.toInt(),cost.toDouble(),notes));validateGoal(g);g}.onSuccess(onSave).onFailure{error=if(title.isBlank()||criteria.isBlank())requiredError else inputError}}
   OutlinedButton(onClick=onCancel,modifier=Modifier.fillMaxWidth()){Text(t("取消","Cancel"))}
  }
 }

@@ -1,3 +1,16 @@
+# Current revision 0.4.0 — goal-to-action navigation
+
+Implementation complete; validation in progress (do not infer a pass from this entry).
+
+- Purpose picker: work, study, communication and everyday goals.
+- Three concrete offline recipes per purpose, each with three steps, completion evidence and an actual chart-derived optional direction, door/star/deity.
+- One canonical chart per plan; goal snapshot preserved for history. Selected first step pinned in planner and home. Expired windows offer a fresh chart/replan.
+- Manual ChatGPT/Codex prompt review, clipboard, Android share and explicit browser open. No automatic upload or answer import. Existing opt-in configured-provider comparison unchanged.
+- Source/key recovery: the ephemeral workspace was cleared. Source recovered from hkese/TianJi. Prior signing private key not found in the workspace or saved source archive. New package `com.tianji.navigator.daily`, label `天機・行動導航`, installs alongside the old app and imports its JSON backups. No uninstall required.
+- Full-chart divination, calibrated predictions, 100 expert goldens, opportunity calendar and advanced Research Lab models remain unfinished; no scientific validation claim.
+
+---
+
 # Current revision 0.3.0 — basic on-device charts
 
 - Ruleset/reference selection complete; native offline calculation and sourced basic Chinese interpretations implemented.
