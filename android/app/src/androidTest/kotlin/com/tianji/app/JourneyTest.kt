@@ -18,6 +18,23 @@ class JourneyTest {
         java.io.File(compose.activity.getExternalFilesDir(null), name).outputStream().use {
             shot.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it)
         }
+        // Test-only shared output survives Gradle's post-test app uninstall.
+        if (android.os.Build.VERSION.SDK_INT >= 29) {
+            val resolver = compose.activity.contentResolver
+            val values = android.content.ContentValues().apply {
+                put(android.provider.MediaStore.Images.Media.DISPLAY_NAME, name)
+                put(android.provider.MediaStore.Images.Media.MIME_TYPE, "image/png")
+                put(android.provider.MediaStore.Images.Media.RELATIVE_PATH, "Pictures/TianJiTests")
+                put(android.provider.MediaStore.Images.Media.IS_PENDING, 1)
+            }
+            val uri = requireNotNull(resolver.insert(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values))
+            requireNotNull(resolver.openOutputStream(uri)).use {
+                shot.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it)
+            }
+            values.clear()
+            values.put(android.provider.MediaStore.Images.Media.IS_PENDING, 0)
+            resolver.update(uri, values, null, null)
+        }
     }
 
     private fun awaitText(text: String) {
