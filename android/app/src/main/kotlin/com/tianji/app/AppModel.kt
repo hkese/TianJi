@@ -19,17 +19,18 @@ class AppModel(val app:Application,val repo:Repository,val prefs:Preferences,val
  fun perform(block:suspend ()->Unit){viewModelScope.launch{busy.value=true;try{withContext(Dispatchers.IO){block()}}catch(e:Exception){messages.send(if(state.value.settings.english)"Could not complete this action. Check the input, deadline, file or connection." else "未能完成。請檢查輸入、限期、檔案或連線。")}finally{busy.value=false}}}
  fun settings(s:Settings)=perform{prefs.save(s);ReminderWorker.configure(app,s.reminders)}
  fun saveProvider(p:AiProviderConfig,key:String)=perform{if(p.baseUrl!=provider.value.baseUrl)vault.clear();if(key.isNotBlank())vault.save(key);repo.provider(p);provider.value=p}
- fun testProvider()=perform{ai.test(provider.value,vault.read());messages.send("Connection OK / 連線成功")}
+ private fun text(zh:String,en:String)=if(state.value.settings.english)en else zh
+ fun testProvider()=perform{ai.test(provider.value,vault.read());messages.send(text("連線成功","Connection OK"))}
  fun payload(g:Goal,actions:List<ActionCandidate>)=ai.payload(g,actions)
- fun compare(payload:String,actions:List<ActionCandidate>)=perform{repo.consent("ai-context-once");val result=ai.compare(provider.value,vault.read(),payload,actions);val top=actions.single{it.id==result.action_order.first()};messages.send("AI · "+top.title+" · "+result.emphasis+" (HEURISTIC)")}
+ fun compare(payload:String,actions:List<ActionCandidate>)=perform{repo.consent("ai-context-once");val result=ai.compare(provider.value,vault.read(),payload,actions);val top=actions.single{it.id==result.action_order.first()};messages.send(text("AI 建議："+top.title+"（實用規劃，非預測）","AI suggestion: "+top.kind+" (heuristic planning)"))}
  fun export(uri:Uri,research:Boolean=false)=perform{
   val text=if(research)researchExport() else repo.export()
   app.contentResolver.openOutputStream(uri)?.use{it.write(text.toByteArray())}?:error("Output unavailable")
-  messages.send("Export saved / 已匯出")
+  messages.send(text("備份已匯出","Export saved"))
  }
  fun restore(uri:Uri)=perform{
   val bytes=app.contentResolver.openInputStream(uri)?.use { input -> val buffer=java.io.ByteArrayOutputStream();val chunk=ByteArray(8192);while(true){val n=input.read(chunk);if(n<0)break;require(buffer.size()+n<=10*1024*1024);buffer.write(chunk,0,n)};buffer.toByteArray() }?:error("Input unavailable")
-  repo.restore(bytes.toString(Charsets.UTF_8));messages.send("Backup restored / 備份已還原")
+  repo.restore(bytes.toString(Charsets.UTF_8));messages.send(text("備份已還原","Backup restored"))
  }
  private suspend fun researchExport():String{
   repo.consent("research-export");val local=app.getSharedPreferences("research-pseudonym",0);val subject=local.getString("id",null)?:UUID.randomUUID().toString().also{check(local.edit().putString("id",it).commit())};val data=repo.snapshot()
@@ -37,5 +38,5 @@ class AppModel(val app:Application,val repo:Repository,val prefs:Preferences,val
    put("event_id",j.id);put("subject_pseudonym",subject);put("occurred_at_utc",j.occurredAt);put("outcome_at_utc",j.occurredAt);put("timezone",state.value.settings.timezone);put("location_coarse",JsonNull);put("context",buildJsonObject{});put("action",buildJsonObject{put("kind",a.kind);put("cost",a.cost)});put("outcome",when(j.outcome){"UNKNOWN"->JsonNull;"SUCCESS"->JsonPrimitive(1);else->JsonPrimitive(0)});put("source","navigator-retrospective-v2");put("consent_scope","research-export");put("chart_ref",JsonNull);put("dataset_version","1")
   }.toString()}
  }
- fun deleteAll()=perform{ReminderWorker.configure(app,false);repo.deleteAll();vault.clear();app.getSharedPreferences("research-pseudonym",0).edit().clear().commit();provider.value=AiProviderConfig();prefs.save(state.value.settings.copy(reminders=false));messages.send("Local data deleted / 本機資料已刪除")}
+ fun deleteAll()=perform{ReminderWorker.configure(app,false);repo.deleteAll();vault.clear();app.getSharedPreferences("research-pseudonym",0).edit().clear().commit();provider.value=AiProviderConfig();prefs.save(state.value.settings.copy(reminders=false));messages.send(text("本機資料已刪除","Local data deleted"))}
 }

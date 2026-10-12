@@ -32,7 +32,7 @@ import com.tianji.planner.*
 import com.tianji.journal.*
 import com.tianji.settings.*
 import org.koin.core.context.GlobalContext
-import java.time.ZoneId
+import androidx.compose.runtime.saveable.rememberSaveable
 class MainActivity:ComponentActivity(){override fun onCreate(savedInstanceState:Bundle?){super.onCreate(savedInstanceState);enableEdgeToEdge();val model=ViewModelProvider(this,object:ViewModelProvider.Factory{override fun <T:ViewModel> create(modelClass:Class<T>):T{@Suppress("UNCHECKED_CAST")return AppModel(application,GlobalContext.get().get(),GlobalContext.get().get(),GlobalContext.get().get()) as T}})[AppModel::class.java];setContent{TianJiApp(model)}}}
 @Composable fun TianJiApp(vm:AppModel){
  val state by vm.state.collectAsStateWithLifecycle();val provider by vm.provider.collectAsStateWithLifecycle();val busy by vm.busy.collectAsStateWithLifecycle();val s=state.settings;val data=state.data
@@ -55,12 +55,13 @@ class MainActivity:ComponentActivity(){override fun onCreate(savedInstanceState:
    Box(Modifier.fillMaxSize().padding(padding).consumeWindowInsets(padding),contentAlignment=Alignment.TopCenter){
     Box(Modifier.widthIn(max=760.dp).fillMaxSize()){
      NavHost(nav,"home"){
-      composable("home"){HomeScreen(data,s.timezone,{nav.navigate("goals")},{nav.navigate("plan/$it")},{nav.navigate("chart")})}
-      composable("chart"){ChartScreen(s.timezone)}
+      composable("home"){HomeScreen(data,s.timezone,{nav.navigate("goals")},{nav.navigate("plan/$it")},{nav.navigate("chart")},{nav.navigate("guide")})}
+      composable("chart"){ChartScreen(s.timezone,{nav.navigate("goals")},{nav.navigate("guide")})}
       composable("goals"){GoalsScreen(data,s.timezone,{vm.perform{vm.repo.saveGoal(it)}},{vm.perform{vm.repo.deleteGoal(it)}},{vm.perform{vm.repo.saveMilestone(it)}},{nav.navigate("plan/$it")})}
       composable("plan/{goal}"){back->val goalId=back.arguments?.getString("goal")?:return@composable;PlannerScreen(goalId,data,s.timezone,{reason->vm.perform{vm.repo.newPlan(goalId,s.timezone,reason)}},{a->vm.perform{vm.repo.choose(a)}},{a->entry=a;nav.navigate("journal")},{g,a->aiReview=vm.payload(g,a) to a},{nav.popBackStack()})}
       composable("journal"){JournalScreen(data,s.timezone,entry,{j->vm.perform{vm.repo.journal(j)};entry=null},{entry=null})}
-      composable("settings"){SettingsScreen(s,provider,{next->if(next.reminders&&!s.reminders&&Build.VERSION.SDK_INT>=33)notification.launch(Manifest.permission.POST_NOTIFICATIONS) else vm.settings(next)},vm::saveProvider,vm::testProvider,{export.launch("TianJi-backup.json")},{restore.launch(arrayOf("application/json","text/plain","application/octet-stream"))},{research=true},vm::deleteAll)}
+      composable("settings"){SettingsScreen(s,provider,{next->if(next.reminders&&!s.reminders&&Build.VERSION.SDK_INT>=33)notification.launch(Manifest.permission.POST_NOTIFICATIONS) else vm.settings(next)},vm::saveProvider,vm::testProvider,{export.launch("TianJi-backup.json")},{restore.launch(arrayOf("application/json","text/plain","application/octet-stream"))},{research=true},vm::deleteAll,{nav.navigate("guide")})}
+      composable("guide"){GuideScreen({nav.navigate("goals"){popUpTo("home");launchSingleTop=true}},{nav.navigate("settings"){popUpTo("home");launchSingleTop=true}},{nav.popBackStack()})}
      }
      if(busy)LinearProgressIndicator(Modifier.fillMaxWidth())
     }
@@ -71,6 +72,16 @@ class MainActivity:ComponentActivity(){override fun onCreate(savedInstanceState:
   importConfirm?.let{uri->AlertDialog(onDismissRequest={importConfirm=null},title={Text(t("取代目前資料？","Replace current records?"))},text={Text(t("只有完整驗證成功後才會取代資料。建議先匯出目前備份。","Records are replaced only after complete validation. Export a backup first if needed."))},confirmButton={TextButton(onClick={vm.restore(uri);importConfirm=null}){Text(t("匯入","Import"))}},dismissButton={TextButton(onClick={importConfirm=null}){Text(t("取消","Cancel"))}})}
  }
 }
-@Composable fun Onboarding(settings:Settings,save:(Settings)->Unit){var zone by remember{mutableStateOf(settings.timezone)};Surface(Modifier.fillMaxSize()){Box(Modifier.safeDrawingPadding()){Page(t("天機 · TianJi","TianJi Navigator"),t("由當下開始。","Start from here.")){
- Text(t("你的目標、方案及日誌預設只保存在手機，毋須帳戶、GPS 或 AI。","Your goals, plans and journal stay on your phone by default. No account, GPS or AI required."));CardBlock(t("先理解證據","Understand the evidence")){Text(t("奇門及時空導航假說未經科學證實。現時排盤待核實，實用規劃建議不是已驗證預測。","Qimen and the navigation hypothesis are not scientifically established. Chart calculation awaits verification; planning advice is not a validated prediction."))};Row{Text("English",Modifier.weight(1f));Switch(settings.english,{save(settings.copy(english=it))})};Field(zone,t("IANA 時區","IANA timezone"),{zone=it});ActionButton(t("開始離線使用","Start offline"),enabled=runCatching{ZoneId.of(zone)}.isSuccess){save(settings.copy(onboarded=true,timezone=zone))}
-}}}}
+@Composable fun Onboarding(settings:Settings,save:(Settings)->Unit){
+ var zone by rememberSaveable{mutableStateOf(settings.timezone)}
+ Surface(Modifier.fillMaxSize()){Box(Modifier.safeDrawingPadding()){Page(t("天機 · TianJi","TianJi Navigator"),t("由當下開始。","Start from here.")){
+  Text(t("建立目標、揀一個實際步驟、記錄結果。資料預設只留在手機，毋須帳戶、GPS 或 AI。","Create a goal, choose a practical step and record the result. Data stays on your phone by default. No account, GPS or AI required."))
+  CardBlock(t("先講清楚","Before you start")){
+   Text(t("離線規劃可以用；奇門排盤及吉時日曆尚未開放。傳統奇門及時空導航假說未經科學證實，現時建議不會預測命運或成功機率。","Offline planning works; Qimen charts and opportunity calendars are not available yet. Traditional Qimen and the navigation hypothesis are not scientifically established. Current suggestions do not predict destiny or success probabilities."))
+  }
+  LanguageSelector(settings.english){save(settings.copy(english=it))}
+  TimeZoneSelector(zone){zone=it}
+  ActionButton(t("開始離線使用","Start offline")){save(settings.copy(onboarded=true,timezone=zone))}
+  Text(t("入到首頁可隨時開啟「使用教學」。","The Getting started guide is always available on Home."),style=MaterialTheme.typography.bodySmall)
+ }}}
+}

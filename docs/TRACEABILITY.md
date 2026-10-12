@@ -31,3 +31,11 @@ Source paths are relative to this repository; Kotlin class files reside under ea
 | LAB-007 | P1 | `research/tianji_research/registry.py` | synthetic approval rejection passes | Metadata registry implemented; Transformer/world model DEFERRED |
 | LAB-008 | P1 | `research/tianji_research/registry.py` | lockbox and human gate tests pass | Exclusive pre-action records and hashes; executable deployment disabled |
 | LAB-009 | P2 | `KNOWN_LIMITATIONS.md` | No experiment run | DEFERRED; no quantum claim |
+
+## 0.2.2 user feedback coverage
+
+| Feedback | Implementation | Verification |
+|---|---|---|
+| Choose time zone without typing codes | `core-ui/TimeZonePicker.kt`, `core-domain/TimeZones.kt`, onboarding/settings | TimeZonesTest covers Chinese/English aliases, valid presets, Pacific DST boundary and Hong Kong offsets; expanded JourneyTest pending device run |
+| Chinese instructions and status | `core-ui/GuideScreen.kt`, `Labels.kt`, `docs/USER_GUIDE_ZH_HK.md`, feature screens | Expanded JourneyTest covers guide navigation, Chinese date dialog, status labels and persistent language choice; pending device run |
+| Blank chart looks broken | `feature-chart/ChartScreen.kt` | Clear unavailable state, practical planning CTA, optional fixed position legend and Chinese verification details; zero invented chart data |

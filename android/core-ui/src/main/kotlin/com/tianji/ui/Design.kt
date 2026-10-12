@@ -9,6 +9,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tianji.data.Settings
+import android.content.res.Configuration
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
+import java.util.Locale
 import java.time.*
 import java.time.format.DateTimeFormatter
 val English=compositionLocalOf{false}
@@ -26,7 +31,7 @@ val English=compositionLocalOf{false}
  }
 }
 @Composable fun CardBlock(title:String,content:@Composable ColumnScope.()->Unit){Card(shape=RoundedCornerShape(20.dp),modifier=Modifier.fillMaxWidth()){Column(Modifier.padding(20.dp),verticalArrangement=Arrangement.spacedBy(12.dp)){Text(title,style=MaterialTheme.typography.titleLarge);content()}}}
-@Composable fun Evidence(){Text(t("HEURISTIC · 實用規劃","HEURISTIC · Practical planning"),style=MaterialTheme.typography.labelMedium,color=MaterialTheme.colorScheme.primary);Text(t("依據你輸入的目標與限制；不代表已驗證預測，請按實際情況判斷。","Based on your goals and constraints. This is not a validated prediction; review against your circumstances."),style=MaterialTheme.typography.bodySmall)}
+@Composable fun Evidence(){Text(t("實用規劃 · 非預測","HEURISTIC · Practical planning"),style=MaterialTheme.typography.labelMedium,color=MaterialTheme.colorScheme.primary);Text(t("依據你輸入的目標與限制；不代表已驗證預測，請按實際情況判斷。","Based on your goals and constraints. This is not a validated prediction; review against your circumstances."),style=MaterialTheme.typography.bodySmall)}
 @Composable fun ActionButton(label:String,enabled:Boolean=true,onClick:()->Unit){Button(onClick,enabled=enabled,modifier=Modifier.fillMaxWidth().heightIn(min=48.dp)){Text(label)}}
 @Composable fun Field(value:String,label:String,onChange:(String)->Unit,modifier:Modifier=Modifier,single:Boolean=true){OutlinedTextField(value,onChange,label={Text(label)},modifier=modifier.fillMaxWidth(),singleLine=single)}
 fun displayTime(value:String?,zone:String):String=value?.let{runCatching{Instant.parse(it).atZone(ZoneId.of(zone)).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))}.getOrDefault(it)}?:"—"
@@ -34,7 +39,27 @@ fun displayTime(value:String?,zone:String):String=value?.let{runCatching{Instant
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable fun DateField(value:String?,zone:String,onChange:(String?)->Unit){
  var show by remember{mutableStateOf(false)}
- OutlinedButton(onClick={show=true},modifier=Modifier.fillMaxWidth().heightIn(min=48.dp)){Text(t("限期：","Deadline: ")+displayTime(value,zone))}
+ OutlinedButton(onClick={show=true},modifier=Modifier.fillMaxWidth().heightIn(min=48.dp).testTag("deadline-picker")){Text(t("限期：","Deadline: ")+(value?.let{displayTime(it,zone)}?:t("未設定（可選填）","Not set (optional)")))}
  if(value!=null)TextButton(onClick={onChange(null)}){Text(t("移除限期","Remove deadline"))}
- if(show){val state=rememberDatePickerState();DatePickerDialog(onDismissRequest={show=false},confirmButton={TextButton(onClick={state.selectedDateMillis?.let{millis->val date=Instant.ofEpochMilli(millis).atZone(ZoneOffset.UTC).toLocalDate();onChange(date.plusDays(1).atStartOfDay(ZoneId.of(zone)).minusSeconds(1).toInstant().toString())};show=false}){Text(t("確定","Confirm"))}},dismissButton={TextButton(onClick={show=false}){Text(t("取消","Cancel"))}}){DatePicker(state)}}
+ if(show){
+  val context=LocalContext.current
+  val configuration=LocalConfiguration.current
+  val english=English.current
+  val localized=remember(configuration,english){Configuration(configuration).apply{setLocale(if(english)Locale.ENGLISH else Locale.forLanguageTag("zh-HK"))}}
+  val localizedContext=remember(context,localized){context.createConfigurationContext(localized)}
+  CompositionLocalProvider(LocalContext provides localizedContext,LocalConfiguration provides localized){
+   val initial=value?.let{Instant.parse(it).atZone(ZoneId.of(zone)).toLocalDate().atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()}
+   val state=rememberDatePickerState(initialSelectedDateMillis=initial)
+   DatePickerDialog(onDismissRequest={show=false},confirmButton={
+    TextButton(enabled=state.selectedDateMillis!=null,onClick={
+     state.selectedDateMillis?.let{millis->
+      val date=Instant.ofEpochMilli(millis).atZone(ZoneOffset.UTC).toLocalDate()
+      onChange(date.plusDays(1).atStartOfDay(ZoneId.of(zone)).minusSeconds(1).toInstant().toString())
+     };show=false
+    }){Text(t("確定","Confirm"))}
+   },dismissButton={TextButton(onClick={show=false}){Text(t("取消","Cancel"))}}){
+    DatePicker(state,title={Text(t("選擇限期","Choose deadline"),Modifier.padding(start=24.dp,top=16.dp))})
+   }
+  }
+ }
 }

@@ -3,6 +3,10 @@ Native, offline-first Android planning and reflection, plus a separate optional 
 
 **Qimen calculation is BLOCKED, not simulated.** No authoritative complete ruleset or independent fixtures were supplied. The app uses useful practical heuristics without invented chart symbols, success percentages or claims of scientific proof. See `KNOWN_LIMITATIONS.md` and `docs/RULESET_REFERENCES.md`.
 
+## 中文使用說明
+
+請看 [繁體中文操作指南](docs/USER_GUIDE_ZH_HK.md)，或直接在 App 的首頁／設定開啟「使用教學」。0.2.2 加入城市時區選單、中文狀態與清楚的未開放功能說明。
+
 ## Android build
 - JDK 17, Android SDK platform 36, build-tools 35.0.0, minimum phone Android 9 (API 28).
 - Gradle wrapper 8.13 with SHA-256 pin; Android Gradle Plugin 8.11.1; Kotlin 2.1.20; Compose BOM 2025.04.01; Room 2.7.1.
@@ -16,7 +20,7 @@ Native, offline-first Android planning and reflection, plus a separate optional 
 - Debug builds use the local Android debug signing key. For a release, create your own signing configuration through Android Studio; do not commit a keystore or credentials.
 
 ## Offline daily flow
-1. Start the app; review privacy/evidence explanation. Default HK timezone can be changed; no account or GPS is needed.
+1. Start the app; review privacy/evidence explanation. Device timezone is the default on new installs; existing choices survive upgrades and a searchable city picker changes it; no account or GPS is needed.
 2. Create a goal with measurable success criteria, deadline, priority, available minutes and spending limit; add milestones.
 3. Open “Plan next step” and generate three alternatives. They share a bounded time window and cost zero; choose one.
 4. Record the actual outcome. Unknown is kept separate from failure.

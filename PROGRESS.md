@@ -1,4 +1,4 @@
-# Progress — revision 0.2.1
+# Progress — revision 0.2.2
 
 | Milestone | Status | Observed exit / remaining gate |
 |---|---|---|
@@ -19,3 +19,6 @@ Recovery: the original workspace was pruned during a stalled login. The original
 Android 16 follow-up: API 36 complete offline journey and 3 Room/Keystore tests passed on GitHub's accelerated emulator. Version 0.2.1 adds edge-to-edge safe areas, keyboard resizing and system bar theme contrast. The source is public in the owner-created repository. Local software-emulator startup did not complete; no local API 36 pass is claimed.
 
 Final Android 16 CI: https://github.com/hkese/TianJi/actions/runs/38227645836 (both jobs passed). Verified app source: `b8b83c07816a28623bc5c14432f358908e21fd65`. Documentation-only publication after this run does not alter app or test code.
+
+## 0.2.2 usability follow-up
+The user supplied an installed-app screenshot: installation is confirmed, but actual Qimen remains blocked. Added offline city timezone selection (Chinese/English search, device shortcut and DST-aware labels), Chinese guide with navigation, localized states/theme/date picker and explicit unavailable-chart UI. Existing records and preferences are retained. Local build, 27 Kotlin unit tests, APK signature and lint pass. Android 16 device validation is pending; prior 0.2.1 evidence does not verify these changes.
