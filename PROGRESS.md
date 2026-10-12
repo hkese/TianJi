@@ -1,4 +1,4 @@
-# Progress — revision 0.2.0
+# Progress — revision 0.2.1
 
 | Milestone | Status | Observed exit / remaining gate |
 |---|---|---|
@@ -9,11 +9,13 @@
 | M4 Research Lab | Implemented | 20 tests pass; Ruff passes; CPU synthetic A/B/C/calendar/shuffle evaluation completed |
 | M5 Polish / APK | Verified debug APK delivered | Latest debug build and v2 signature pass; lint 0 errors / 8 warnings; complete offline UI test passed, including replan, persistence, English and dark mode |
 | M6 Advanced optional | Deferred | Requires enough consented real data and valid benchmarks; no executable model deployment |
-| GitHub publication | In progress | Owner created https://github.com/hkese/TianJi; access and push permission verified; full source import in progress |
+| GitHub publication | Published | Full source is at https://github.com/hkese/TianJi; Kotlin/Python/lint/build CI passes; all 4 Android 16 device tests and screenshot collection pass |
 
 Evidence: `docs/TEST_RESULTS.md`, `docs/evidence/`, and `docs/TRACEABILITY.md`.
 Synthetic run: `afe3a603b68ad3d710bc8f1ace708ca0e95a48bab909aed7fe8575bfc93f9635` (480 fictional records, 24 fictional subjects). It establishes no predictive or causal validity.
 
 Recovery: the original workspace was pruned during a stalled login. The original installed APK was recovered and saved. This source is a reconstructed revision with separately observed test results; it has not been pushed into an unrelated GitHub repository.
 
-Android 16 follow-up: user confirmed Android 16 on their phone. Installing an API 36 emulator to run the complete offline journey and Room/Keystore tests. No runtime pass claimed yet.
+Android 16 follow-up: API 36 complete offline journey and 3 Room/Keystore tests passed on GitHub's accelerated emulator. Version 0.2.1 adds edge-to-edge safe areas, keyboard resizing and system bar theme contrast. The source is public in the owner-created repository. Local software-emulator startup did not complete; no local API 36 pass is claimed.
+
+Final Android 16 CI: https://github.com/hkese/TianJi/actions/runs/38227645836 (both jobs passed). Verified app source: `b8b83c07816a28623bc5c14432f358908e21fd65`. Documentation-only publication after this run does not alter app or test code.

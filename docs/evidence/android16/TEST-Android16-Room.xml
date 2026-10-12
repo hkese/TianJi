@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="com.tianji.data.RepositoryTest" tests="3" failures="0" errors="0" skipped="0" time="1.221" timestamp="2026-10-12T09:08:55" hostname="localhost">
+  <properties>
+    <property name="device" value="emulator-5554 - 16" />
+    <property name="flavor" value="" />
+    <property name="project" value=":android:core-data" />
+  </properties>
+  <testcase name="credentialRoundTrip" classname="com.tianji.data.RepositoryTest" time="0.013" />
+  <testcase name="legacyMigrationPreservesRows" classname="com.tianji.data.RepositoryTest" time="0.175" />
+  <testcase name="persistedJourneyBackupAndDelete" classname="com.tianji.data.RepositoryTest" time="0.281" />
+</testsuite>

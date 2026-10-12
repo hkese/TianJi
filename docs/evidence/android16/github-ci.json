@@ -1,0 +1,14 @@
+{
+  "source_commit": "b8b83c07816a28623bc5c14432f358908e21fd65",
+  "workflow_run_id": 38227645836,
+  "url": "https://github.com/hkese/TianJi/actions/runs/38227645836",
+  "verify": "success",
+  "android16_device": "success",
+  "kotlin_tests": 23,
+  "python_tests": 20,
+  "android16_room_tests": 3,
+  "android16_ui_journeys": 1,
+  "android16_ui_suite_seconds": 11.443,
+  "screenshots_collected": true,
+  "physical_phone_tested": false
+}

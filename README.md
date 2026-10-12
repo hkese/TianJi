@@ -55,7 +55,7 @@ No analytics, automatic uploads, location permission, cloud backup or embedded p
 The original working directory was pruned during a stalled GitHub login. The first installed APK was recovered; this source is a separately rebuilt revision. `docs/TEST_RESULTS.md` records current evidence, not results borrowed from the lost revision. `docs/TRACEABILITY.md` maps each specification requirement. `PROGRESS.md` tracks remaining gates.
 
 ## GitHub
-Repository: https://github.com/hkese/TianJi (owner: **hkese**). The repository includes Android/Python CI and the observed local test evidence. The delivered APK targets Android 16 / API 36, with minimum Android 9 / API 28. Android 16 runtime verification is in progress; target SDK alone is not a runtime compatibility test.
+Repository: https://github.com/hkese/TianJi (owner: **hkese**). The repository includes Android/Python CI and the observed local test evidence. The delivered APK targets Android 16 / API 36, with minimum Android 9 / API 28. Version **0.2.1** has passed the complete offline UI journey and 3 Room/migration/Keystore device tests on an Android 16 / API 36 emulator. The journey checks a real open keyboard, Save visibility, system Back, persistence, English and dark mode. See `docs/ANDROID16.md`. Physical Samsung/One UI testing is still pending.
 
 ## License
 License choice pending owner decision. No open-source license grant is implied. See `LICENSE-PENDING.md`.

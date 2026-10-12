@@ -1,3 +1,16 @@
+# Android 16 update — 0.2.1
+
+- GitHub source: https://github.com/hkese/TianJi
+- Validated source commit: `b8b83c07816a28623bc5c14432f358908e21fd65`.
+- Kotlin/Python/lint/build job passed on GitHub (23 Kotlin tests, 20 Python tests).
+- Android 16 / API 36 emulator: 3 Room/migration/Keystore tests passed; 1 complete UI journey passed, including real keyboard visibility, Save position, three options, journal, persistence, replan, system Back, English and dark mode.
+- Final GitHub workflow, including screenshot collection, passed: https://github.com/hkese/TianJi/actions/runs/38227645836
+- Local 0.2.1 build/lint/signature passed. The certificate matches the delivered 0.2.0 APK. 64-bit native ELF and ZIP 16KB alignment checks pass; no 16KB-page runtime or physical-phone test is claimed.
+- APK: `android/app/build/outputs/apk/debug/app-debug.apk`, versionCode 3 / versionName 0.2.1, SHA-256 `56d521cafbb24eb56a9b163240f91e63ec710518a14ebec54a8a056ec1568723`.
+- Current evidence: `evidence/android16/`; details: `ANDROID16.md`.
+
+The following section preserves the earlier 0.2.0 validation record.
+
 # Verification — reconstructed revision 0.2.0
 Commands run in the provided environment; actual output files are preserved in `docs/evidence/` at handoff.
 

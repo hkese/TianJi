@@ -1,6 +1,6 @@
 # Requirement traceability
 
-Source paths are relative to this repository; Kotlin class files reside under each module’s `src/.../kotlin/com/tianji/` package. Current evidence is in TEST_RESULTS.md. Device and unit results are recorded separately; passing software checks do not validate traditional computation.
+Source paths are relative to this repository; Kotlin class files reside under each module’s `src/.../kotlin/com/tianji/` package. Current evidence is in TEST_RESULTS.md. Version 0.2.1 passes Android 16 / API 36 device tests, including real keyboard/Save positioning and system Back; evidence and actual screenshots are in docs/evidence/android16/. Device and unit results are recorded separately; passing software checks do not validate traditional computation.
 
 | ID | Priority | Code / evidence | Validation | Status and limits |
 |---|---|---|---|---|

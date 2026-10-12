@@ -1,0 +1,6 @@
+APK version 0.2.1, versionCode 3, target/compile API 36, min API 28.
+Development signer SHA-256 matches the previously delivered 0.2.0 APK:
+efdde0075fcd01ed92cf7f3d8efbe3ce600defa7cbe381f09f1a917e7794cf85
+zipalign -c -P 16 -v 4: passes.
+Both arm64-v8a and x86_64 graphics.path and datastore_shared_counter ELF PT_LOAD segments have 16384-byte alignment.
+These are packaging checks, not a claim of an executed 16KB-page emulator test.
