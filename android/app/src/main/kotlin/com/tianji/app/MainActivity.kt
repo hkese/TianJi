@@ -56,7 +56,7 @@ class MainActivity:ComponentActivity(){override fun onCreate(savedInstanceState:
     Box(Modifier.widthIn(max=760.dp).fillMaxSize()){
      NavHost(nav,"home"){
       composable("home"){HomeScreen(data,s.timezone,{nav.navigate("goals")},{nav.navigate("plan/$it")},{nav.navigate("chart")},{nav.navigate("guide")})}
-      composable("chart"){ChartScreen(s.timezone,{nav.navigate("goals")},{nav.navigate("guide")})}
+      composable("chart"){ChartScreen(s.timezone,data.charts,{vm.settings(s.copy(timezone=it))},{chart->vm.perform{vm.repo.saveChart(chart);vm.messages.send(if(s.english)"Chart saved offline" else "命盤已儲存喺手機")}}, {nav.navigate("goals")},{nav.navigate("guide")})}
       composable("goals"){GoalsScreen(data,s.timezone,{vm.perform{vm.repo.saveGoal(it)}},{vm.perform{vm.repo.deleteGoal(it)}},{vm.perform{vm.repo.saveMilestone(it)}},{nav.navigate("plan/$it")})}
       composable("plan/{goal}"){back->val goalId=back.arguments?.getString("goal")?:return@composable;PlannerScreen(goalId,data,s.timezone,{reason->vm.perform{vm.repo.newPlan(goalId,s.timezone,reason)}},{a->vm.perform{vm.repo.choose(a)}},{a->entry=a;nav.navigate("journal")},{g,a->aiReview=vm.payload(g,a) to a},{nav.popBackStack()})}
       composable("journal"){JournalScreen(data,s.timezone,entry,{j->vm.perform{vm.repo.journal(j)};entry=null},{entry=null})}
@@ -77,7 +77,7 @@ class MainActivity:ComponentActivity(){override fun onCreate(savedInstanceState:
  Surface(Modifier.fillMaxSize()){Box(Modifier.safeDrawingPadding()){Page(t("天機 · TianJi","TianJi Navigator"),t("由當下開始。","Start from here.")){
   Text(t("建立目標、揀一個實際步驟、記錄結果。資料預設只留在手機，毋須帳戶、GPS 或 AI。","Create a goal, choose a practical step and record the result. Data stays on your phone by default. No account, GPS or AI required."))
   CardBlock(t("先講清楚","Before you start")){
-   Text(t("離線規劃可以用；奇門排盤及吉時日曆尚未開放。傳統奇門及時空導航假說未經科學證實，現時建議不會預測命運或成功機率。","Offline planning works; Qimen charts and opportunity calendars are not available yet. Traditional Qimen and the navigation hypothesis are not scientifically established. Current suggestions do not predict destiny or success probabilities."))
+   Text(t("基本奇門排盤、中文傳統簡讀及行動規劃均可離線使用。奇門解讀是傳統參考，預測效果未經科學證實，不會給出成功機率或保證結果。","Basic Qimen charts, traditional readings and practical planning work offline. Predictive effectiveness is not scientifically established; no success probabilities or guaranteed outcomes are provided."))
   }
   LanguageSelector(settings.english){save(settings.copy(english=it))}
   TimeZoneSelector(zone){zone=it}

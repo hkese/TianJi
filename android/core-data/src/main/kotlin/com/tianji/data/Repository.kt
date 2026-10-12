@@ -23,6 +23,11 @@ private suspend fun put(v:ChartSnapshot)=dao.put(CRow(v.id,Codec.encodeToString(
 private suspend fun put(v:PlanVersion)=dao.put(PRow(v.id,v.goalId,Codec.encodeToString(v)))
 private suspend fun put(v:ActionCandidate)=dao.put(ARow(v.id,v.planVersionId,v.chartId,Codec.encodeToString(v)))
 private suspend fun put(v:JournalEntry)=dao.put(JRow(v.id,v.actionId,Codec.encodeToString(v)))
+suspend fun saveChart(c:Chart) {
+ val snapshot=ChartSnapshot(c.chart_id,c.input.instant_utc,c.input.timezone,c.ruleset.id,c.ruleset.version,core.canonical(c),c.input_hash)
+ verifySnapshot(snapshot)
+ put(snapshot)
+}
 suspend fun saveGoal(g:Goal) { validateGoal(g); db.withTransaction {
  // UPDATE existing rows rather than REPLACE: preserve children and history.
  val existing=dao.goals().firstOrNull{it.id==g.id}

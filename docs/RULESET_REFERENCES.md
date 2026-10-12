@@ -1,8 +1,35 @@
-# Ruleset gate
-Candidate: Shi Jia rotating-plate Chai Bu (時家轉盤拆補), ID shijia-zhuanpan-chaibu, version 0.0.0-blocked. This candidate is not implemented or independently verified.
+# 時家轉盤拆補：基本離線版的固定口徑
 
-Missing authoritative decisions: solar-term ephemeris and precision; midnight versus Zi-hour day boundary; calendrical epoch; Yin/Yang Dun and Ju tables; upper/middle/lower Yuan; leap handling; center hosting; duty-star/door placement; deity order; location/true-solar-time convention. Do not mix schools.
+2026-10-12：依使用者要求啟用最簡單的本機排盤及中文傳統解讀。這是有來源、有可重現計算的 `TRADITIONAL` 模式，並非 `VERIFIED` 科學預測。M2 原定的 100 個獨立人工金標盤仍未達成；軟體互相比對不能冒充人工金標。
 
-No reference supplied with the build specification establishes these conventions. Public implementations can be investigated but are not themselves adopted as authority. Independent fixture count **0/100**. Until the gate is satisfied, outputs carry BLOCKED with empty palaces and null Dun/Ju. The 3x3 UI is only a fixed Lo Shu position legend.
+## 原始來源與核對材料（先於實作選定）
 
-Required input: an authoritative source for the selected complete convention, plus independently produced worked charts with provenance, timestamps and timezone covering solar-term, midnight, leap and DST boundaries. Engine tests verify determinism and honest blocking, not traditional correctness or predictive validity.
+- R1：《煙波釣叟歌》，維基文庫公有領域原文，固定版本 oldid=1336835：https://zh.wikisource.org/w/index.php?title=煙波釣叟歌&oldid=1336835 。取九宮、奇儀順逆、值符加時干、值使順逆遁宮、八門傳統象意；不採古文中的必勝、必凶等斷言。原文的超神接氣不是本版拆補定元的來源。
+- R2：樂測公開的「時家轉盤拆補法」口徑：https://lexcn.net/guides/qimen-method 。實際交節、甲己符頭、天禽隨芮、中五寄坤二；只參考規則事實，未複製網站程式。
+- R3：天衍奇門公開逐步例盤：https://www.qimena.com/tc/wiki/qimen-calculation-rules/ ，2027-02-06 10:00 上海，陽遁五局。公布四柱、地盤、值符值使及八外宮完整表。該例真太陽時約 09:51，與本版民用時間 10:00 在相同日期及巳時，所以可比較；不表示其他真太陽時盤皆可直接比較。天禽寄干另外按固定規則測試，不能聲稱其公開表已列出寄干。
+- R4：6tail/lunar-java，MIT，固定依賴 `cn.6tail:lunar:1.7.7`，https://github.com/6tail/lunar-java 。只用其曆法／節氣；來源授權保留於 THIRD_PARTY_NOTICES。絕對時刻先轉固定 UTC+08:00 取交節及年月柱，不能把海外鐘面時間直接當北京時間查節氣。
+- R5：香港天文台 2026 年曆中氣時刻：https://www.hko.gov.hk/tc/gts/astron2026/files/2026SolarTerms24.pdf 。12 個官方時刻用於獨立曆法核對，不是奇門預測驗證。
+- R6：anthonylee1994/qimen，MIT，https://github.com/anthonylee1994/qimen 。僅作獨立程式輸出的交叉檢查，不移植其實作；其示例文件有矛盾、曆法用整日交節／午夜換日，故不能把不同口徑的時間列為金標。保留來源版本、生成腳本、排除口徑差異說明與實際比對結果。
+
+## 唯一啟用口徑
+
+規則 ID `shijia-zhuanpan-chaibu-civil-kun2`，版本 `1.0.0`。
+
+1. 以輸入 UTC instant 為唯一時刻；IANA 時區決定当地民用日期及時辰，包含歷史夏令時。無 GPS、無真太陽時、無經度修正。支援當地公曆 1900–2100 年。其他流派及曆法範圍不偷偷代算。
+2. 節氣以實際交節瞬間分界（lunar-java 精確到秒的計算值，並非保證天文真值精度）。距離交節兩分鐘內提示可能有曆表差異。立春換年、節令換月，以絕對時刻判斷。
+3. 日柱採當地 23:00 子初換日；時柱五鼠遁與該日一致。紀日以 2000-01-01 戊午作錨點，公曆日期用 java.time。DST 不存在時間拒絕，重複時間讓使用者選第一次或第二次，儲存精確 UTC。
+4. 當日日干支倒退至最近甲／己日作符頭：子午卯酉上元、寅申巳亥中元、辰戌丑未下元。按節氣／三元表拆補，不置閏、不按交節後每五天硬分元。
+5. 冬至含至夏至前陽遁；夏至含至冬至前陰遁。地盤戊己庚辛壬癸丁丙乙自局數宮起，按數字宮位陽順陰逆。
+6. 時旬首六甲遁戊己庚辛壬癸。旬首地盤原宮定值符本星、值使本門。原宫五記值符天禽、值使死門；計算旋轉時寄坤二。
+7. 八外宮環序 1,8,3,4,9,2,7,6。九星及其本宮地盤干整體旋轉，值符加地盤時干；甲時以本旬遁干替代。時干在五宮寄二。天禽／中宮干隨天芮轉；地盤中干保留於五宮並在二宮註明寄干。
+8. 值使從旬首原宮（五仍從五起）按時柱在旬中的步數，陽順陰逆走數字九宮；落五寄二。再沿固定八宮環旋轉整組門，不能把陰遁的門序反轉。
+9. 八神值符、螣蛇、太陰、六合、白虎、玄武、九地、九天，自值符落宮起陽順陰逆；本版陰陽均使用白虎／玄武，不混入勾陳／朱雀替名。
+10. 中五不另放門／神／旋轉星；天禽及寄干在天芮所在外宮明示。JSON 宮序固定 1..9；畫面洛書序 4,9,2 / 3,5,7 / 8,1,6。合併寄干以 `、` 分隔，首字是本干，第二字是中宮寄干。
+
+## 解讀界線
+
+離線規則只用實際盤中「時干在天盤所在宮」作事情觀察點，再依該宮八門提供簡化的傳統象意與可選小步。甲時用旬首遁干。不是完整占斷，不推算成功率、他人思想、精確事件或必然未來。所有解讀標 `TRADITIONAL`，顯示用到的宮、時干、門與來源；實用目標規劃仍是另外的 `HEURISTIC`。
+
+## 驗證進度
+
+已執行並通過 1 個公開完整例盤逐宮比對、12 個 HKO 中氣時刻（容許 90 秒）、351 個跨程式盤、全年 4,380 時刻的結構一致性，以及 DST／子初／閏日測試。351 個來自預先選定的 360 個時刻；9 個因對方整日交節與本版精確交節不同而預先排除，排除清單隨 fixture 保存。參考引擎固定 commit `77fa5605e3d7477e43e1fcc569e4c9594856afd1`；它與本版共享 6tail 曆法來源，不能當作獨立天文算法或 351 個人工金標。100 個獨立人工金標目標未完成，進階格局、置閏／飛盤與科學預測驗證未包含。

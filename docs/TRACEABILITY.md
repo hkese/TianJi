@@ -6,7 +6,7 @@ Source paths are relative to this repository; Kotlin class files reside under ea
 |---|---|---|---|---|
 | NAV-001 | P0 | `android/app/MainActivity.kt` | JourneyTest: device pass | Implemented; 1 tap default start; no account/GPS |
 | NAV-002 | P0 | `android/feature-home` | JourneyTest: device pass | Implemented; offline state and next action |
-| NAV-003 | P0 | `android/feature-chart` | CoreTest | BLOCKED symbols; accessible fixed position legend only |
+| NAV-003 | P0 | `android/feature-chart` | CoreTest | Basic calculated grid, palace details and traditional readings implemented; 0.3.0 device verification pending |
 | NAV-004 | P0 | `android/feature-goals; android/core-data` | RepositoryTest: device pass | Implemented; CRUD, deadlines, constraints, milestones, persistence |
 | NAV-005 | P0 | `android/core-domain/Planner` | PlannerTest: 7 tests pass | 3 alternatives; enforced minutes/deadline/zero cost; text constraints need user review |
 | NAV-006 | P0 | `android/feature-journal` | RepositoryTest: device pass | Implemented; linked action → plan + chart; unknown distinct |
@@ -16,12 +16,12 @@ Source paths are relative to this repository; Kotlin class files reside under ea
 | NAV-010 | P1 | `android/core-data; android/feature-settings` | quietHours unit test and Room/device tests pass | Implemented quiet reminder, atomic import/export, delete-all |
 | NAV-011 | P2 | `android/app/AppModel; research/registry` | Lab consent and approval tests pass | Explicit pseudonym export; executable model import DEFERRED |
 | NAV-012 | P0 | `android/core-ui/Evidence; chart and settings` | Source + unit checks; light/dark screenshots reviewed | Implemented labels/limitations; no VALIDATED prediction |
-| CORE-001 | P0 | `android/core-qimen; docs/RULESET_REFERENCES.md` | 0/100 independent reference charts | BLOCKED pending authoritative conventions and independent fixtures |
-| CORE-002 | P0 | `android/core-qimen; docs/RULESET_REFERENCES.md` | 0/100 independent reference charts | BLOCKED pending authoritative conventions and independent fixtures |
-| CORE-004 | P0 | `android/core-qimen; docs/RULESET_REFERENCES.md` | 0/100 independent reference charts | BLOCKED pending authoritative conventions and independent fixtures |
-| CORE-005 | P0 | `android/core-qimen; docs/RULESET_REFERENCES.md` | 0/100 independent reference charts | BLOCKED pending authoritative conventions and independent fixtures |
-| CORE-003 | P0 | `android/core-qimen/QimenCore` | CoreTest: 8 tests pass | Canonical deterministic blocked snapshot, hash and version; not a real chart |
-| CORE-006 | P1 | `android/core-qimen/QimenCore` | CoreTest batch replay pass | Batch/cache/variant hooks implemented; actual ruleset comparisons await rulesets |
+| CORE-001 | P0 | `android/core-qimen/ShiJiaChaiBu; docs/RULESET_REFERENCES.md` | TraditionalCoreTest: published chart, 351 cross-engine cases, 12 HKO terms, DST and 23:00 boundaries | Implemented fixed basic convention; limited independent coverage; TRADITIONAL status |
+| CORE-002 | P0 | `android/core-qimen/ShiJiaChaiBu; docs/RULESET_REFERENCES.md` | TraditionalCoreTest: published chart, 351 cross-engine cases, 12 HKO terms, DST and 23:00 boundaries | Implemented fixed basic convention; limited independent coverage; TRADITIONAL status |
+| CORE-004 | P0 | `android/core-qimen/ShiJiaChaiBu; docs/RULESET_REFERENCES.md` | TraditionalCoreTest: published chart, 351 cross-engine cases, 12 HKO terms, DST and 23:00 boundaries | Implemented fixed basic convention; limited independent coverage; TRADITIONAL status |
+| CORE-005 | P0 | `android/core-qimen; contracts/fixtures` | 1 published worked example; 351 cross-engine regressions are not human goldens | INCOMPLETE: 100 independent human-golden target not met |
+| CORE-003 | P0 | `android/core-qimen/QimenCore` | CoreTest: 8 tests pass | Canonical deterministic traditional chart plus legacy blocked snapshots; independent chart and cross-language tests |
+| CORE-006 | P1 | `android/core-qimen/QimenCore` | CoreTest batch replay pass | Batch/cache/variant hooks implemented; new and legacy rulesets retained; saved historical replay added |
 | LAB-001 | P0 | `research/tianji_research/data.py` | CSV, consent, immutable hash tests pass | Implemented explicit JSONL/CSV import |
 | LAB-002 | P0 | `research/tianji_research/data.py` | position/version and leakage tests pass | Deterministic position-aware tokenizer; fictional tokens clearly marked |
 | LAB-003 | P0 | `research/tianji_research/experiment.py` | baseline demo + identical protocol test pass | A ordinary time/context/action/history availability |

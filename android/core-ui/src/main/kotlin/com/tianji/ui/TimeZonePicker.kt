@@ -34,7 +34,7 @@ fun zoneCity(id: String, english: Boolean): String {
 }
 
 @Composable
-fun TimeZoneSelector(zone: String, onSelect: (String) -> Unit) {
+fun TimeZoneSelector(zone: String, referenceInstant: Instant = Instant.now(), onSelect: (String) -> Unit) {
     var opened by rememberSaveable { mutableStateOf(false) }
     val english = English.current
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -42,7 +42,7 @@ fun TimeZoneSelector(zone: String, onSelect: (String) -> Unit) {
         OutlinedButton(onClick = { opened = true }, modifier = Modifier.fillMaxWidth().testTag("timezone-selector")) {
             Column(Modifier.weight(1f).padding(vertical = 6.dp)) {
                 Text(zoneCity(zone, english))
-                Text(TimeZones.offset(zone, Instant.now()), style = MaterialTheme.typography.bodySmall)
+                Text(TimeZones.offset(zone, referenceInstant), style = MaterialTheme.typography.bodySmall)
             }
             Text(t("更改", "Change"))
         }

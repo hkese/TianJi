@@ -39,6 +39,7 @@
         "status": {
           "enum": [
             "BLOCKED",
+            "TRADITIONAL",
             "VERIFIED",
             "SYNTHETIC"
           ],

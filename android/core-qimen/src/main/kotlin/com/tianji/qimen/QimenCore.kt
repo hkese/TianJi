@@ -22,9 +22,9 @@ object UnverifiedShiJia : QimenRuleset {
 }
 val Canonical = Json { encodeDefaults=true; explicitNulls=true }
 fun sha(s:String)=MessageDigest.getInstance("SHA-256").digest(s.toByteArray(Charsets.UTF_8)).joinToString(""){"%02x".format(it)}
-class QimenCore(private val rulesets: List<QimenRuleset> = listOf(UnverifiedShiJia)) {
+class QimenCore(private val rulesets: List<QimenRuleset> = listOf(ShiJiaChaiBu, UnverifiedShiJia)) {
  private val cache=object: LinkedHashMap<String,Chart>(128,0.75f,true){ override fun removeEldestEntry(e:MutableMap.MutableEntry<String,Chart>?)=size>128 }
- @Synchronized fun calculateChart(instant:Instant, timezone:String, rulesetId:String=UnverifiedShiJia.metadata.id, latitude:Double?=null,longitude:Double?=null):Chart {
+ @Synchronized fun calculateChart(instant:Instant, timezone:String, rulesetId:String=rulesets.first().metadata.id, latitude:Double?=null,longitude:Double?=null):Chart {
   val input=Input(instant.toString(),timezone,latitude,longitude); val key=Canonical.encodeToString(input)+rulesetId
   return cache.getOrPut(key){ rulesets.single{it.metadata.id==rulesetId}.calculate(input) }
  }

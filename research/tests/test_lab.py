@@ -148,3 +148,20 @@ def test_lockbox_rejects_invalid_probability(events, tmp_path):
     payload = {"event_id": str(events[0].event_id), "action_at_utc": (now + timedelta(hours=1)).isoformat(), "model_id": "test", "dataset_hash": "a"*64, "seed": 42, "prediction": 1.2, "outcome": None}
     with pytest.raises(ValueError):
         lock_prediction(tmp_path, payload, now)
+
+
+def test_real_traditional_chart_contract_and_tokens():
+    import jsonschema
+    from tianji_research.data import tokenize
+    root = Path(__file__).parents[2] / "contracts"
+    raw = json.loads((root / "fixtures/traditional-chart.json").read_text())
+    chart = Chart.model_validate(raw)
+    jsonschema.validate(raw, json.loads((root / "chart.schema.json").read_text()))
+    assert chart.status == "TRADITIONAL"
+    assert chart.ju_number == 5 and chart.dun_type == "陽遁"
+    assert chart.palaces[0].star == "天柱"
+    assert chart.palaces[5].star == "天芮、天禽"
+    assert "NO_SCIENTIFIC_VALIDATION" in chart.warnings
+    tokens = tokenize(chart)
+    assert tokens["qimen:availability"] == "TRADITIONAL"
+    assert tokens["qimen:shijia-zhuanpan-chaibu-civil-kun2@1.0.0:palace:6:heaven_stem"] == "丁、戊"

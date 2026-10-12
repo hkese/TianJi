@@ -38,7 +38,7 @@ class Palace(Strict):
 class Chart(Strict):
     schema_version: Literal[1] = 1
     chart_id: UUID
-    status: Literal["BLOCKED", "VERIFIED", "SYNTHETIC"]
+    status: Literal["BLOCKED", "TRADITIONAL", "VERIFIED", "SYNTHETIC"]
     input: ChartInput
     ruleset: Ruleset
     calendar: dict[str, str]

@@ -18,7 +18,8 @@ import kotlinx.coroutines.flow.Flow
 @Insert(onConflict=OnConflictStrategy.REPLACE) suspend fun put(row:MRow)
 @Query("DELETE FROM milestones") suspend fun clearmilestones()
 @Query("SELECT * FROM charts") suspend fun charts():List<CRow>
-@Insert(onConflict=OnConflictStrategy.REPLACE) suspend fun put(row:CRow)
+// Chart snapshots are immutable. REPLACE could cascade-delete linked actions.
+@Insert(onConflict=OnConflictStrategy.IGNORE) suspend fun put(row:CRow)
 @Query("DELETE FROM charts") suspend fun clearcharts()
 @Query("SELECT * FROM plans") suspend fun plans():List<PRow>
 @Insert(onConflict=OnConflictStrategy.REPLACE) suspend fun put(row:PRow)

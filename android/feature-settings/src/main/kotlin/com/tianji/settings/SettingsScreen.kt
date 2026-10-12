@@ -60,7 +60,7 @@ import com.tianji.ui.*
   }
   CardBlock(t("證據與限制","Evidence and limitations")){
    Text(t("實用規劃：按目標及限制提供步驟，並非預測。傳統解讀：不代表科學驗證。研究結果：只供探索。實證估計：必須先有獨立驗證；目前沒有這類預測。","Heuristic planning offers steps based on goals and constraints, not predictions. Traditional interpretation is not scientific validation. Research results are exploratory. Validated estimates require independent evidence; none are currently available."))
-   Text(t("奇門排盤及吉時日曆尚未開放（已核對參考盤 0／100）。模型匯入及進階研究模型亦未啟用。","Qimen and opportunity calendars are unavailable (0/100 reference charts checked). Model import and advanced research models are not enabled."))
+   Text(t("基本拆補轉盤及傳統簡讀已可離線使用。100 個獨立人工金標仍未完成；吉時日曆、模型匯入及進階研究模型未啟用。","Basic Chai Bu charts and traditional readings work offline. The 100 human-golden target remains incomplete. Opportunity calendars, model import and advanced research models are not enabled."))
   }
  }
  if(deleting)AlertDialog(onDismissRequest={deleting=false},title={Text(t("刪除所有資料？","Delete all data?"))},text={Text(t("會刪除目標、計劃、日誌、同意及 API 金鑰。已匯出的檔案不受影響。","Deletes goals, plans, journal, consents and API key. Previously exported files remain under your control."))},confirmButton={TextButton(onClick={onDelete();deleting=false}){Text(t("確認刪除","Delete"))}},dismissButton={TextButton(onClick={deleting=false}){Text(t("取消","Cancel"))}})

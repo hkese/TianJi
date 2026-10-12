@@ -1,3 +1,13 @@
+# 0.3.0 implementation plan — requested basic offline calculation
+1. Select one documented convention, primary traditional/calendrical references and independently published comparison charts. **Complete.**
+2. Implement native deterministic Core, transparent basic Chinese reading, accessible date/time/city pickers and saved chart replay. **Implemented.**
+3. Run independent chart/calendar checks, contract/backup tests and Android 16 device journey; fix observed failures. **In progress.**
+4. Publish source to hkese/TianJi and deliver a same-signature debug APK with honest validation limits. **Pending.**
+
+Full M2 verified-core acceptance still needs 100 independent human goldens; the requested basic mode is explicitly `TRADITIONAL`, not `VERIFIED`. One public worked example, cross-engine regression cases and official solar-term checks are tracked separately. No test count is presented as proof of predictive efficacy.
+
+---
+
 # Implementation and recovery plan
 1. M0: Restore deterministic source, pinned Gradle modules and contracts. Save a source checkpoint.
 2. M1: Offline onboarding, goal/milestone editing, constrained alternative plans, linked journal, immutable replan history and atomic backup round trip.
