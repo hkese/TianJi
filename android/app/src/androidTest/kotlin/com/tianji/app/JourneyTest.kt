@@ -148,24 +148,18 @@ class JourneyTest {
             .performTextInput("Updated after observation")
         compose.onNodeWithText("重新規劃，保留歷史").performScrollTo().performClick()
         awaitText("Updated after observation")
-        // Dismiss the IME first, as on a phone, then navigate back.
-        val keyboardVisible = compose.runOnIdle {
-            ViewCompat.getRootWindowInsets(compose.activity.window.decorView)
-                ?.isVisible(WindowInsetsCompat.Type.ime()) == true
-        }
-        if (keyboardVisible) {
-            InstrumentationRegistry.getInstrumentation().uiAutomation
-                .executeShellCommand("input keyevent KEYCODE_BACK").close()
-            compose.waitUntil(120000) {
-                compose.runOnIdle {
-                    ViewCompat.getRootWindowInsets(compose.activity.window.decorView)
-                        ?.isVisible(WindowInsetsCompat.Type.ime()) != true
-                }
+        // Replan dismisses focus and the IME. Wait for that product behaviour before Back.
+        compose.waitUntil(120000) {
+            compose.runOnIdle {
+                ViewCompat.getRootWindowInsets(compose.activity.window.decorView)
+                    ?.isVisible(WindowInsetsCompat.Type.ime()) != true
             }
         }
-        // Exercise Android's system back dispatch after a replan.
-        InstrumentationRegistry.getInstrumentation().uiAutomation
-            .executeShellCommand("input keyevent KEYCODE_BACK").close()
+        // Drain the shell command so the event is delivered before awaiting the destination.
+        android.os.ParcelFileDescriptor.AutoCloseInputStream(
+            InstrumentationRegistry.getInstrumentation().uiAutomation
+                .executeShellCommand("input keyevent KEYCODE_BACK")
+        ).use { it.readBytes() }
         awaitText("新增目標")
 
         compose.onNodeWithTag("tab-settings").performClick()

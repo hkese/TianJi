@@ -60,8 +60,7 @@ jobs:
             adb shell settings put secure show_ime_with_hard_keyboard 1
             adb shell svc wifi disable
             adb shell svc data disable
-            ./gradlew :android:core-data:connectedDebugAndroidTest :android:app:connectedDebugAndroidTest
-            adb pull /sdcard/Pictures/TianJiTests android16-screenshots
+            ./gradlew :android:core-data:connectedDebugAndroidTest :android:app:connectedDebugAndroidTest; result=$?; adb pull /sdcard/Pictures/TianJiTests android16-screenshots; exit $result
       - uses: actions/upload-artifact@v4
         if: always()
         with:

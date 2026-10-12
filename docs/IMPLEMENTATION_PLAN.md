@@ -18,3 +18,13 @@ Full M2 verified-core acceptance still needs 100 independent human goldens; the 
 7. GitHub: complete. Owner created hkese/TianJi; source and CI were published through the connected account. Android 16 device verification also passed; see docs/ANDROID16.md.
 
 Recovery incident: automated scratch cleanup removed the original source after the first build. The installed 35,398,738-byte APK was recovered from the still-running test emulator and saved. Its SHA-256 is cce7d837531fa7184b84eeb11d048a56e442f19b9ce40cfdae6041b5de7cd545. Reconstructed source is a new revision and must be tested separately. Earlier 20 Kotlin/20 Python test results cannot substitute for tests of this revision.
+
+## 0.4 user-requested continuation
+
+1. Diagnose disconnected goal/planner/chart flow — completed.
+2. Implement frozen goal context and 12 purpose-specific offline recipes (three per purpose), actual chart door/star/deity/direction, selected next step and outcome/replan loop — implemented.
+3. Add reviewed manual ChatGPT/Codex handoff with full chart/context and concrete-action prompt; no automatic transmission or response import — implemented.
+4. Verify backward-compatible backup decoding, exact chart linkage, constrained time/cost, prompt privacy, Android 16 offline clipboard/user journey, build/lint/APK signing — in progress.
+5. Publish source and a signed installable debug APK; preserve signing material privately for future upgrades — pending evidence.
+
+Installation recovery choice: prior private debug signer was lost with the temporary workspace. Keep old app/data intact; new daily-navigation package installs alongside it. Old JSON backups are accepted by the new app. This is an explicit package transition, not a same-signature upgrade.

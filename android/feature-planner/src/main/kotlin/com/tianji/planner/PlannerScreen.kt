@@ -1,6 +1,7 @@
 package com.tianji.planner
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -8,6 +9,9 @@ import com.tianji.domain.*
 import com.tianji.qimen.*
 import com.tianji.ui.*
 import java.time.Instant
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import kotlinx.coroutines.delay
 
 @Composable fun PlannerScreen(goalId:String,data:Backup,zone:String,onNew:(String)->Unit,onChoose:(ActionCandidate)->Unit,onJournal:(ActionCandidate)->Unit,onAi:(Goal,List<ActionCandidate>)->Unit,onBack:()->Unit){
  val goal=data.goals.firstOrNull{it.id==goalId}?:return
@@ -20,28 +24,38 @@ import java.time.Instant
  val snapshot=data.charts.firstOrNull{it.id==actions.firstOrNull()?.chartId}
  val chart=remember(snapshot){snapshot?.let{runCatching{Codec.decodeFromString<Chart>(it.chartJson)}.getOrNull()}}
  val chosen=actions.firstOrNull{it.selected}
- val expired=actions.firstOrNull()?.let{Instant.parse(it.plannedEnd)<Instant.now()}?:false
+ val focusManager=LocalFocusManager.current
+ val keyboard=LocalSoftwareKeyboardController.current
+ var clock by remember{mutableStateOf(Instant.now())}
+ LaunchedEffect(Unit){while(true){clock=Instant.now();delay(30_000)}}
+ val expired=actions.firstOrNull()?.let{Instant.parse(it.plannedEnd)<clock}?:false
+ val scroll=rememberScrollState()
+ val canPlan=goal.deadline?.let{Instant.parse(it)>=clock.plusSeconds(300)}?:true
+ LaunchedEffect(chosen?.id){if(chosen!=null)scroll.animateScrollTo(0)}
  val initialReason=t("首次計劃","Initial plan")
- Page(t("下一步導航","Your next step"),goal.title){
+ Page(t("下一步導航","Your next step"),goal.title,scrollState=scroll){
   TextButton(onClick=onBack){Text(t("返回目標","Back to goals"))}
+  if(!canPlan)ErrorText(t("限期剩餘不足五分鐘。請返回目標，編輯限期後再規劃。","Less than five minutes remain. Go back and edit the deadline before planning."))
   if(plan==null){
    CardBlock(t("由你想做嘅事開始","Start from your purpose")){
     Text(t("想達成：","Goal: ")+goal.title)
     Text(t("完成標準：","Success criteria: ")+goal.successCriteria)
     Text(t("按下面按鈕，App 會用現在時間起盤，將三種做法、盤面方位同實際步驟放埋一齊。揀一個便可。","The button calculates a chart for now and links it to three practical approaches, symbolic directions and steps. Choose one."))
     Text(t("每次 ${goal.constraints.minutes} 分鐘 · 時區：","${goal.constraints.minutes} minutes · Time zone: ")+zoneCity(zone,English.current))
-    ActionButton(t("產生三個方案","Generate three options")){onNew(initialReason)}
+    ActionButton(t("產生三個方案","Generate three options"),enabled=canPlan){onNew(initialReason)}
    }
   } else {
    if(expired)CardBlock(t("原定時段已過","The original window has ended")){
     Text(t("下面保留當時的盤同建議。要而家行動，先重新起盤；舊方位唔會自動當成現在方位。","The saved chart and advice remain as history. Refresh before acting now; old directions are not current readings."))
     val refresh=t("原時段已過，按現在情況重新規劃","Original window ended; refresh for now")
-    ActionButton(t("用現在時間重新規劃","Refresh for now")){shown=null;onNew(refresh)}
+    ActionButton(t("用現在時間重新規劃","Refresh for now"),enabled=canPlan){shown=null;onNew(refresh)}
    }
    chosen?.guide?.let{guide->
     CardBlock(t("你已揀好 · 即刻做呢一步","Your choice · start here")){
      Text(if(English.current)guide.titleEn else chosen.title,style=MaterialTheme.typography.titleMedium)
      Text(if(English.current)guide.stepsEn.first() else guide.stepsZh.first())
+     Text(displayTime(chosen.plannedStart,snapshot?.timezone?:zone)+" → "+displayTime(chosen.plannedEnd,snapshot?.timezone?:zone))
+     chart?.let{Navigator.palace(it,chosen)}?.let{p->Text(t("可選方向：${p.direction}（${p.door}）","Optional direction: ${p.direction} (${p.door})"))}
      Text(t("做完點算：","Check: ")+(if(English.current)guide.doneEn else guide.doneZh))
      val previous=data.journal.lastOrNull{it.actionId==chosen.id}
      if(previous!=null)Text(t("已記錄結果，可按新觀察重新規劃。","Outcome saved. Replan from your new observation."))
@@ -88,7 +102,7 @@ import java.time.Instant
      if(a.selected && guide==null)OutlinedButton(onClick={onJournal(a)}){Text(t("記錄結果","Record outcome"))}
     }
    }
-   if(snapshot!=null && actions.isNotEmpty())CardBlock(t("想分析得更貼身？","Want a more personal analysis?")){
+   if(snapshot!=null && chart?.status=="TRADITIONAL" && actions.isNotEmpty())CardBlock(t("想分析得更貼身？","Want a more personal analysis?")){
     Text(t("將目標、限制、呢個完整盤同三個方案，交畀 ChatGPT／Codex 深入分析。你先檢視再複製，毋須喺 App 填 API 金鑰。","Review and copy your goal, constraints, this complete chart and the three options into ChatGPT or Codex. No API key is needed for this manual handoff."))
     ActionButton(t("交畀 ChatGPT／Codex 分析","Analyze with ChatGPT / Codex")){
      handoff=AnalysisPrompt.build(goal,plan,actions,snapshot,data.journal)
@@ -98,7 +112,7 @@ import java.time.Instant
    Text(t("計劃版本：","Plan version: ")+plan.version+" · "+displayTime(plan.createdAt,zone));Text(plan.reason)
   }
   Field(reason,t("新觀察／改計劃原因","New observation / reason to replan"),{reason=it},single=false)
-  ActionButton(t("重新規劃，保留歷史","Replan and preserve history"),enabled=reason.isNotBlank()){onNew(reason);shown=null;reason=""}
+  ActionButton(t("重新規劃，保留歷史","Replan and preserve history"),enabled=reason.isNotBlank() && canPlan){focusManager.clearFocus(force=true);keyboard?.hide();onNew(reason);shown=null;reason=""}
   if(plans.isNotEmpty())CardBlock(t("歷史版本","Plan history")){plans.forEach{p->TextButton(onClick={shown=p.id}){Text(displayTime(p.createdAt,zone)+" · "+p.reason)}}}
  }
  handoff?.let{AnalysisHandoff(it){handoff=null}}

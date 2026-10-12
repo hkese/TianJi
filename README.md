@@ -1,3 +1,5 @@
+> 0.4 行動導航更新：由目的產生三個有步驟的方案，連同實際盤面方位，並可複製完整提示詞交畀 ChatGPT／Codex。新版與舊版並排安裝，先保留舊 App。詳見 [繁體中文使用教學](docs/USER_GUIDE_ZH.md)。目前驗證狀態見 [PROGRESS.md](PROGRESS.md)。
+
 # TianJi Navigator
 Native, offline-first Android planning and reflection, plus a separate optional Python Research Lab. Traditional Chinese (Hong Kong), with an English switch and dark mode.
 

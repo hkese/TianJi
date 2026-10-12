@@ -23,8 +23,8 @@ val English=compositionLocalOf{false}
  val colors=if(dark)darkColorScheme(primary=Color(0xFF9CD4BC),onPrimary=Color(0xFF103D30),primaryContainer=Color(0xFF285342),onPrimaryContainer=Color(0xFFBCEED5),secondary=Color(0xFFB5CCBC),onSecondary=Color(0xFF21372C),secondaryContainer=Color(0xFF354F40),onSecondaryContainer=Color(0xFFD4E8D9),onSurface=Color(0xFFE1E8DE),onSurfaceVariant=Color(0xFFBECABD),outline=Color(0xFF88958B),background=Color(0xFF10201A),surface=Color(0xFF15281F),surfaceContainerLow=Color(0xFF1B3026),surfaceContainer=Color(0xFF223A2E),surfaceContainerHigh=Color(0xFF2A4036),surfaceContainerHighest=Color(0xFF31493B)) else lightColorScheme(primary=Color(0xFF1A6356),background=Color(0xFFF8F7F2),surface=Color(0xFFF8F7F2),surfaceContainerLow=Color(0xFFF0F2EB),surfaceContainer=Color(0xFFE8EDE3),surfaceContainerHigh=Color(0xFFE2E8DC),surfaceContainerHighest=Color(0xFFDDE5D7),onSurfaceVariant=Color(0xFF4D5D52),onSecondaryContainer=Color(0xFF163F34),secondaryContainer=Color(0xFFDCEBDD))
  CompositionLocalProvider(English provides s.english){MaterialTheme(colorScheme=colors,typography=Typography(),content=content)}
 }
-@Composable fun Page(title:String,subtitle:String="",content:@Composable ColumnScope.()->Unit){
- Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal=20.dp,vertical=24.dp),verticalArrangement=Arrangement.spacedBy(18.dp)){
+@Composable fun Page(title:String,subtitle:String="",scrollState:ScrollState=rememberScrollState(),content:@Composable ColumnScope.()->Unit){
+ Column(Modifier.fillMaxSize().verticalScroll(scrollState).padding(horizontal=20.dp,vertical=24.dp),verticalArrangement=Arrangement.spacedBy(18.dp)){
   Text(title,style=MaterialTheme.typography.headlineLarge)
   if(subtitle.isNotEmpty())Text(subtitle,color=MaterialTheme.colorScheme.onSurfaceVariant,style=MaterialTheme.typography.bodyMedium)
   content();Spacer(Modifier.height(32.dp))
