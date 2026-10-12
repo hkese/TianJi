@@ -2,7 +2,7 @@ plugins { id("com.android.application"); kotlin("android"); kotlin("plugin.seria
 android {
  namespace = "com.tianji.app"
  compileSdk = 36
- defaultConfig { minSdk = 28; testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"; applicationId = "com.tianji.navigator"; targetSdk = 36; versionCode = 2; versionName = "0.2.0-recovery" }
+ defaultConfig { minSdk = 28; testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"; applicationId = "com.tianji.navigator"; targetSdk = 36; versionCode = 3; versionName = "0.2.1" }
  compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }
  buildFeatures { compose = true }
 }

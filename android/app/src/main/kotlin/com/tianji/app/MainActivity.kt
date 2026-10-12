@@ -3,6 +3,10 @@ import android.Manifest
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.enableEdgeToEdge
+import androidx.activity.SystemBarStyle
+import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.graphics.luminance
 import androidx.activity.compose.setContent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -29,10 +33,16 @@ import com.tianji.journal.*
 import com.tianji.settings.*
 import org.koin.core.context.GlobalContext
 import java.time.ZoneId
-class MainActivity:ComponentActivity(){override fun onCreate(savedInstanceState:Bundle?){super.onCreate(savedInstanceState);val model=ViewModelProvider(this,object:ViewModelProvider.Factory{override fun <T:ViewModel> create(modelClass:Class<T>):T{@Suppress("UNCHECKED_CAST")return AppModel(application,GlobalContext.get().get(),GlobalContext.get().get(),GlobalContext.get().get()) as T}})[AppModel::class.java];setContent{TianJiApp(model)}}}
+class MainActivity:ComponentActivity(){override fun onCreate(savedInstanceState:Bundle?){super.onCreate(savedInstanceState);enableEdgeToEdge();val model=ViewModelProvider(this,object:ViewModelProvider.Factory{override fun <T:ViewModel> create(modelClass:Class<T>):T{@Suppress("UNCHECKED_CAST")return AppModel(application,GlobalContext.get().get(),GlobalContext.get().get(),GlobalContext.get().get()) as T}})[AppModel::class.java];setContent{TianJiApp(model)}}}
 @Composable fun TianJiApp(vm:AppModel){
  val state by vm.state.collectAsStateWithLifecycle();val provider by vm.provider.collectAsStateWithLifecycle();val busy by vm.busy.collectAsStateWithLifecycle();val s=state.settings;val data=state.data
  Theme(s){
+  val view=LocalView.current
+  val dark=MaterialTheme.colorScheme.background.luminance()<0.5f
+  SideEffect{(view.context as? ComponentActivity)?.enableEdgeToEdge(
+   statusBarStyle=SystemBarStyle.auto(android.graphics.Color.TRANSPARENT,android.graphics.Color.TRANSPARENT){dark},
+   navigationBarStyle=SystemBarStyle.auto(android.graphics.Color.rgb(248,247,242),android.graphics.Color.rgb(16,32,26)){dark}
+  )}
   if(!state.loaded){Surface(Modifier.fillMaxSize()){Box(contentAlignment=Alignment.Center){CircularProgressIndicator()}};return@Theme}
   if(!s.onboarded){Onboarding(s,vm::settings);return@Theme}
   val nav=rememberNavController();val stack by nav.currentBackStackEntryAsState();val route=stack?.destination?.route?:"home";val snack=remember{SnackbarHostState()};var entry by remember{mutableStateOf<ActionCandidate?>(null)};var aiReview by remember{mutableStateOf<Pair<String,List<ActionCandidate>>?>(null)};var research by remember{mutableStateOf(false)};var importConfirm by remember{mutableStateOf<android.net.Uri?>(null)}
@@ -41,8 +51,8 @@ class MainActivity:ComponentActivity(){override fun onCreate(savedInstanceState:
   val restore=rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()){importConfirm=it}
   val notification=rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()){granted->vm.settings(s.copy(reminders=granted))}
   LaunchedEffect(Unit){for(message in vm.messages)snack.showSnackbar(message)}
-  Scaffold(snackbarHost={SnackbarHost(snack)},bottomBar={NavigationBar{val tabs=listOf(Triple("home",t("首頁","Home"),Icons.Default.Home),Triple("chart",t("奇門","Chart"),Icons.Default.DateRange),Triple("goals",t("目標","Goals"),Icons.Default.List),Triple("journal",t("日誌","Journal"),Icons.Default.Edit),Triple("settings",t("設定","Settings"),Icons.Default.Settings));tabs.forEach{(id,label,icon)->NavigationBarItem(modifier=Modifier.testTag("tab-$id"),selected=route==id || (id=="goals" && route=="plan/{goal}"),onClick={nav.navigate(id){popUpTo("home");launchSingleTop=true}},icon={Icon(icon,contentDescription=label)},label={Text(label)})}}}){padding->
-   Box(Modifier.fillMaxSize().padding(padding),contentAlignment=Alignment.TopCenter){
+  Scaffold(modifier=Modifier.imePadding(),contentWindowInsets=WindowInsets.safeDrawing,snackbarHost={SnackbarHost(snack)},bottomBar={NavigationBar{val tabs=listOf(Triple("home",t("首頁","Home"),Icons.Default.Home),Triple("chart",t("奇門","Chart"),Icons.Default.DateRange),Triple("goals",t("目標","Goals"),Icons.Default.List),Triple("journal",t("日誌","Journal"),Icons.Default.Edit),Triple("settings",t("設定","Settings"),Icons.Default.Settings));tabs.forEach{(id,label,icon)->NavigationBarItem(modifier=Modifier.testTag("tab-$id"),selected=route==id || (id=="goals" && route=="plan/{goal}"),onClick={nav.navigate(id){popUpTo("home");launchSingleTop=true}},icon={Icon(icon,contentDescription=label)},label={Text(label)})}}}){padding->
+   Box(Modifier.fillMaxSize().padding(padding).consumeWindowInsets(padding),contentAlignment=Alignment.TopCenter){
     Box(Modifier.widthIn(max=760.dp).fillMaxSize()){
      NavHost(nav,"home"){
       composable("home"){HomeScreen(data,s.timezone,{nav.navigate("goals")},{nav.navigate("plan/$it")},{nav.navigate("chart")})}
@@ -61,6 +71,6 @@ class MainActivity:ComponentActivity(){override fun onCreate(savedInstanceState:
   importConfirm?.let{uri->AlertDialog(onDismissRequest={importConfirm=null},title={Text(t("取代目前資料？","Replace current records?"))},text={Text(t("只有完整驗證成功後才會取代資料。建議先匯出目前備份。","Records are replaced only after complete validation. Export a backup first if needed."))},confirmButton={TextButton(onClick={vm.restore(uri);importConfirm=null}){Text(t("匯入","Import"))}},dismissButton={TextButton(onClick={importConfirm=null}){Text(t("取消","Cancel"))}})}
  }
 }
-@Composable fun Onboarding(settings:Settings,save:(Settings)->Unit){var zone by remember{mutableStateOf(settings.timezone)};Surface(Modifier.fillMaxSize()){Page(t("天機 · TianJi","TianJi Navigator"),t("由當下開始。","Start from here.")){
+@Composable fun Onboarding(settings:Settings,save:(Settings)->Unit){var zone by remember{mutableStateOf(settings.timezone)};Surface(Modifier.fillMaxSize()){Box(Modifier.safeDrawingPadding()){Page(t("天機 · TianJi","TianJi Navigator"),t("由當下開始。","Start from here.")){
  Text(t("你的目標、方案及日誌預設只保存在手機，毋須帳戶、GPS 或 AI。","Your goals, plans and journal stay on your phone by default. No account, GPS or AI required."));CardBlock(t("先理解證據","Understand the evidence")){Text(t("奇門及時空導航假說未經科學證實。現時排盤待核實，實用規劃建議不是已驗證預測。","Qimen and the navigation hypothesis are not scientifically established. Chart calculation awaits verification; planning advice is not a validated prediction."))};Row{Text("English",Modifier.weight(1f));Switch(settings.english,{save(settings.copy(english=it))})};Field(zone,t("IANA 時區","IANA timezone"),{zone=it});ActionButton(t("開始離線使用","Start offline"),enabled=runCatching{ZoneId.of(zone)}.isSuccess){save(settings.copy(onboarded=true,timezone=zone))}
-}}}
+}}}}
