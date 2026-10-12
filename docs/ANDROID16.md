@@ -15,7 +15,9 @@ Local build, instrumentation compilation, lint and debug signature verification 
 
 **All checks passed** for source commit `b8b83c07816a28623bc5c14432f358908e21fd65`: Kotlin/Python/lint/build CI, 3 Room/migration/Keystore tests and 1 complete Android 16 UI journey (11.443 seconds for the suite). The final workflow also collected all five screenshots successfully. JUnit XML and the screenshots are committed under `docs/evidence/android16/`.
 
-CI run: https://github.com/hkese/TianJi/actions/runs/38227645836 No physical Samsung/One UI validation or 16KB-page runtime test has been performed. Results will be recorded after the device jobs finish.
+CI run: https://github.com/hkese/TianJi/actions/runs/38227645836
+
+No physical Samsung/One UI validation or 16KB-page runtime test has been performed.
 
 ## Primary references
 - https://developer.android.com/about/versions/16/behavior-changes-16
