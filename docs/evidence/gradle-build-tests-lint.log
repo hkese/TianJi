@@ -1,0 +1,557 @@
+Picked up JAVA_TOOL_OPTIONS: -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.13/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :android:app:preBuild UP-TO-DATE
+> Task :android:app:preDebugBuild UP-TO-DATE
+> Task :android:app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :android:core-domain:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :android:core-domain:compileKotlin UP-TO-DATE
+> Task :android:core-domain:compileJava NO-SOURCE
+> Task :android:core-domain:processResources NO-SOURCE
+> Task :android:core-domain:classes UP-TO-DATE
+> Task :android:core-domain:jar UP-TO-DATE
+> Task :android:core-qimen:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :android:core-qimen:compileKotlin UP-TO-DATE
+> Task :android:core-qimen:compileJava NO-SOURCE
+> Task :android:core-qimen:processResources NO-SOURCE
+> Task :android:core-qimen:classes UP-TO-DATE
+> Task :android:core-qimen:jar UP-TO-DATE
+> Task :android:app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :android:core-data:preBuild UP-TO-DATE
+> Task :android:core-data:preDebugBuild UP-TO-DATE
+> Task :android:core-data:writeDebugAarMetadata UP-TO-DATE
+> Task :android:core-ui:preBuild UP-TO-DATE
+> Task :android:core-ui:preDebugBuild UP-TO-DATE
+> Task :android:core-ui:writeDebugAarMetadata UP-TO-DATE
+> Task :android:feature-chart:preBuild UP-TO-DATE
+> Task :android:feature-chart:preDebugBuild UP-TO-DATE
+> Task :android:feature-chart:writeDebugAarMetadata UP-TO-DATE
+> Task :android:feature-goals:preBuild UP-TO-DATE
+> Task :android:feature-goals:preDebugBuild UP-TO-DATE
+> Task :android:feature-goals:writeDebugAarMetadata UP-TO-DATE
+> Task :android:feature-home:preBuild UP-TO-DATE
+> Task :android:feature-home:preDebugBuild UP-TO-DATE
+> Task :android:feature-home:writeDebugAarMetadata UP-TO-DATE
+> Task :android:feature-journal:preBuild UP-TO-DATE
+> Task :android:feature-journal:preDebugBuild UP-TO-DATE
+> Task :android:feature-journal:writeDebugAarMetadata UP-TO-DATE
+> Task :android:feature-planner:preBuild UP-TO-DATE
+> Task :android:feature-planner:preDebugBuild UP-TO-DATE
+> Task :android:feature-planner:writeDebugAarMetadata UP-TO-DATE
+> Task :android:feature-settings:preBuild UP-TO-DATE
+> Task :android:feature-settings:preDebugBuild UP-TO-DATE
+> Task :android:feature-settings:writeDebugAarMetadata UP-TO-DATE
+> Task :android:app:checkDebugAarMetadata UP-TO-DATE
+> Task :android:app:generateDebugResValues UP-TO-DATE
+> Task :android:core-data:generateDebugResValues UP-TO-DATE
+> Task :android:core-data:generateDebugResources UP-TO-DATE
+> Task :android:core-data:packageDebugResources UP-TO-DATE
+> Task :android:core-ui:generateDebugResValues UP-TO-DATE
+> Task :android:core-ui:generateDebugResources UP-TO-DATE
+> Task :android:core-ui:packageDebugResources UP-TO-DATE
+> Task :android:feature-chart:generateDebugResValues UP-TO-DATE
+> Task :android:feature-chart:generateDebugResources UP-TO-DATE
+> Task :android:feature-chart:packageDebugResources UP-TO-DATE
+> Task :android:feature-goals:generateDebugResValues UP-TO-DATE
+> Task :android:feature-goals:generateDebugResources UP-TO-DATE
+> Task :android:feature-goals:packageDebugResources UP-TO-DATE
+> Task :android:feature-home:generateDebugResValues UP-TO-DATE
+> Task :android:feature-home:generateDebugResources UP-TO-DATE
+> Task :android:feature-home:packageDebugResources UP-TO-DATE
+> Task :android:feature-journal:generateDebugResValues UP-TO-DATE
+> Task :android:feature-journal:generateDebugResources UP-TO-DATE
+> Task :android:feature-journal:packageDebugResources UP-TO-DATE
+> Task :android:feature-planner:generateDebugResValues UP-TO-DATE
+> Task :android:feature-planner:generateDebugResources UP-TO-DATE
+> Task :android:feature-planner:packageDebugResources UP-TO-DATE
+> Task :android:feature-settings:generateDebugResValues UP-TO-DATE
+> Task :android:feature-settings:generateDebugResources UP-TO-DATE
+> Task :android:feature-settings:packageDebugResources UP-TO-DATE
+> Task :android:app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :android:app:generateDebugResources UP-TO-DATE
+> Task :android:app:mergeDebugResources UP-TO-DATE
+> Task :android:app:packageDebugResources UP-TO-DATE
+> Task :android:app:parseDebugLocalResources UP-TO-DATE
+> Task :android:app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :android:app:extractDeepLinksDebug UP-TO-DATE
+> Task :android:core-data:extractDeepLinksDebug UP-TO-DATE
+> Task :android:core-data:processDebugManifest UP-TO-DATE
+> Task :android:core-ui:extractDeepLinksDebug UP-TO-DATE
+> Task :android:core-ui:processDebugManifest UP-TO-DATE
+> Task :android:feature-chart:extractDeepLinksDebug UP-TO-DATE
+> Task :android:feature-chart:processDebugManifest UP-TO-DATE
+> Task :android:feature-goals:extractDeepLinksDebug UP-TO-DATE
+> Task :android:feature-goals:processDebugManifest UP-TO-DATE
+> Task :android:feature-home:extractDeepLinksDebug UP-TO-DATE
+> Task :android:feature-home:processDebugManifest UP-TO-DATE
+> Task :android:feature-journal:extractDeepLinksDebug UP-TO-DATE
+> Task :android:feature-journal:processDebugManifest UP-TO-DATE
+> Task :android:feature-planner:extractDeepLinksDebug UP-TO-DATE
+> Task :android:feature-planner:processDebugManifest UP-TO-DATE
+> Task :android:feature-settings:extractDeepLinksDebug UP-TO-DATE
+> Task :android:feature-settings:processDebugManifest UP-TO-DATE
+> Task :android:app:processDebugMainManifest UP-TO-DATE
+> Task :android:app:processDebugManifest UP-TO-DATE
+> Task :android:app:processDebugManifestForPackage UP-TO-DATE
+> Task :android:core-data:compileDebugLibraryResources UP-TO-DATE
+> Task :android:core-data:parseDebugLocalResources UP-TO-DATE
+> Task :android:core-data:generateDebugRFile UP-TO-DATE
+> Task :android:core-ui:compileDebugLibraryResources UP-TO-DATE
+> Task :android:core-ui:parseDebugLocalResources UP-TO-DATE
+> Task :android:core-ui:generateDebugRFile UP-TO-DATE
+> Task :android:feature-chart:compileDebugLibraryResources UP-TO-DATE
+> Task :android:feature-chart:parseDebugLocalResources UP-TO-DATE
+> Task :android:feature-chart:generateDebugRFile UP-TO-DATE
+> Task :android:feature-goals:compileDebugLibraryResources UP-TO-DATE
+> Task :android:feature-goals:parseDebugLocalResources UP-TO-DATE
+> Task :android:feature-goals:generateDebugRFile UP-TO-DATE
+> Task :android:feature-home:compileDebugLibraryResources UP-TO-DATE
+> Task :android:feature-home:parseDebugLocalResources UP-TO-DATE
+> Task :android:feature-home:generateDebugRFile UP-TO-DATE
+> Task :android:feature-journal:compileDebugLibraryResources UP-TO-DATE
+> Task :android:feature-journal:parseDebugLocalResources UP-TO-DATE
+> Task :android:feature-journal:generateDebugRFile UP-TO-DATE
+> Task :android:feature-planner:compileDebugLibraryResources UP-TO-DATE
+> Task :android:feature-planner:parseDebugLocalResources UP-TO-DATE
+> Task :android:feature-planner:generateDebugRFile UP-TO-DATE
+> Task :android:feature-settings:compileDebugLibraryResources UP-TO-DATE
+> Task :android:feature-settings:parseDebugLocalResources UP-TO-DATE
+> Task :android:feature-settings:generateDebugRFile UP-TO-DATE
+> Task :android:app:processDebugResources UP-TO-DATE
+> Task :android:core-data:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :android:core-data:javaPreCompileDebug UP-TO-DATE
+> Task :android:core-ui:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :android:core-ui:javaPreCompileDebug UP-TO-DATE
+> Task :android:feature-chart:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :android:feature-chart:javaPreCompileDebug UP-TO-DATE
+> Task :android:feature-goals:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :android:feature-goals:javaPreCompileDebug UP-TO-DATE
+> Task :android:feature-home:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :android:feature-home:javaPreCompileDebug UP-TO-DATE
+> Task :android:feature-journal:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :android:feature-journal:javaPreCompileDebug UP-TO-DATE
+> Task :android:feature-planner:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :android:feature-planner:javaPreCompileDebug UP-TO-DATE
+> Task :android:feature-settings:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :android:feature-settings:javaPreCompileDebug UP-TO-DATE
+> Task :android:app:javaPreCompileDebug UP-TO-DATE
+> Task :android:app:mergeDebugShaders UP-TO-DATE
+> Task :android:app:compileDebugShaders NO-SOURCE
+> Task :android:app:generateDebugAssets UP-TO-DATE
+> Task :android:core-data:mergeDebugShaders UP-TO-DATE
+> Task :android:core-data:compileDebugShaders NO-SOURCE
+> Task :android:core-data:generateDebugAssets UP-TO-DATE
+> Task :android:core-data:mergeDebugAssets UP-TO-DATE
+> Task :android:core-ui:mergeDebugShaders UP-TO-DATE
+> Task :android:core-ui:compileDebugShaders NO-SOURCE
+> Task :android:core-ui:generateDebugAssets UP-TO-DATE
+> Task :android:core-ui:mergeDebugAssets UP-TO-DATE
+> Task :android:feature-chart:mergeDebugShaders UP-TO-DATE
+> Task :android:feature-chart:compileDebugShaders NO-SOURCE
+> Task :android:feature-chart:generateDebugAssets UP-TO-DATE
+> Task :android:feature-chart:mergeDebugAssets UP-TO-DATE
+> Task :android:feature-goals:mergeDebugShaders UP-TO-DATE
+> Task :android:feature-goals:compileDebugShaders NO-SOURCE
+> Task :android:feature-goals:generateDebugAssets UP-TO-DATE
+> Task :android:feature-goals:mergeDebugAssets UP-TO-DATE
+> Task :android:feature-home:mergeDebugShaders UP-TO-DATE
+> Task :android:feature-home:compileDebugShaders NO-SOURCE
+> Task :android:feature-home:generateDebugAssets UP-TO-DATE
+> Task :android:feature-home:mergeDebugAssets UP-TO-DATE
+> Task :android:feature-journal:mergeDebugShaders UP-TO-DATE
+> Task :android:feature-journal:compileDebugShaders NO-SOURCE
+> Task :android:feature-journal:generateDebugAssets UP-TO-DATE
+> Task :android:feature-journal:mergeDebugAssets UP-TO-DATE
+> Task :android:feature-planner:mergeDebugShaders UP-TO-DATE
+> Task :android:feature-planner:compileDebugShaders NO-SOURCE
+> Task :android:feature-planner:generateDebugAssets UP-TO-DATE
+> Task :android:feature-planner:mergeDebugAssets UP-TO-DATE
+> Task :android:feature-settings:mergeDebugShaders UP-TO-DATE
+> Task :android:feature-settings:compileDebugShaders NO-SOURCE
+> Task :android:feature-settings:generateDebugAssets UP-TO-DATE
+> Task :android:feature-settings:mergeDebugAssets UP-TO-DATE
+> Task :android:app:mergeDebugAssets UP-TO-DATE
+> Task :android:app:compressDebugAssets UP-TO-DATE
+> Task :android:app:desugarDebugFileDependencies UP-TO-DATE
+> Task :android:app:checkDebugDuplicateClasses UP-TO-DATE
+> Task :android:app:mergeExtDexDebug UP-TO-DATE
+> Task :android:app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :android:core-data:mergeDebugJniLibFolders UP-TO-DATE
+> Task :android:core-data:mergeDebugNativeLibs NO-SOURCE
+> Task :android:core-data:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :android:core-ui:mergeDebugJniLibFolders UP-TO-DATE
+> Task :android:core-ui:mergeDebugNativeLibs NO-SOURCE
+> Task :android:core-ui:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :android:feature-chart:mergeDebugJniLibFolders UP-TO-DATE
+> Task :android:feature-chart:mergeDebugNativeLibs NO-SOURCE
+> Task :android:feature-chart:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :android:feature-goals:mergeDebugJniLibFolders UP-TO-DATE
+> Task :android:feature-goals:mergeDebugNativeLibs NO-SOURCE
+> Task :android:feature-goals:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :android:feature-home:mergeDebugJniLibFolders UP-TO-DATE
+> Task :android:feature-home:mergeDebugNativeLibs NO-SOURCE
+> Task :android:feature-home:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :android:feature-journal:mergeDebugJniLibFolders UP-TO-DATE
+> Task :android:feature-journal:mergeDebugNativeLibs NO-SOURCE
+> Task :android:feature-journal:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :android:feature-planner:mergeDebugJniLibFolders UP-TO-DATE
+> Task :android:feature-planner:mergeDebugNativeLibs NO-SOURCE
+> Task :android:feature-planner:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :android:feature-settings:mergeDebugJniLibFolders UP-TO-DATE
+> Task :android:feature-settings:mergeDebugNativeLibs NO-SOURCE
+> Task :android:feature-settings:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :android:app:mergeDebugNativeLibs UP-TO-DATE
+> Task :android:app:stripDebugDebugSymbols UP-TO-DATE
+> Task :android:app:validateSigningDebug UP-TO-DATE
+> Task :android:app:writeDebugAppMetadata UP-TO-DATE
+> Task :android:app:writeDebugSigningConfigVersions UP-TO-DATE
+> Task :android:core-domain:compileTestKotlin UP-TO-DATE
+> Task :android:core-domain:compileTestJava NO-SOURCE
+> Task :android:core-domain:processTestResources NO-SOURCE
+> Task :android:core-domain:testClasses UP-TO-DATE
+> Task :android:core-domain:test UP-TO-DATE
+> Task :android:core-qimen:compileTestKotlin UP-TO-DATE
+> Task :android:core-qimen:compileTestJava NO-SOURCE
+> Task :android:core-qimen:processTestResources NO-SOURCE
+> Task :android:core-qimen:testClasses UP-TO-DATE
+> Task :android:core-qimen:test UP-TO-DATE
+> Task :android:core-data:preDebugUnitTestBuild UP-TO-DATE
+> Task :android:core-data:kspDebugKotlin
+> Task :android:core-data:generateDebugUnitTestStubRFile UP-TO-DATE
+> Task :android:core-data:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :android:core-data:preDebugAndroidTestBuild UP-TO-DATE
+> Task :android:core-data:checkDebugAndroidTestAarMetadata UP-TO-DATE
+> Task :android:core-data:generateDebugAndroidTestResValues UP-TO-DATE
+> Task :android:core-data:mapDebugAndroidTestSourceSetPaths UP-TO-DATE
+> Task :android:core-data:generateDebugAndroidTestResources UP-TO-DATE
+> Task :android:core-data:mergeDebugAndroidTestResources UP-TO-DATE
+> Task :android:core-data:processDebugAndroidTestManifest UP-TO-DATE
+> Task :android:core-data:processDebugAndroidTestResources UP-TO-DATE
+> Task :android:core-data:javaPreCompileDebugAndroidTest UP-TO-DATE
+> Task :android:core-data:mergeDebugAndroidTestShaders UP-TO-DATE
+> Task :android:core-data:compileDebugAndroidTestShaders NO-SOURCE
+> Task :android:core-data:generateDebugAndroidTestAssets UP-TO-DATE
+> Task :android:core-data:mergeDebugAndroidTestAssets UP-TO-DATE
+> Task :android:core-data:compressDebugAndroidTestAssets UP-TO-DATE
+> Task :android:core-data:desugarDebugAndroidTestFileDependencies UP-TO-DATE
+> Task :android:core-data:checkDebugAndroidTestDuplicateClasses UP-TO-DATE
+> Task :android:core-data:mergeExtDexDebugAndroidTest UP-TO-DATE
+> Task :android:core-data:compileDebugKotlin
+> Task :android:core-data:mergeDebugAndroidTestJniLibFolders UP-TO-DATE
+> Task :android:core-data:compileDebugJavaWithJavac NO-SOURCE
+> Task :android:core-data:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :android:core-data:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :android:core-data:processDebugJavaRes UP-TO-DATE
+> Task :android:core-data:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :android:core-data:kspDebugUnitTestKotlin
+> Task :android:core-data:compileDebugUnitTestKotlin
+> Task :android:core-data:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :android:core-data:processDebugUnitTestJavaRes UP-TO-DATE
+> Task :android:core-ui:compileDebugKotlin
+
+> Task :android:core-data:testDebugUnitTest
+Picked up JAVA_TOOL_OPTIONS: -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts
+
+> Task :android:core-ui:compileDebugJavaWithJavac NO-SOURCE
+> Task :android:core-ui:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :android:feature-goals:compileDebugKotlin
+> Task :android:feature-goals:compileDebugJavaWithJavac NO-SOURCE
+> Task :android:feature-goals:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :android:feature-home:compileDebugKotlin
+> Task :android:feature-home:compileDebugJavaWithJavac NO-SOURCE
+> Task :android:feature-home:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :android:feature-journal:compileDebugKotlin
+> Task :android:feature-journal:compileDebugJavaWithJavac NO-SOURCE
+> Task :android:feature-journal:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :android:feature-chart:compileDebugKotlin
+> Task :android:feature-chart:compileDebugJavaWithJavac NO-SOURCE
+> Task :android:feature-chart:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :android:feature-planner:compileDebugKotlin
+> Task :android:feature-planner:compileDebugJavaWithJavac NO-SOURCE
+> Task :android:feature-planner:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :android:feature-home:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :android:feature-chart:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :android:feature-goals:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :android:feature-planner:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :android:feature-journal:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :android:core-ui:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :android:core-ui:processDebugJavaRes UP-TO-DATE
+> Task :android:feature-chart:processDebugJavaRes UP-TO-DATE
+> Task :android:feature-goals:processDebugJavaRes UP-TO-DATE
+> Task :android:feature-home:processDebugJavaRes UP-TO-DATE
+> Task :android:feature-journal:processDebugJavaRes UP-TO-DATE
+> Task :android:feature-planner:processDebugJavaRes UP-TO-DATE
+> Task :android:feature-home:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :android:feature-chart:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :android:feature-settings:compileDebugKotlin
+> Task :android:feature-settings:compileDebugJavaWithJavac NO-SOURCE
+> Task :android:feature-settings:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :android:feature-settings:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :android:feature-settings:processDebugJavaRes UP-TO-DATE
+> Task :android:feature-goals:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :android:feature-planner:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :android:feature-journal:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :android:feature-settings:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :android:core-ui:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :android:app:mergeLibDexDebug UP-TO-DATE
+> Task :android:core-data:kspDebugAndroidTestKotlin
+> Task :android:core-data:compileDebugAndroidTestKotlin
+> Task :android:core-data:compileDebugAndroidTestJavaWithJavac NO-SOURCE
+> Task :android:core-data:dexBuilderDebugAndroidTest
+> Task :android:core-data:mergeDebugAndroidTestGlobalSynthetics
+> Task :android:core-data:processDebugAndroidTestJavaRes
+
+> Task :android:app:compileDebugKotlin
+w: file:///workspace/scratch/0cebb87356aa/TianJi/android/app/src/main/kotlin/com/tianji/app/MainActivity.kt:43:238 'val Icons.Filled.List: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.List.
+
+> Task :android:app:compileDebugJavaWithJavac NO-SOURCE
+> Task :android:core-data:mergeDebugAndroidTestJavaResource
+> Task :android:app:dexBuilderDebug
+> Task :android:app:processDebugJavaRes
+> Task :android:app:mergeDebugGlobalSynthetics
+> Task :android:app:mergeProjectDexDebug
+> Task :android:core-data:mergeLibDexDebugAndroidTest
+> Task :android:core-data:mergeProjectDexDebugAndroidTest
+> Task :android:core-data:mergeDebugAndroidTestNativeLibs UP-TO-DATE
+> Task :android:core-data:stripDebugAndroidTestDebugSymbols UP-TO-DATE
+> Task :android:core-data:validateSigningDebugAndroidTest UP-TO-DATE
+> Task :android:core-data:writeDebugAndroidTestSigningConfigVersions UP-TO-DATE
+> Task :android:app:mergeDebugJavaResource
+> Task :android:core-data:packageDebugAndroidTest
+> Task :android:core-data:createDebugAndroidTestApkListingFileRedirect
+> Task :android:core-data:assembleDebugAndroidTest
+> Task :android:app:bundleDebugClassesToCompileJar
+> Task :android:app:packageDebug
+> Task :android:app:createDebugApkListingFileRedirect
+> Task :android:app:assembleDebug
+> Task :android:app:preDebugAndroidTestBuild SKIPPED
+> Task :android:app:checkDebugAndroidTestAarMetadata UP-TO-DATE
+> Task :android:app:generateDebugAndroidTestResValues UP-TO-DATE
+> Task :android:app:mapDebugAndroidTestSourceSetPaths UP-TO-DATE
+> Task :android:app:generateDebugAndroidTestResources UP-TO-DATE
+> Task :android:app:mergeDebugAndroidTestResources UP-TO-DATE
+> Task :android:app:processDebugAndroidTestManifest UP-TO-DATE
+> Task :android:app:processDebugAndroidTestResources UP-TO-DATE
+> Task :android:app:javaPreCompileDebugAndroidTest UP-TO-DATE
+> Task :android:app:mergeDebugAndroidTestShaders UP-TO-DATE
+> Task :android:app:compileDebugAndroidTestShaders NO-SOURCE
+> Task :android:app:generateDebugAndroidTestAssets UP-TO-DATE
+> Task :android:app:mergeDebugAndroidTestAssets UP-TO-DATE
+> Task :android:app:compressDebugAndroidTestAssets UP-TO-DATE
+> Task :android:app:desugarDebugAndroidTestFileDependencies UP-TO-DATE
+> Task :android:app:checkDebugAndroidTestDuplicateClasses UP-TO-DATE
+> Task :android:app:mergeExtDexDebugAndroidTest UP-TO-DATE
+> Task :android:app:mergeLibDexDebugAndroidTest
+> Task :android:app:mergeDebugAndroidTestJniLibFolders UP-TO-DATE
+> Task :android:app:mergeDebugAndroidTestNativeLibs NO-SOURCE
+> Task :android:app:stripDebugAndroidTestDebugSymbols NO-SOURCE
+> Task :android:app:validateSigningDebugAndroidTest UP-TO-DATE
+> Task :android:app:writeDebugAndroidTestSigningConfigVersions UP-TO-DATE
+> Task :android:core-data:stripDebugDebugSymbols NO-SOURCE
+> Task :android:core-data:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :android:app:compileDebugAndroidTestKotlin
+> Task :android:core-data:extractDebugAnnotations
+> Task :android:app:compileDebugAndroidTestJavaWithJavac NO-SOURCE
+> Task :android:app:dexBuilderDebugAndroidTest
+> Task :android:app:mergeDebugAndroidTestGlobalSynthetics
+> Task :android:app:processDebugAndroidTestJavaRes
+> Task :android:app:mergeProjectDexDebugAndroidTest
+> Task :android:core-data:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :android:core-data:mergeDebugGeneratedProguardFiles
+> Task :android:core-data:mergeDebugConsumerProguardFiles
+> Task :android:core-data:prepareDebugArtProfile UP-TO-DATE
+> Task :android:core-data:prepareLintJarForPublish UP-TO-DATE
+> Task :android:core-data:mergeDebugJavaResource
+> Task :android:app:mergeDebugAndroidTestJavaResource
+> Task :android:core-data:syncDebugLibJars
+> Task :android:core-data:bundleDebugLocalLintAar
+> Task :android:app:packageDebugAndroidTest
+> Task :android:app:createDebugAndroidTestApkListingFileRedirect
+> Task :android:app:assembleDebugAndroidTest
+> Task :android:core-ui:stripDebugDebugSymbols NO-SOURCE
+> Task :android:core-ui:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :android:core-ui:extractDebugAnnotations
+> Task :android:core-ui:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :android:core-ui:mergeDebugGeneratedProguardFiles
+> Task :android:core-ui:mergeDebugConsumerProguardFiles
+> Task :android:core-ui:prepareDebugArtProfile UP-TO-DATE
+> Task :android:core-ui:prepareLintJarForPublish UP-TO-DATE
+> Task :android:feature-home:stripDebugDebugSymbols NO-SOURCE
+> Task :android:feature-home:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :android:core-ui:mergeDebugJavaResource
+> Task :android:feature-home:extractDebugAnnotations
+> Task :android:core-ui:syncDebugLibJars
+> Task :android:core-ui:bundleDebugLocalLintAar
+> Task :android:feature-home:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :android:feature-home:mergeDebugGeneratedProguardFiles
+> Task :android:feature-home:mergeDebugConsumerProguardFiles
+> Task :android:feature-home:prepareDebugArtProfile UP-TO-DATE
+> Task :android:feature-home:prepareLintJarForPublish UP-TO-DATE
+> Task :android:feature-chart:stripDebugDebugSymbols NO-SOURCE
+> Task :android:feature-chart:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :android:feature-home:mergeDebugJavaResource
+> Task :android:feature-home:syncDebugLibJars
+> Task :android:feature-home:bundleDebugLocalLintAar
+> Task :android:feature-chart:extractDebugAnnotations
+> Task :android:feature-chart:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :android:feature-chart:mergeDebugGeneratedProguardFiles
+> Task :android:feature-chart:mergeDebugConsumerProguardFiles
+> Task :android:feature-chart:prepareDebugArtProfile UP-TO-DATE
+> Task :android:feature-chart:prepareLintJarForPublish UP-TO-DATE
+> Task :android:feature-goals:stripDebugDebugSymbols NO-SOURCE
+> Task :android:feature-goals:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :android:feature-chart:mergeDebugJavaResource
+> Task :android:feature-goals:extractDebugAnnotations
+> Task :android:feature-chart:syncDebugLibJars
+> Task :android:feature-chart:bundleDebugLocalLintAar
+> Task :android:feature-goals:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :android:feature-goals:mergeDebugGeneratedProguardFiles
+> Task :android:feature-goals:mergeDebugConsumerProguardFiles
+> Task :android:feature-goals:prepareDebugArtProfile UP-TO-DATE
+> Task :android:feature-goals:prepareLintJarForPublish UP-TO-DATE
+> Task :android:feature-planner:stripDebugDebugSymbols NO-SOURCE
+> Task :android:feature-planner:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :android:feature-goals:mergeDebugJavaResource
+> Task :android:feature-planner:extractDebugAnnotations
+> Task :android:feature-goals:syncDebugLibJars
+> Task :android:feature-goals:bundleDebugLocalLintAar
+> Task :android:feature-planner:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :android:feature-planner:mergeDebugGeneratedProguardFiles
+> Task :android:feature-planner:mergeDebugConsumerProguardFiles
+> Task :android:feature-planner:prepareDebugArtProfile UP-TO-DATE
+> Task :android:feature-planner:prepareLintJarForPublish UP-TO-DATE
+> Task :android:feature-journal:stripDebugDebugSymbols NO-SOURCE
+> Task :android:feature-journal:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :android:feature-planner:mergeDebugJavaResource
+> Task :android:feature-journal:extractDebugAnnotations
+> Task :android:feature-planner:syncDebugLibJars
+> Task :android:feature-planner:bundleDebugLocalLintAar
+> Task :android:feature-journal:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :android:feature-journal:mergeDebugGeneratedProguardFiles
+> Task :android:feature-journal:mergeDebugConsumerProguardFiles
+> Task :android:feature-journal:prepareDebugArtProfile UP-TO-DATE
+> Task :android:feature-journal:prepareLintJarForPublish UP-TO-DATE
+> Task :android:feature-journal:mergeDebugJavaResource
+> Task :android:feature-settings:stripDebugDebugSymbols NO-SOURCE
+> Task :android:feature-journal:syncDebugLibJars
+> Task :android:feature-journal:bundleDebugLocalLintAar
+> Task :android:feature-settings:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :android:feature-settings:extractDebugAnnotations
+> Task :android:feature-settings:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :android:feature-settings:mergeDebugGeneratedProguardFiles
+> Task :android:feature-settings:mergeDebugConsumerProguardFiles
+> Task :android:feature-settings:prepareDebugArtProfile UP-TO-DATE
+> Task :android:feature-settings:prepareLintJarForPublish UP-TO-DATE
+> Task :android:feature-settings:mergeDebugJavaResource
+> Task :android:core-data:createFullJarDebug
+> Task :android:feature-settings:syncDebugLibJars
+> Task :android:feature-settings:bundleDebugLocalLintAar
+> Task :android:core-data:writeDebugLintModelMetadata UP-TO-DATE
+> Task :android:core-ui:createFullJarDebug
+> Task :android:core-ui:writeDebugLintModelMetadata UP-TO-DATE
+> Task :android:feature-chart:createFullJarDebug
+> Task :android:feature-chart:writeDebugLintModelMetadata UP-TO-DATE
+> Task :android:feature-goals:createFullJarDebug
+> Task :android:feature-goals:writeDebugLintModelMetadata UP-TO-DATE
+> Task :android:feature-home:createFullJarDebug
+> Task :android:feature-home:writeDebugLintModelMetadata UP-TO-DATE
+> Task :android:feature-journal:createFullJarDebug
+> Task :android:feature-journal:writeDebugLintModelMetadata UP-TO-DATE
+> Task :android:feature-planner:createFullJarDebug
+> Task :android:feature-planner:writeDebugLintModelMetadata UP-TO-DATE
+> Task :android:feature-settings:createFullJarDebug
+> Task :android:feature-settings:writeDebugLintModelMetadata UP-TO-DATE
+> Task :android:app:generateDebugAndroidTestLintModel
+> Task :android:app:extractProguardFiles UP-TO-DATE
+> Task :android:core-data:extractProguardFiles UP-TO-DATE
+> Task :android:core-data:generateDebugLintModel
+> Task :android:core-ui:extractProguardFiles UP-TO-DATE
+> Task :android:core-ui:generateDebugLintModel
+> Task :android:feature-chart:extractProguardFiles UP-TO-DATE
+> Task :android:feature-chart:generateDebugLintModel
+> Task :android:feature-goals:extractProguardFiles UP-TO-DATE
+> Task :android:feature-goals:generateDebugLintModel
+> Task :android:feature-home:extractProguardFiles UP-TO-DATE
+> Task :android:feature-home:generateDebugLintModel
+> Task :android:feature-journal:extractProguardFiles UP-TO-DATE
+> Task :android:feature-journal:generateDebugLintModel
+> Task :android:feature-planner:extractProguardFiles UP-TO-DATE
+> Task :android:feature-planner:generateDebugLintModel
+> Task :android:feature-settings:extractProguardFiles UP-TO-DATE
+> Task :android:feature-settings:generateDebugLintModel
+> Task :android:app:generateDebugLintReportModel
+> Task :android:app:preDebugUnitTestBuild UP-TO-DATE
+> Task :android:app:generateDebugUnitTestLintModel
+> Task :android:app:lintAnalyzeDebugAndroidTest
+> Task :android:app:lintAnalyzeDebugUnitTest
+> Task :android:core-data:generateDebugAndroidTestLintModel
+> Task :android:core-data:generateDebugUnitTestLintModel
+> Task :android:core-data:lintAnalyzeDebugAndroidTest
+> Task :android:core-data:lintAnalyzeDebugUnitTest
+> Task :android:core-ui:preDebugAndroidTestBuild UP-TO-DATE
+> Task :android:core-ui:generateDebugAndroidTestResValues UP-TO-DATE
+> Task :android:core-ui:generateDebugAndroidTestLintModel
+> Task :android:core-ui:preDebugUnitTestBuild UP-TO-DATE
+> Task :android:core-ui:generateDebugUnitTestLintModel
+> Task :android:core-ui:lintAnalyzeDebugAndroidTest
+> Task :android:core-ui:lintAnalyzeDebugUnitTest
+> Task :android:feature-chart:preDebugAndroidTestBuild UP-TO-DATE
+> Task :android:feature-chart:generateDebugAndroidTestResValues UP-TO-DATE
+> Task :android:feature-chart:generateDebugAndroidTestLintModel
+> Task :android:feature-chart:preDebugUnitTestBuild UP-TO-DATE
+> Task :android:feature-chart:generateDebugUnitTestLintModel
+> Task :android:feature-chart:lintAnalyzeDebugAndroidTest
+> Task :android:feature-chart:lintAnalyzeDebugUnitTest
+> Task :android:feature-goals:preDebugAndroidTestBuild UP-TO-DATE
+> Task :android:feature-goals:generateDebugAndroidTestResValues UP-TO-DATE
+> Task :android:feature-goals:generateDebugAndroidTestLintModel
+> Task :android:feature-goals:preDebugUnitTestBuild UP-TO-DATE
+> Task :android:feature-goals:generateDebugUnitTestLintModel
+> Task :android:feature-goals:lintAnalyzeDebugAndroidTest
+> Task :android:feature-goals:lintAnalyzeDebugUnitTest
+> Task :android:feature-home:preDebugAndroidTestBuild UP-TO-DATE
+> Task :android:feature-home:generateDebugAndroidTestResValues UP-TO-DATE
+> Task :android:feature-home:generateDebugAndroidTestLintModel
+> Task :android:feature-home:preDebugUnitTestBuild UP-TO-DATE
+> Task :android:feature-home:generateDebugUnitTestLintModel
+> Task :android:feature-home:lintAnalyzeDebugAndroidTest
+> Task :android:feature-home:lintAnalyzeDebugUnitTest
+> Task :android:feature-journal:preDebugAndroidTestBuild UP-TO-DATE
+> Task :android:feature-journal:generateDebugAndroidTestResValues UP-TO-DATE
+> Task :android:feature-journal:generateDebugAndroidTestLintModel
+> Task :android:feature-journal:preDebugUnitTestBuild UP-TO-DATE
+> Task :android:feature-journal:generateDebugUnitTestLintModel
+> Task :android:feature-journal:lintAnalyzeDebugAndroidTest
+> Task :android:feature-journal:lintAnalyzeDebugUnitTest
+> Task :android:feature-planner:preDebugAndroidTestBuild UP-TO-DATE
+> Task :android:feature-planner:generateDebugAndroidTestResValues UP-TO-DATE
+> Task :android:feature-planner:generateDebugAndroidTestLintModel
+> Task :android:feature-planner:preDebugUnitTestBuild UP-TO-DATE
+> Task :android:feature-planner:generateDebugUnitTestLintModel
+> Task :android:feature-planner:lintAnalyzeDebugAndroidTest
+> Task :android:feature-planner:lintAnalyzeDebugUnitTest
+> Task :android:feature-settings:preDebugAndroidTestBuild UP-TO-DATE
+> Task :android:feature-settings:generateDebugAndroidTestResValues UP-TO-DATE
+> Task :android:feature-settings:generateDebugAndroidTestLintModel
+> Task :android:feature-settings:preDebugUnitTestBuild UP-TO-DATE
+> Task :android:feature-settings:generateDebugUnitTestLintModel
+> Task :android:feature-settings:lintAnalyzeDebugAndroidTest
+> Task :android:feature-settings:lintAnalyzeDebugUnitTest
+> Task :android:core-data:lintAnalyzeDebug
+> Task :wrapper
+> Task :android:core-ui:lintAnalyzeDebug
+> Task :android:feature-chart:lintAnalyzeDebug
+> Task :android:feature-goals:lintAnalyzeDebug
+> Task :android:feature-home:lintAnalyzeDebug
+> Task :android:feature-journal:lintAnalyzeDebug
+> Task :android:feature-planner:lintAnalyzeDebug
+> Task :android:feature-settings:lintAnalyzeDebug
+> Task :android:app:lintAnalyzeDebug
+
+> Task :android:app:lintReportDebug
+Wrote HTML report to file:///workspace/scratch/0cebb87356aa/TianJi/android/app/build/reports/lint-results-debug.html
+
+> Task :android:app:lintDebug
+
+BUILD SUCCESSFUL in 5m 17s
+427 actionable tasks: 153 executed, 274 up-to-date

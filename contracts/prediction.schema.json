@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Research-only prediction lockbox record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "model_id",
+    "dataset_hash",
+    "seed",
+    "action_at_utc",
+    "prediction",
+    "outcome"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "model_id": {
+      "type": "string"
+    },
+    "dataset_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "seed": {
+      "type": "integer"
+    },
+    "action_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "prediction": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "outcome": {
+      "type": "null"
+    }
+  }
+}

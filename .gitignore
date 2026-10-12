@@ -1,0 +1,12 @@
+.gradle/
+**/build/
+local.properties
+.env
+*.jks
+*.keystore
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+research/output/
+.kotlin/

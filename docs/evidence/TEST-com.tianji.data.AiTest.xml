@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.tianji.data.AiTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-12T02:18:35.898Z" hostname="6c3e059baa10" time="0.466">
+  <properties/>
+  <testcase name="validComparisonAccepted" classname="com.tianji.data.AiTest" time="0.441"/>
+  <testcase name="quietHours" classname="com.tianji.data.AiTest" time="0.001"/>
+  <testcase name="missingActionRejected" classname="com.tianji.data.AiTest" time="0.004"/>
+  <testcase name="extraProbabilityRejected" classname="com.tianji.data.AiTest" time="0.016"/>
+  <testcase name="endpointsRejectCredentialsAndHttp" classname="com.tianji.data.AiTest" time="0.001"/>
+  <testcase name="chartClaimsRejected" classname="com.tianji.data.AiTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "action_order",
+    "emphasis",
+    "chart_claims"
+  ],
+  "properties": {
+    "action_order": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "format": "uuid"
+      }
+    },
+    "emphasis": {
+      "enum": [
+        "time",
+        "cost",
+        "reversibility"
+      ]
+    },
+    "chart_claims": {
+      "type": "array",
+      "maxItems": 0
+    }
+  }
+}

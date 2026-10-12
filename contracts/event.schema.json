@@ -1,0 +1,396 @@
+{
+  "$defs": {
+    "Action": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Kind",
+          "type": "string"
+        },
+        "cost": {
+          "minimum": 0,
+          "title": "Cost",
+          "type": "number"
+        }
+      },
+      "required": [
+        "kind",
+        "cost"
+      ],
+      "title": "Action",
+      "type": "object"
+    },
+    "Chart": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "chart_id": {
+          "format": "uuid",
+          "title": "Chart Id",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "BLOCKED",
+            "VERIFIED",
+            "SYNTHETIC"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "input": {
+          "$ref": "#/$defs/ChartInput"
+        },
+        "ruleset": {
+          "$ref": "#/$defs/Ruleset"
+        },
+        "calendar": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Calendar",
+          "type": "object"
+        },
+        "dun_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Dun Type"
+        },
+        "ju_number": {
+          "anyOf": [
+            {
+              "maximum": 9,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Ju Number"
+        },
+        "palaces": {
+          "items": {
+            "$ref": "#/$defs/Palace"
+          },
+          "title": "Palaces",
+          "type": "array"
+        },
+        "derivation_steps": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Derivation Steps",
+          "type": "array"
+        },
+        "warnings": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        },
+        "input_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Input Hash",
+          "type": "string"
+        }
+      },
+      "required": [
+        "chart_id",
+        "status",
+        "input",
+        "ruleset",
+        "calendar",
+        "dun_type",
+        "ju_number",
+        "palaces",
+        "derivation_steps",
+        "warnings",
+        "input_hash"
+      ],
+      "title": "Chart",
+      "type": "object"
+    },
+    "ChartInput": {
+      "additionalProperties": false,
+      "properties": {
+        "instant_utc": {
+          "format": "date-time",
+          "title": "Instant Utc",
+          "type": "string"
+        },
+        "timezone": {
+          "title": "Timezone",
+          "type": "string"
+        },
+        "latitude": {
+          "anyOf": [
+            {
+              "maximum": 90,
+              "minimum": -90,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Latitude"
+        },
+        "longitude": {
+          "anyOf": [
+            {
+              "maximum": 180,
+              "minimum": -180,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Longitude"
+        }
+      },
+      "required": [
+        "instant_utc",
+        "timezone"
+      ],
+      "title": "ChartInput",
+      "type": "object"
+    },
+    "Palace": {
+      "additionalProperties": false,
+      "properties": {
+        "index": {
+          "maximum": 9,
+          "minimum": 1,
+          "title": "Index",
+          "type": "integer"
+        },
+        "direction": {
+          "title": "Direction",
+          "type": "string"
+        },
+        "door": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Door"
+        },
+        "star": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Star"
+        },
+        "deity": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Deity"
+        },
+        "heaven_stem": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Heaven Stem"
+        },
+        "earth_stem": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Earth Stem"
+        }
+      },
+      "required": [
+        "index",
+        "direction",
+        "door",
+        "star",
+        "deity",
+        "heaven_stem",
+        "earth_stem"
+      ],
+      "title": "Palace",
+      "type": "object"
+    },
+    "Ruleset": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "version": {
+          "title": "Version",
+          "type": "string"
+        },
+        "source": {
+          "title": "Source",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "source"
+      ],
+      "title": "Ruleset",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "event_id": {
+      "format": "uuid",
+      "title": "Event Id",
+      "type": "string"
+    },
+    "subject_pseudonym": {
+      "maxLength": 100,
+      "minLength": 1,
+      "title": "Subject Pseudonym",
+      "type": "string"
+    },
+    "occurred_at_utc": {
+      "format": "date-time",
+      "title": "Occurred At Utc",
+      "type": "string"
+    },
+    "timezone": {
+      "title": "Timezone",
+      "type": "string"
+    },
+    "location_coarse": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Location Coarse"
+    },
+    "context": {
+      "additionalProperties": true,
+      "title": "Context",
+      "type": "object"
+    },
+    "action": {
+      "$ref": "#/$defs/Action"
+    },
+    "outcome": {
+      "anyOf": [
+        {
+          "enum": [
+            0,
+            1
+          ],
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Outcome"
+    },
+    "outcome_at_utc": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Outcome At Utc"
+    },
+    "source": {
+      "title": "Source",
+      "type": "string"
+    },
+    "consent_scope": {
+      "enum": [
+        "research-export",
+        "synthetic-example"
+      ],
+      "title": "Consent Scope",
+      "type": "string"
+    },
+    "chart_ref": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Chart"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "dataset_version": {
+      "const": "1",
+      "default": "1",
+      "title": "Dataset Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "event_id",
+    "subject_pseudonym",
+    "occurred_at_utc",
+    "timezone",
+    "context",
+    "action",
+    "outcome",
+    "outcome_at_utc",
+    "source",
+    "consent_scope"
+  ],
+  "title": "Event",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

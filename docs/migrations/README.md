@@ -1,0 +1,4 @@
+# Database recovery migration
+Original installed APK used schema 1 with singular entity table names. The original schema was recovered directly from the emulator database. Schema 2 migrates to reconstructed plural tables in one transaction, preserves goal IDs, historical plan versions, action text, journal and original chart JSON. Only legacy constraints keys and selection representation are translated.
+
+The historical blocked chart format 1.0 retains its original hash IDs and remains readable/exportable; new charts use contract integer schema 1, UUID chart IDs and ruleset 0.0.1-blocked. The version bump describes a serialization change, not verified calculations. A destructive Room migration is never enabled. Recovered provider metadata is retained; users may need to re-enter their API key because the original encryption-store layout is unavailable.

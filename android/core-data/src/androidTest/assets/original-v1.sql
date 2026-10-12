@@ -1,0 +1,8 @@
+CREATE TABLE `Goal` (`id` TEXT NOT NULL, `title` TEXT NOT NULL, `createdAt` TEXT NOT NULL, `deadline` TEXT, `status` TEXT NOT NULL, `priority` INTEGER NOT NULL, `payload` TEXT NOT NULL, PRIMARY KEY(`id`));
+CREATE TABLE `Milestone` (`id` TEXT NOT NULL, `goalId` TEXT NOT NULL, `payload` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`goalId`) REFERENCES `Goal`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE );
+CREATE TABLE `ChartSnapshot` (`id` TEXT NOT NULL, `instantUtc` TEXT NOT NULL, `timezone` TEXT NOT NULL, `inputHash` TEXT NOT NULL, `payload` TEXT NOT NULL, PRIMARY KEY(`id`));
+CREATE TABLE `PlanVersion` (`id` TEXT NOT NULL, `goalId` TEXT NOT NULL, `parentVersionId` TEXT, `version` INTEGER NOT NULL, `payload` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`goalId`) REFERENCES `Goal`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`parentVersionId`) REFERENCES `PlanVersion`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE );
+CREATE TABLE `ActionCandidate` (`id` TEXT NOT NULL, `planVersionId` TEXT NOT NULL, `chartId` TEXT NOT NULL, `payload` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`planVersionId`) REFERENCES `PlanVersion`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`chartId`) REFERENCES `ChartSnapshot`(`id`) ON UPDATE NO ACTION ON DELETE RESTRICT );
+CREATE TABLE `JournalEntry` (`id` TEXT NOT NULL, `actionId` TEXT NOT NULL, `payload` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`actionId`) REFERENCES `ActionCandidate`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE );
+CREATE TABLE `Consent` (`id` TEXT NOT NULL, `scope` TEXT NOT NULL, `payload` TEXT NOT NULL, PRIMARY KEY(`id`));
+CREATE TABLE `AiProviderConfig` (`id` TEXT NOT NULL, `payload` TEXT NOT NULL, PRIMARY KEY(`id`));

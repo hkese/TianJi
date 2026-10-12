@@ -1,0 +1,25 @@
+--------- beginning of main
+--------- beginning of system
+10-12 01:14:26.154  1706  1706 D AndroidRuntime: >>>>>> START com.android.internal.os.ZygoteInit uid 0 <<<<<<
+10-12 01:14:27.806  1707  1707 D AndroidRuntime: >>>>>> START com.android.internal.os.ZygoteInit uid 0 <<<<<<
+10-12 01:15:22.414  2056  2056 I AndroidRuntime: VM exiting with result code 0, cleanup skipped.
+10-12 01:15:22.456  2050  2050 I AndroidRuntime: VM exiting with result code 0, cleanup skipped.
+10-12 01:16:03.508  2516  2516 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-12 01:16:07.886  2516  2516 D AndroidRuntime: Calling main entry com.android.commands.svc.Svc
+10-12 01:16:07.976  2516  2516 D AndroidRuntime: Shutting down VM
+10-12 01:16:16.603  2634  2634 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-12 01:16:23.532  2634  2634 D AndroidRuntime: Calling main entry com.android.commands.svc.Svc
+10-12 01:16:23.679  2634  2634 D AndroidRuntime: Shutting down VM
+10-12 01:17:09.401  3041  3041 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-12 01:17:10.785  3041  3041 D AndroidRuntime: Calling main entry com.android.commands.svc.Svc
+10-12 01:17:10.860  3041  3041 D AndroidRuntime: Shutting down VM
+10-12 01:17:13.032  3100  3100 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-12 01:17:14.151  3100  3100 D AndroidRuntime: Calling main entry com.android.commands.svc.Svc
+10-12 01:17:14.206  3100  3100 D AndroidRuntime: Shutting down VM
+10-12 01:17:16.020  3112  3112 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-12 01:17:16.926  3112  3112 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+10-12 01:17:32.493  3124  3141 I TestRunner: run started: 1 tests
+10-12 01:17:32.517  3124  3141 I TestRunner: started: offlineJourney(com.tianji.app.JourneyTest)
+10-12 01:19:00.787  3124  3141 I TestRunner: finished: offlineJourney(com.tianji.app.JourneyTest)
+10-12 01:19:00.833  3124  3141 I TestRunner: run finished: 1 tests, 0 failed, 0 ignored
+10-12 01:19:01.185  3112  3112 D AndroidRuntime: Shutting down VM
