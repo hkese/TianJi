@@ -1,16 +1,16 @@
 # 0.5 執行次序
 
 1. 固定 R1 奇門相合、R7 人遁／玉女守門與保守排除規則：已編碼及文件化。
-2. 實作獨立時段盤、候選搜尋、備份與行程階段：已編碼，測試中。
-3. 中文畫面／教學、選用指南針及單次定位、離線語音、行程 AI 提示詞：已編碼，測試中。
-4. 單元、Room、Android 16 離線流程、lint 與編譯：進行中，按實際結果修正。
-5. GitHub 發布與保留簽署的可安裝 APK：待驗證完成。
+2. 實作獨立時段盤、候選搜尋、備份與行程階段：完成；規則、邊界、偽造輸入、備份與階段測試通過。
+3. 中文畫面／教學、選用指南針及單次定位、離線語音、行程 AI 提示詞：完成；中文 Android 16 流程及畫面檢視通過。實機定位、權限對話框與語音播放仍未驗證。
+4. 單元、Room、Android 16 離線流程、lint 與編譯：通過；60 Kotlin、21 Python、5 Room 測試及 1 完整 UI 流程。CI 38338847939；兩次模糊歷史項目測試選取已修正。
+5. GitHub 發布與保留簽署的可安裝 APK：完成；原始碼 `5455294381c1238128d695069a1d085783e9629a`，0.5 APK 已簽署、核對並保存，可更新 0.4。結果見 TEST_RESULTS.md。
 
 ---
 
 # 2026-10-13 revision — traditional directional itinerary
 
-The latest product clarification supersedes the practical-recipe interpretation of 0.4.0. Follow `DIRECTIONAL_NAVIGATION_PLAN_ZH.md`: D0 source/method selection, D1 deterministic timing/direction engine, D2 location/bearing, D3 Chinese itinerary/voice, D4 bounded AI explanation, D5 Android 16 verification and signed APK. D0 is in investigation; later phases are not implemented. This does not change the original master document or rewrite historical test results.
+The product clarification supersedes the practical-recipe interpretation of 0.4.0. Follow `DIRECTIONAL_NAVIGATION_PLAN_ZH.md`: D0 source/method selection, D1 deterministic timing/direction engine, D2 location/bearing, D3 Chinese itinerary/voice, D4 bounded AI explanation, D5 Android 16 verification and signed APK. The limited 0.5 profile above is implemented and its stated software gates pass. The broader proposed destination/ritual features and physical-device acceptance remain incomplete. This does not change the original master document or rewrite historical test results.
 
 ---
 

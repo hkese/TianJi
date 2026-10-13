@@ -1,8 +1,8 @@
 # TianJi 0.5 — 傳統擇時・擇方行程
 
-0.5 改為按心願搜尋傳統時段及方位，並用中文逐步記錄出發、到達、停留、返回。規則與限制見 [DIRECTION_RULES_1_0.md](docs/DIRECTION_RULES_1_0.md)，使用說明見 [USER_GUIDE_ZH.md](docs/USER_GUIDE_ZH.md)。此版本正在驗證，實際結果以 PROGRESS.md 與 docs/TEST_RESULTS.md 為準。
+0.5 改為按心願搜尋傳統時段及方位，並用中文逐步記錄出發、到達、停留、返回。規則與限制見 [DIRECTION_RULES_1_0.md](docs/DIRECTION_RULES_1_0.md)，使用說明見 [USER_GUIDE_ZH.md](docs/USER_GUIDE_ZH.md)。[Android 16 離線流程及建置驗證已通過](https://github.com/hkese/TianJi/actions/runs/38338847939)：60 個 Kotlin、21 個 Python、5 個資料層裝置測試及 1 個完整介面流程。精確範圍與 APK 驗證見 [TEST_RESULTS.md](docs/TEST_RESULTS.md)。
 
-套件仍為 `com.tianji.navigator.daily`；versionCode 7 / 0.5.0。更新 APK 必須使用原 0.4 私有保留的開發簽署金鑰，CI 臨時簽署 APK 不可冒充同簽署更新。
+套件仍為 `com.tianji.navigator.daily`；versionCode 7 / 0.5.0。已交付 APK 使用原 0.4 私有保留的開發簽署金鑰，可直接更新 0.4，毋須先解除安裝；CI 臨時簽署 APK 並非這份同簽署更新檔。沒有自動城市／道路選址、手勢步數或返回吉時；停留時間由本人安排，實體手機定位及廣東話播放仍須在手機確認。
 
 ---
 
@@ -33,7 +33,7 @@ Native, offline-first Android planning and reflection, plus a separate optional 
 1. Start the app; review privacy/evidence explanation. Device timezone is the default on new installs; existing choices survive upgrades and a searchable city picker changes it; no account or GPS is needed.
 2. Tap Qimen → Calculate for now. Read the traditional interpretation and tap palaces for details. Change date/time/zone with pickers; save and reopen charts offline.
 3. Create a goal with measurable success criteria, deadline, priority, available minutes and spending limit; add milestones.
-4. Open “Plan next step” and generate three alternatives. They share a bounded time window and cost zero; choose one.
+4. Open “Plan next step”, choose general outing or harmony, then search 24/72/168 hours. Up to three chronological matches have separate calculated charts and departure windows; an empty result is explicit. Choose one, identify the direction from a fixed origin and record departure/arrival/stay/return. Optional location and installed offline speech support this flow; this is not street routing. Older practical plans remain in history.
 5. Record the actual outcome. Unknown is kept separate from failure.
 6. Add an observation and replan; prior versions remain inspectable.
 7. Settings offers JSON backup/restore, opt-in reminders (quiet 22:00–08:00), language, theme and delete-all.

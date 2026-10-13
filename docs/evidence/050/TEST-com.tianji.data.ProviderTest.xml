@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.tianji.data.ProviderTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-13T02:31:30.504Z" hostname="fe32069eb778" time="0.773">
+  <properties/>
+  <testcase name="failureIsNotSuccessfulConnection" classname="com.tianji.data.ProviderTest" time="0.602"/>
+  <testcase name="httpsConnectionTest" classname="com.tianji.data.ProviderTest" time="0.17"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

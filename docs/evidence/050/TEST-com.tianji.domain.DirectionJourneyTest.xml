@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.tianji.domain.DirectionJourneyTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-10-13T02:39:28.032Z" hostname="fe32069eb778" time="1.15">
+  <properties/>
+  <testcase name="noCandidateDoesNotGenerateFakeDirections" classname="com.tianji.domain.DirectionJourneyTest" time="0.261"/>
+  <testcase name="journeyGatesDepartureAndPersistsAllPhasesWithoutInferringOutcome" classname="com.tianji.domain.DirectionJourneyTest" time="0.313"/>
+  <testcase name="coordinateMathHandlesDateLineAndNorthWrap" classname="com.tianji.domain.DirectionJourneyTest" time="0.0"/>
+  <testcase name="promptHasEachActualChartButNeverLocationOrInventedPracticalRecipe" classname="com.tianji.domain.DirectionJourneyTest" time="0.142"/>
+  <testcase name="deadlineReservesTheUserTripBudgetAndForgedCrossingWindowIsRejected" classname="com.tianji.domain.DirectionJourneyTest" time="0.127"/>
+  <testcase name="publishedHarmonyConfigurationProducesAnActualItinerary" classname="com.tianji.domain.DirectionJourneyTest" time="0.014"/>
+  <testcase name="candidatesHaveOwnChartsFrozenPurposeAndBoundedWindow" classname="com.tianji.domain.DirectionJourneyTest" time="0.148"/>
+  <testcase name="promptEscapesGoalInstructionDelimiters" classname="com.tianji.domain.DirectionJourneyTest" time="0.083"/>
+  <testcase name="backupRejectsForgedPalace" classname="com.tianji.domain.DirectionJourneyTest" time="0.058"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

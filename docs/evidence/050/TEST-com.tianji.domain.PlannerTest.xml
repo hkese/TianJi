@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.tianji.domain.PlannerTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-10-13T02:39:29.347Z" hostname="fe32069eb778" time="0.012">
+  <properties/>
+  <testcase name="invalidCostRejected" classname="com.tianji.domain.PlannerTest" time="0.002"/>
+  <testcase name="fullBackupRoundTrip" classname="com.tianji.domain.PlannerTest" time="0.001"/>
+  <testcase name="threeBoundedAlternatives" classname="com.tianji.domain.PlannerTest" time="0.001"/>
+  <testcase name="pastDeadlineRejected" classname="com.tianji.domain.PlannerTest" time="0.0"/>
+  <testcase name="cyclicHistoryRejected" classname="com.tianji.domain.PlannerTest" time="0.003"/>
+  <testcase name="deadlineBoundsAllAlternatives" classname="com.tianji.domain.PlannerTest" time="0.0"/>
+  <testcase name="orphanJournalRejected" classname="com.tianji.domain.PlannerTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

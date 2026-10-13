@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.tianji.qimen.DirectionRulesTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-13T02:31:18.051Z" hostname="fe32069eb778" time="1.508">
+  <properties/>
+  <testcase name="classicalJadeMaidenWorkedExampleAgreesWithCoreGeometry" classname="com.tianji.qimen.DirectionRulesTest" time="0.872"/>
+  <testcase name="matchesAlwaysHaveDocumentedConjunctionAndNoKnownExclusion" classname="com.tianji.qimen.DirectionRulesTest" time="0.528"/>
+  <testcase name="blockedChartsCannotBeUsed" classname="com.tianji.qimen.DirectionRulesTest" time="0.001"/>
+  <testcase name="unknownPurposeCannotSilentlyFallBack" classname="com.tianji.qimen.DirectionRulesTest" time="0.004"/>
+  <testcase name="windowsSplitDstGapOverlapAndSolarTermWithoutChangingChartInside" classname="com.tianji.qimen.DirectionRulesTest" time="0.103"/>
+  <system-out><![CDATA[R7_WORKED_EXAMPLE 2026-01-05T04:00:00Z matches=[DirectionMatch(palace=7, ruleIds=[R7_YUNU_SHOUMEN], reasons=[值使門到地盤主干丁所在宮。[R7 卷二・玉女守門]])]
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

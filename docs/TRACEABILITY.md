@@ -55,3 +55,14 @@ Final 0.2.2 evidence: `docs/evidence/022/` and https://github.com/hkese/TianJi/a
 | NAV-006/007 | Existing journal/replan links, immutable frozen goal/steps, expired-window refresh | Backup round trip, Room journey, UI journey |
 | NAV-009 | `AnalysisPrompt.kt`, `AnalysisHandoff.kt`: review, copy, share chooser, explicit ChatGPT open | Exact chart/selected-option/privacy/delimiter unit tests, Android clipboard assertion |
 | NAV-010 | New defaulted payload fields; former backups remain readable | Legacy JSON omission test and Room round trip |
+
+## 0.5 sourced directional itinerary (CI 38338847939)
+
+| Requirement / clarification | Implementation | Verification and limits |
+|---|---|---|
+| D0 / CORE-001/004 / NAV-012 | `core-qimen/DirectionRules.kt`, `docs/DIRECTION_RULES_1_0.md`: fixed R1/R7 conditions and conservative exclusions | `DirectionRulesTest`; R7 example geometry and actual matches checked. Basic traditional profile only; CORE-005 human-golden target still incomplete. |
+| D1 / NAV-005 | `core-domain/DirectionalJourney.kt`: 24/72/168-hour search, separate question/candidate charts, chronological matches, explicit no-match result, deadline/budget limits | `DirectionJourneyTest`, DST/term rule tests and native UI; no invented filler candidate or success probability. |
+| D2 | `feature-planner/DirectionDevices.kt`: optional foreground fixes, fixed origin, relative bearing/distance, magnetic/true-north distinction | Domain bearing/coordinate tests and compass display visual review. Physical GPS/permission dialogs/accuracy remain untested; no street/city routing. |
+| D3 / NAV-002/006/007/010 | `DirectionPlannerScreen.kt`, repository stage persistence, Chinese guide, optional installed offline TTS | Stage/domain tests, Room restore and Android 16 selection/history/restart journey. Actual physical walking stages and Cantonese playback not exercised. Stay is user scheduling. |
+| D4 / NAV-009/012 | Direction-specific manual AI prompt, canonical candidate charts/rules, private-coordinate exclusion, sensitive clipboard flag | Prompt/delimiter/privacy unit tests, native handoff/clipboard assertions. No automatic upload/response import or fabricated ritual instructions. |
+| D5 | API 36 CI, signed 0.5 debug APK, same 0.4 identity | 60 Kotlin / 21 Python, 5 Room tests, 1 full UI journey, lint/build, v2/v3 and ZIP alignment pass. See TEST_RESULTS.md for exact source, artifact hashes, failed attempts and physical-device limits. |

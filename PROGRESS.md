@@ -1,11 +1,14 @@
-# 0.5.0 — sourced time/direction itineraries (verification in progress)
+# 0.5.0 — sourced time/direction itineraries (verified debug delivery)
 
 - Selected `classical-direction-civil/1.0`: general outings use Qi-Men conjunction; harmony uses Ren Dun / Jade Maiden. Fixed exclusions and limits are documented in `docs/DIRECTION_RULES_1_0.md`.
 - Implemented offline 24/72/168-hour searches, separate question and candidate charts, explicit no-match results and chronological candidates.
 - Implemented persisted departure/arrival/stay/return stages, optional foreground location capture, compass with optional true-north correction, and installed offline Cantonese speech.
 - New manual AI prompt explains the calculated itinerary and omits coordinates; legacy practical plans remain accessible as history. Added Chinese instructions and preserved the 0.4 package/signing identity for updates.
 - Initial compile errors in Chinese string interpolation were fixed. Tests correctly allow a harmony search to have zero matches; no fallback or fabricated candidate is inserted.
-- Tests/build/device verification are still in progress. No 0.5 APK or device pass is claimed at this checkpoint.
+- Verified app source: `5455294381c1238128d695069a1d085783e9629a`. Both jobs pass in https://github.com/hkese/TianJi/actions/runs/38338847939 .
+- 60 Kotlin unit tests, 21 Python tests, Ruff and Android lint/build pass. Android 16 offline emulator: 5 Room/backup/Keystore tests plus the complete native UI journey pass. Two earlier runs failed an ambiguous history-test selector; the final selector targets the saved plan version. Native compass and method screens reviewed at 360dp.
+- Signed APK: 0.5.0 / versionCode 7, 33,791,280 bytes; SHA-256 `bcfee9c851f803e1f2f052339dc6b1d2628e8125a71f0902df0e5f653aa5cca9`. v2/v3 signatures and 16 KB ZIP alignment pass. Same package and retained signer as 0.4; update without uninstalling. All non-signature APK entries match the successful CI build.
+- APK saved for delivery; source is published. Physical Samsung GPS/compass accuracy, permission-dialog paths and actual Cantonese playback remain unverified. No automatic city/street routing, ritual gestures/counts, auspicious return time or full human-golden acceptance is claimed. Details: `docs/TEST_RESULTS.md`.
 
 ---
 
@@ -13,7 +16,7 @@
 
 The user clarified that the desired primary experience is traditional time/direction selection and an explicit departure, destination, action, stay and return itinerary. The 0.4.0 practical recipes do not meet that need. Its successful software tests do not establish product acceptance for this clarified requirement.
 
-Primary-source investigation and a concrete revised workflow/acceptance plan are recorded in `docs/DIRECTIONAL_NAVIGATION_PLAN_ZH.md`. Classical texts contain relevant directional and ritual material, but the specific operative method, conditions and examples must be reconciled before coding gestures, counts or return timings. No new app feature or APK is claimed in this documentation revision. Current code/deliverable remains 0.4.0 below.
+Historical checkpoint before implementation: primary-source investigation and the revised workflow/acceptance plan were recorded in `docs/DIRECTIONAL_NAVIGATION_PLAN_ZH.md`. At that checkpoint, code/deliverable remained 0.4.0. The verified 0.5 delivery above supersedes that status; unsourced gestures, counts and return timings remain excluded.
 
 ---
 

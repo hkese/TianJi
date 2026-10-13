@@ -1,10 +1,12 @@
 # Known limitations
 
-## 0.5 implementation (verification pending)
+## 0.5 verified software scope and remaining limits
+- CI 38338847939 passes the build, 60 Kotlin / 21 Python tests, 5 Room tests and one complete offline Android 16 UI journey. These checks establish the tested software behaviour, not predictive efficacy. See `docs/TEST_RESULTS.md`.
 - Time/direction selection is a limited classical profile, not full professional divination. Void/horse/seasonal-strength synthesis and 100 expert human goldens remain unfinished. Harmony can have no match even in a seven-day search.
 - Directional walking guidance and optional measured start/arrival bearings are implemented, but there is no street routing, offline map, automated city/POI choice, auspicious return time, post-return sitting direction, sourced gesture or step-count engine.
 - Stay duration is chosen by the user, not a traditional auspicious number. View-only mode does not perform the traditional outing.
-- Compass/GPS and Cantonese voice depend on the phone hardware, permissions, location accuracy and installed offline voice. Physical Samsung/One UI verification is still unavailable.
+- Compass/GPS and Cantonese voice depend on the phone hardware, permissions, location accuracy and installed offline voice. Physical Samsung/One UI, real GPS accuracy and permission-grant/denial dialogs, and actual Cantonese playback have not been tested. The UI journey does not simulate a physical walking trip.
+- The delivered 0.5 APK has the same package and retained signing certificate as 0.4. CI's temporary-signer APK is not the same-key update artifact. Upgrade compatibility is checked by identity and backup/persistence tests; a physical-phone 0.4-to-0.5 installer upgrade has not been exercised here.
 - Selected position fixes are included in private backups, but not in the AI handoff or research export.
 
 ## Earlier revision notes

@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="com.tianji.data.RepositoryTest" tests="5" failures="0" errors="0" skipped="0" time="1.713" timestamp="2026-10-13T02:54:11" hostname="localhost">
+  <properties>
+    <property name="device" value="emulator-5554 - 16" />
+    <property name="flavor" value="" />
+    <property name="project" value=":android:core-data" />
+  </properties>
+  <testcase name="chartSaveDoesNotDeleteLinkedActionsAndLegacyBackupStillRestores" classname="com.tianji.data.RepositoryTest" time="0.324" />
+  <testcase name="credentialRoundTrip" classname="com.tianji.data.RepositoryTest" time="0.001" />
+  <testcase name="legacyMigrationPreservesRows" classname="com.tianji.data.RepositoryTest" time="0.17" />
+  <testcase name="persistedJourneyBackupAndDelete" classname="com.tianji.data.RepositoryTest" time="0.153" />
+  <testcase name="directionalPlanRestoresFrozenChartsAndSelection" classname="com.tianji.data.RepositoryTest" time="0.431" />
+</testsuite>

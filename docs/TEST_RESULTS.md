@@ -1,3 +1,38 @@
+# 0.5.0 — sourced time/direction itineraries
+
+Date: 2026-10-13. Verified executable source: `5455294381c1238128d695069a1d085783e9629a`.
+CI: https://github.com/hkese/TianJi/actions/runs/38338847939 — verify and Android 16 jobs successful. Subsequent documentation/evidence publication does not alter the tested executable source.
+
+| Gate | Observed result |
+|---|---|
+| Kotlin JVM/unit | 60 passed: domain 29, Qimen 23, data 8. Local suite XML retained in `evidence/050`; final CI also passes these suites. |
+| Direction rules | 5 new tests cover the R7 worked palace example, actual match conditions/exclusions, blocked input, unknown purpose and stable windows across DST/solar-term boundaries. The geometry example is not an additional independently adjudicated full-chart golden. |
+| Journey domain | 9 new tests cover actual candidate charts, empty harmony results, the published geometry case, windows/deadlines/budgets, forged inputs, stage gating/persistence, geographic bearings, and prompt chart/privacy/delimiter handling. |
+| Research Lab | 21 tests passed; Ruff passed. Existing synthetic research remains separate from predictive validation. |
+| Android build/lint | Final CI Gradle build and lint gates passed; warning count not separately collected. |
+| API 36 data | 5 Room/backup/Keystore tests passed in 1.713 s, including direction-plan snapshots, selection and backup/restore. |
+| API 36 UI | 1 complete native journey passed in 22.115 s; Google APIs x86_64, 720×1440 / 320dpi (360dp width), Wi-Fi/data disabled. |
+| UI scope | Chinese onboarding/city picker, keyboard/goal, seven-day general-outing search, candidate charts, AI preview and clipboard, selected itinerary/compass display, unknown observation, restart, replan/history, methods, English/dark mode, chart date/time and saved chart replay. |
+| Visual review | Selected itinerary, handoff, compass and method screens inspected; text wraps at 360dp. Clipboard preview is redacted by the Android sensitive-content flag. The temporary system clipboard overlay is visible in captures. Public evidence is text-only. |
+| APK verification | Package/version/min/target checked with aapt; v2/v3 verification passed with `apksigner verify --min-sdk-version 24`; `zipalign -c -P 16 4` passed. Manifest minimum remains API 28. |
+
+**Observed failures and fixes:** initial compilation caught unbraced Chinese-adjacent Kotlin interpolation; fixed. One initial domain test incorrectly required a harmony match within every seven-day search; it was corrected to accept a legitimate empty result, with a separate positive worked example. Matching rules were not relaxed. CI runs `38338006188` and `38338604701` passed verification/data gates but the UI assertion matched both an observation field and its saved history entry. The final test selects the versioned saved-plan row, and passes. The first failing XML is retained as `android16-ui-first-failure.xml`; it is not a passing run.
+
+Local compilation/unit work succeeded, including final domain tests and both instrumentation APK compilations (`BUILD SUCCESSFUL`, 3m26s). An earlier redundant full build was stopped during lint after APK assembly; that interrupted command is not claimed as a full local pass. The delivered APK is compiled by the final successful CI run above.
+
+## Delivered 0.5 package
+
+- Filename: `TianJi-Navigator-0.5.0-debug.apk`; build-output copy: `android/app/build/outputs/apk/debug/app-debug.apk`.
+- Package `com.tianji.navigator.daily`; launcher `天機・行動導航`; versionCode 7 / versionName 0.5.0; minSdk 28, target/compileSdk 36.
+- Size: 33,791,280 bytes. SHA-256: `bcfee9c851f803e1f2f052339dc6b1d2628e8125a71f0902df0e5f653aa5cca9`.
+- Signing certificate SHA-256: `e262754c09f6cef572c56aaa785debffa3e62e09ff87f93f87f0394e2e9de240`, matching the delivered 0.4 daily app. No uninstall is required for that update. Older `com.tianji.navigator` remains a separate package and needs explicit JSON export/import.
+- CI APK artifact `11785612833`, downloaded ZIP SHA-256 `883bfa601052eb203ac9a5843a614f4f4c61bd27b4896ac40f34e9a2f0c13fb2`. Download checksum verified, APK aligned and re-signed using the retained private daily-app development key. Every non-signature ZIP entry digest matches the CI APK. Key material is never published.
+- Device artifact `11785806539`, downloaded ZIP SHA-256 `6a5d341ceda5cf3544d660028f420297264fffe0f2650b0f4cdeb5d9031bdc01`. Passing UI/data XML copied into `evidence/050`.
+
+**Limits:** no physical Samsung/One UI test, actual GPS accuracy/permission-grant/denial dialog test, real Cantonese playback, full walking-stage UI simulation or physical 0.4-to-0.5 installer exercise. Identity and persistent-data compatibility are checked; 16 KB ZIP alignment is not a 16 KB-page runtime test. No automatic city/POI/street routing, gesture/step-count engine, auspicious return time, birth-chart calculation or full-pattern judgment is implemented. The 100 independent expert-human-golden goal remains incomplete. Software test success is not evidence that a direction causes the desired real-world outcome.
+
+---
+
 # 0.4.0 — goal-to-action navigation
 
 Source: `75eca621ee280abc11b83484b2d7743d8c8c7f40`.
