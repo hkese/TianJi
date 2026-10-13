@@ -13,9 +13,9 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import kotlinx.coroutines.delay
 
-@Composable fun PlannerScreen(goalId:String,data:Backup,zone:String,onNew:(String)->Unit,onChoose:(ActionCandidate)->Unit,onJournal:(ActionCandidate)->Unit,onAi:(Goal,List<ActionCandidate>)->Unit,onBack:()->Unit){
+@Composable fun LegacyPlannerScreen(goalId:String,data:Backup,zone:String,onNew:(String)->Unit,onChoose:(ActionCandidate)->Unit,onJournal:(ActionCandidate)->Unit,onAi:(Goal,List<ActionCandidate>)->Unit,onBack:()->Unit){
  val goal=data.goals.firstOrNull{it.id==goalId}?:return
- val plans=data.plans.filter{it.goalId==goalId}.sortedByDescending{it.createdAt}
+ val plans=data.plans.filter{it.goalId==goalId && it.directionRequest==null}.sortedByDescending{it.createdAt}
  var shown by rememberSaveable(goalId){mutableStateOf<String?>(null)}
  val plan=plans.firstOrNull{it.id==shown}?:plans.firstOrNull()
  var reason by rememberSaveable(goalId){mutableStateOf("")}

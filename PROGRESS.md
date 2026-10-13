@@ -1,3 +1,14 @@
+# 0.5.0 — sourced time/direction itineraries (verification in progress)
+
+- Selected `classical-direction-civil/1.0`: general outings use Qi-Men conjunction; harmony uses Ren Dun / Jade Maiden. Fixed exclusions and limits are documented in `docs/DIRECTION_RULES_1_0.md`.
+- Implemented offline 24/72/168-hour searches, separate question and candidate charts, explicit no-match results and chronological candidates.
+- Implemented persisted departure/arrival/stay/return stages, optional foreground location capture, compass with optional true-north correction, and installed offline Cantonese speech.
+- New manual AI prompt explains the calculated itinerary and omits coordinates; legacy practical plans remain accessible as history. Added Chinese instructions and preserved the 0.4 package/signing identity for updates.
+- Initial compile errors in Chinese string interpolation were fixed. Tests correctly allow a harmony search to have zero matches; no fallback or fabricated candidate is inserted.
+- Tests/build/device verification are still in progress. No 0.5 APK or device pass is claimed at this checkpoint.
+
+---
+
 # 2026-10-13 product correction — directional Qimen navigation
 
 The user clarified that the desired primary experience is traditional time/direction selection and an explicit departure, destination, action, stay and return itinerary. The 0.4.0 practical recipes do not meet that need. Its successful software tests do not establish product acceptance for this clarified requirement.

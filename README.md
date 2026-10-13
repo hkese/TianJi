@@ -1,3 +1,11 @@
+# TianJi 0.5 — 傳統擇時・擇方行程
+
+0.5 改為按心願搜尋傳統時段及方位，並用中文逐步記錄出發、到達、停留、返回。規則與限制見 [DIRECTION_RULES_1_0.md](docs/DIRECTION_RULES_1_0.md)，使用說明見 [USER_GUIDE_ZH.md](docs/USER_GUIDE_ZH.md)。此版本正在驗證，實際結果以 PROGRESS.md 與 docs/TEST_RESULTS.md 為準。
+
+套件仍為 `com.tianji.navigator.daily`；versionCode 7 / 0.5.0。更新 APK 必須使用原 0.4 私有保留的開發簽署金鑰，CI 臨時簽署 APK 不可冒充同簽署更新。
+
+---
+
 > 0.4 行動導航更新：由目的產生三個有步驟的方案，連同實際盤面方位，並可複製完整提示詞交畀 ChatGPT／Codex。新版與舊版並排安裝，先保留舊 App。詳見 [繁體中文使用教學](docs/USER_GUIDE_ZH.md)。目前驗證狀態見 [PROGRESS.md](PROGRESS.md)。
 
 # TianJi Navigator

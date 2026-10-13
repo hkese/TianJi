@@ -1,4 +1,13 @@
 # Known limitations
+
+## 0.5 implementation (verification pending)
+- Time/direction selection is a limited classical profile, not full professional divination. Void/horse/seasonal-strength synthesis and 100 expert human goldens remain unfinished. Harmony can have no match even in a seven-day search.
+- Directional walking guidance and optional measured start/arrival bearings are implemented, but there is no street routing, offline map, automated city/POI choice, auspicious return time, post-return sitting direction, sourced gesture or step-count engine.
+- Stay duration is chosen by the user, not a traditional auspicious number. View-only mode does not perform the traditional outing.
+- Compass/GPS and Cantonese voice depend on the phone hardware, permissions, location accuracy and installed offline voice. Physical Samsung/One UI verification is still unavailable.
+- Selected position fixes are included in private backups, but not in the AI handoff or research export.
+
+## Earlier revision notes
 - The 2026-10-13 clarified requirement is traditional time/direction selection with a physical itinerary. Current 0.4.0 practical recipes do not satisfy it. The missing method/conditions and phased implementation are tracked in `docs/DIRECTIONAL_NAVIGATION_PLAN_ZH.md`; no sourced gesture/step-count/stay/return engine is implemented.
 - 0.4.0 adds practical navigation and manual AI handoff. Directions come from the actual door palace; the purpose-to-door mapping is an app-authored symbolic lens, not a whole-chart auspiciousness score. No compass, GPS measurement, travel routing or favourable-time search.
 - 0.4.0 uses a new side-by-side package/signing identity because the former private debug key was lost when the temporary environment was cleared. Keep the old app and export/import a JSON backup; the new app cannot read another package’s private data.

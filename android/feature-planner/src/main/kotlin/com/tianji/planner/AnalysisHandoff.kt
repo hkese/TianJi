@@ -29,7 +29,7 @@ import com.tianji.ui.*
    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(16.dp)){
     Text(t("帶住呢個盤問 AI","Ask AI with this chart"),style=MaterialTheme.typography.headlineSmall)
     Text(t("1 · 檢視下面內容，確認冇唔想分享嘅資料。\n2 · 按「複製完整提示詞」。\n3 · 開 ChatGPT 或你使用的 Codex 對話，貼上再送出。\n4 · 睇完返嚟揀方案，做完記錄結果。","1 · Review the content below.\n2 · Copy the complete prompt.\n3 · Open a ChatGPT or Codex conversation, paste and send.\n4 · Return to choose an option and record the result."))
-    Text(t("包括：本計劃的目標、描述、限制、改計劃原因、完整盤、三方案及本計劃已記錄的結果。唔包括日誌筆記、其他目標、API 金鑰或 GPS。只有你喺對方服務按送出，先會交畀佢分析。","Includes this plan's goal, description, constraints, replan reason, complete chart, three options and recorded outcomes. Excludes journal notes, other goals, API keys and GPS. You send it yourself in the other service."),style=MaterialTheme.typography.bodySmall)
+    Text(t("分享內容以預覽為準：目標、限制、候選方案及相應完整盤；新行程包含擇時擇方規則。唔包括日誌筆記、其他目標、API 金鑰或 GPS。只有你喺對方服務按送出，先會交畀佢分析。","Review the preview: it contains your goal, constraints, candidate options and their charts; new itineraries include time and direction rules. Excludes journal notes, other goals, API keys and GPS. You send it yourself in the other service."),style=MaterialTheme.typography.bodySmall)
     OutlinedButton(onClick={preview=!preview},modifier=Modifier.fillMaxWidth().testTag("handoff-preview")){Text(if(preview)t("收起完整內容","Hide complete content") else t("檢視完整分享內容","Review complete content"))}
     if(preview)SelectionContainer{Text(prompt,style=MaterialTheme.typography.bodySmall,modifier=Modifier.testTag("handoff-prompt"))}
     ActionButton(if(copied)t("已複製 · 下一步開 ChatGPT","Copied · open ChatGPT next") else t("複製完整提示詞","Copy complete prompt")){

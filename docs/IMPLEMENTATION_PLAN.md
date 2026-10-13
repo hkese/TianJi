@@ -1,3 +1,13 @@
+# 0.5 執行次序
+
+1. 固定 R1 奇門相合、R7 人遁／玉女守門與保守排除規則：已編碼及文件化。
+2. 實作獨立時段盤、候選搜尋、備份與行程階段：已編碼，測試中。
+3. 中文畫面／教學、選用指南針及單次定位、離線語音、行程 AI 提示詞：已編碼，測試中。
+4. 單元、Room、Android 16 離線流程、lint 與編譯：進行中，按實際結果修正。
+5. GitHub 發布與保留簽署的可安裝 APK：待驗證完成。
+
+---
+
 # 2026-10-13 revision — traditional directional itinerary
 
 The latest product clarification supersedes the practical-recipe interpretation of 0.4.0. Follow `DIRECTIONAL_NAVIGATION_PLAN_ZH.md`: D0 source/method selection, D1 deterministic timing/direction engine, D2 location/bearing, D3 Chinese itinerary/voice, D4 bounded AI explanation, D5 Android 16 verification and signed APK. D0 is in investigation; later phases are not implemented. This does not change the original master document or rewrite historical test results.

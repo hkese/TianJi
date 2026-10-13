@@ -16,7 +16,7 @@ class AppModel(val app:Application,val repo:Repository,val prefs:Preferences,val
  val state=combine(repo.state,prefs.flow){data,s->UiState(data,s,true)}.stateIn(viewModelScope,SharingStarted.Eagerly,UiState())
  val messages=Channel<String>(Channel.BUFFERED);val busy=MutableStateFlow(false);val provider=MutableStateFlow(AiProviderConfig());private val ai=AiClient()
  init{perform{provider.value=repo.provider()}}
- fun perform(block:suspend ()->Unit){viewModelScope.launch{busy.value=true;try{withContext(Dispatchers.IO){block()}}catch(e:Exception){messages.send(if(state.value.settings.english)"Could not complete this action. Check the input, deadline, file or connection." else "未能完成。請檢查輸入、限期、檔案或連線。")}finally{busy.value=false}}}
+ fun perform(block:suspend ()->Unit){if(busy.value)return;busy.value=true;viewModelScope.launch{try{withContext(Dispatchers.IO){block()}}catch(e:Exception){messages.send(if(state.value.settings.english)"Could not complete this action. Check the input, deadline, file or connection." else "未能完成。請檢查輸入、限期、檔案或連線。")}finally{busy.value=false}}}
  fun settings(s:Settings)=perform{prefs.save(s);ReminderWorker.configure(app,s.reminders)}
  fun saveProvider(p:AiProviderConfig,key:String)=perform{if(p.baseUrl!=provider.value.baseUrl)vault.clear();if(key.isNotBlank())vault.save(key);repo.provider(p);provider.value=p}
  private fun text(zh:String,en:String)=if(state.value.settings.english)en else zh

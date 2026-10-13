@@ -42,5 +42,18 @@ import org.junit.runner.RunWith
   try{repo.restore(backup.replace("天柱","天蓬"));fail("Tampered symbols accepted")}catch(_:IllegalArgumentException){}
   assertEquals(backup,repo.export());repo.db.close()
  }
+ @Test fun directionalPlanRestoresFrozenChartsAndSelection():Unit=runBlocking {
+  val context=InstrumentationRegistry.getInstrumentation().targetContext
+  context.deleteDatabase("tianji.db");var repo=Repository.open(context)
+  val goal=Goal(title="Synthetic outdoor intention",successCriteria="Record observation")
+  repo.saveGoal(goal);val plan=repo.newDirectionPlan(goal.id,"Asia/Hong_Kong","synthetic",DirectionRequest(horizonHours=168))
+  var data=repo.snapshot();assertEquals(3,data.actions.size);assertNotNull(plan.questionChartId)
+  repo.choose(data.actions.first());repo.saveGoal(goal.copy(title="Edited later"))
+  val text=repo.export();repo.db.close();repo=Repository.open(context);repo.restore(text)
+  data=repo.snapshot();data.validate();assertEquals(text,repo.export());assertTrue(data.actions.first().selected)
+  assertEquals(goal.title,data.plans.single().goalSnapshot!!.title)
+  assertTrue(data.actions.all{it.itinerary!=null && data.charts.any{c->c.id==it.chartId}})
+  repo.db.close()
+ }
  @Test fun credentialRoundTrip(){val context=InstrumentationRegistry.getInstrumentation().targetContext;val vault=CredentialVault(context);vault.save("test-only-not-a-real-key");assertEquals("test-only-not-a-real-key",vault.read());vault.clear();assertEquals("",vault.read())}
 }

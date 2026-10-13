@@ -102,65 +102,52 @@ class JourneyTest {
         compose.onNodeWithText("儲存目標").performClick()
         awaitText("Read one page")
         compose.onNodeWithText("規劃下一步").performScrollTo().performClick()
-        compose.onNodeWithText("產生三個方案").performScrollTo().performClick()
-        awaitText("1 · 讀一小段，寫一句重點")
-        compose.onAllNodesWithText("選擇此方案").assertCountEquals(3)
-        compose.onAllNodesWithText("可選象意方位：", substring=true).assertCountEquals(3)
-        compose.onNodeWithText("交畀 ChatGPT／Codex 分析").performScrollTo().performClick()
+        compose.onNodeWithTag("horizon-168").performScrollTo().performClick()
+        compose.onNodeWithText("搜尋合適時段及方位").performScrollTo().performClick()
+        awaitText("本次 3 個候選")
+        compose.onAllNodesWithText("選擇呢個行程").assertCountEquals(3)
+        compose.onNodeWithText("交畀 ChatGPT／Codex 解說行程").performScrollTo().performClick()
         compose.onNodeWithText("帶住呢個盤問 AI").assertExists()
         compose.onNodeWithTag("handoff-preview").performClick()
         compose.onNodeWithTag("handoff-prompt").assertExists()
         compose.onNodeWithTag("handoff-preview").performScrollTo().performClick()
         compose.onNodeWithText("複製完整提示詞").performScrollTo().performClick()
-        compose.onNodeWithText("已複製 · 下一步開 ChatGPT").assertExists()
         compose.runOnIdle {
             val clipboard=compose.activity.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
             val prompt=clipboard.primaryClip!!.getItemAt(0).text.toString()
             assertTrue(prompt.contains("Read one page"))
-            assertTrue(prompt.contains("<context_json>"))
-            assertTrue(prompt.contains("shijia-zhuanpan-chaibu-civil-kun2"))
+            assertTrue(prompt.contains("tianji-direction-handoff/1.0"))
+            assertTrue(prompt.contains("classical-direction-civil/1.0"))
         }
-        capture("handoff-zh.png")
+        capture("direction-handoff.png")
         compose.onNodeWithText("返回天機方案").performScrollTo().performClick()
-        compose.onNodeWithText("1 · 讀一小段，寫一句重點").performScrollTo()
-        capture("navigation-zh.png")
-        compose.onAllNodesWithText("選擇此方案")[0].performScrollTo().performClick()
-        awaitText("記錄結果")
-        compose.onNodeWithText("你已揀好 · 即刻做呢一步").performScrollTo().assertIsDisplayed()
-        capture("selected-next-step.png")
-        compose.onNodeWithText("記錄結果").performScrollTo().performClick()
-        compose.onNodeWithText("完成", substring = false).performClick()
+        compose.onAllNodesWithText("選擇呢個行程")[0].performScrollTo().performClick()
+        awaitText("已選行程 · 準備出發")
+        compose.onNodeWithText("已選行程 · 準備出發").performScrollTo().assertIsDisplayed()
+        capture("direction-selected.png")
+        compose.onNodeWithText("記錄心願結果／觀察").performScrollTo().performClick()
+        compose.onNodeWithText("未知", substring = false).performClick()
         compose.onNodeWithText("儲存日誌").performScrollTo().performClick()
         compose.waitUntil(120000) {
-            compose.onAllNodesWithText(" · 完成", substring = true).fetchSemanticsNodes().isNotEmpty()
+            compose.onAllNodesWithText(" · 未知", substring = true).fetchSemanticsNodes().isNotEmpty()
         }
         compose.activityRule.scenario.recreate()
         awaitText("行動日誌")
-        compose.onNodeWithText(" · 完成", substring = true).assertExists()
-        compose.onNodeWithText("SUCCESS", substring = true).assertDoesNotExist()
-
+        compose.onNodeWithText(" · 未知", substring = true).assertExists()
         compose.onNodeWithTag("tab-goals").performClick()
-        awaitText("新增目標")
         awaitText("規劃下一步")
         compose.onNodeWithText("規劃下一步").performScrollTo().performClick()
-        awaitText("1 · 讀一小段，寫一句重點")
-        compose.onNodeWithText("新觀察／改計劃原因").performScrollTo()
-            .performTextInput("Updated after observation")
-        compose.onNodeWithText("重新規劃，保留歷史").performScrollTo().performClick()
-        awaitText("Updated after observation")
-        // Replan dismisses focus and the IME. Wait for that product behaviour before Back.
-        compose.waitUntil(120000) {
-            compose.runOnIdle {
-                ViewCompat.getRootWindowInsets(compose.activity.window.decorView)
-                    ?.isVisible(WindowInsetsCompat.Type.ime()) != true
-            }
-        }
-        // Drain the shell command so the event is delivered before awaiting the destination.
-        android.os.ParcelFileDescriptor.AutoCloseInputStream(
-            InstrumentationRegistry.getInstrumentation().uiAutomation
-                .executeShellCommand("input keyevent KEYCODE_BACK")
-        ).use { it.readBytes() }
-        awaitText("新增目標")
+        awaitText("已選行程 · 準備出發")
+        compose.onNodeWithText("新觀察／重新擇時原因").performScrollTo().performTextInput("Synthetic updated observation")
+        compose.onNodeWithText("按新情況重新擇時").performScrollTo().performClick()
+        compose.onNodeWithText("搜尋合適時段及方位").performScrollTo().performClick()
+        awaitText("本次 3 個候選")
+        awaitText("歷史行程")
+        compose.onNodeWithText("歷史行程").performScrollTo().performClick()
+        compose.onNodeWithText("Synthetic updated observation",substring=true).assertExists()
+        compose.onNodeWithText("方法、依據及限制").performScrollTo().performClick()
+        compose.onNodeWithText("古籍簡式・TRADITIONAL").performScrollTo().assertIsDisplayed()
+        capture("direction-method.png")
 
         compose.onNodeWithTag("tab-settings").performClick()
         awaitText("顯示與時間")

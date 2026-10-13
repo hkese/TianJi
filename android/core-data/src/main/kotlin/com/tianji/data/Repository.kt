@@ -42,6 +42,19 @@ suspend fun newPlan(goalId:String,zone:String,reason:String):PlanVersion=db.with
  val actions=Navigator.candidates(goal,plan,chart,now)
  put(chart);put(plan);actions.forEach{put(it)};plan
 }
+suspend fun newDirectionPlan(goalId:String,zone:String,reason:String,request:DirectionRequest):PlanVersion {
+ val b=snapshot(); val goal=b.goals.single{it.id==goalId}; val now=Instant.now()
+ val plan=PlanVersion(goalId=goalId,createdAt=now.toString(),parentVersionId=b.plans.filter{it.goalId==goalId}.maxByOrNull{it.createdAt}?.id,reason=reason,version=(b.plans.filter{it.goalId==goalId}.maxOfOrNull{it.version}?:0)+1)
+ val result=kotlinx.coroutines.withContext(Dispatchers.Default){DirectionNavigator.plan(goal,plan,request,now,zone)}
+ db.withTransaction { result.charts.forEach{put(it)};put(result.plan);result.actions.forEach{put(it)} }
+ return result.plan
+}
+suspend fun advanceDirection(actionId:String,point:GeoPoint?=null)=db.withTransaction {
+ val a=snapshot().actions.single{it.id==actionId}
+ require(a.selected){"請先揀選行程。"}
+ val updated=DirectionNavigator.next(a,Instant.now(),point)
+ db.openHelper.writableDatabase.execSQL("UPDATE actions SET payload=? WHERE id=?",arrayOf(Codec.encodeToString(updated),a.id))
+}
 suspend fun choose(action:ActionCandidate)=db.withTransaction {
  snapshot().actions.filter{it.planVersionId==action.planVersionId}.forEach { a ->
   val updated=a.copy(selected=a.id==action.id)
