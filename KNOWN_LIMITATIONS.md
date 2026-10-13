@@ -1,4 +1,5 @@
 # Known limitations
+- The 2026-10-13 clarified requirement is traditional time/direction selection with a physical itinerary. Current 0.4.0 practical recipes do not satisfy it. The missing method/conditions and phased implementation are tracked in `docs/DIRECTIONAL_NAVIGATION_PLAN_ZH.md`; no sourced gesture/step-count/stay/return engine is implemented.
 - 0.4.0 adds practical navigation and manual AI handoff. Directions come from the actual door palace; the purpose-to-door mapping is an app-authored symbolic lens, not a whole-chart auspiciousness score. No compass, GPS measurement, travel routing or favourable-time search.
 - 0.4.0 uses a new side-by-side package/signing identity because the former private debug key was lost when the temporary environment was cleared. Keep the old app and export/import a JSON backup; the new app cannot read another package’s private data.
 - External ChatGPT/Codex interpretation is manual, user-reviewed and unvalidated; responses do not automatically become app plans.

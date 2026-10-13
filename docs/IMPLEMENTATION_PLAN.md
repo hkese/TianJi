@@ -1,3 +1,9 @@
+# 2026-10-13 revision — traditional directional itinerary
+
+The latest product clarification supersedes the practical-recipe interpretation of 0.4.0. Follow `DIRECTIONAL_NAVIGATION_PLAN_ZH.md`: D0 source/method selection, D1 deterministic timing/direction engine, D2 location/bearing, D3 Chinese itinerary/voice, D4 bounded AI explanation, D5 Android 16 verification and signed APK. D0 is in investigation; later phases are not implemented. This does not change the original master document or rewrite historical test results.
+
+---
+
 # 0.3.0 implementation plan — requested basic offline calculation
 1. Select one documented convention, primary traditional/calendrical references and independently published comparison charts. **Complete.**
 2. Implement native deterministic Core, transparent basic Chinese reading, accessible date/time/city pickers and saved chart replay. **Implemented.**

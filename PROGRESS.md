@@ -1,3 +1,11 @@
+# 2026-10-13 product correction — directional Qimen navigation
+
+The user clarified that the desired primary experience is traditional time/direction selection and an explicit departure, destination, action, stay and return itinerary. The 0.4.0 practical recipes do not meet that need. Its successful software tests do not establish product acceptance for this clarified requirement.
+
+Primary-source investigation and a concrete revised workflow/acceptance plan are recorded in `docs/DIRECTIONAL_NAVIGATION_PLAN_ZH.md`. Classical texts contain relevant directional and ritual material, but the specific operative method, conditions and examples must be reconciled before coding gestures, counts or return timings. No new app feature or APK is claimed in this documentation revision. Current code/deliverable remains 0.4.0 below.
+
+---
+
 # Current revision 0.4.0 — goal-to-action navigation
 
 Implemented and verified. Source commit `75eca621ee280abc11b83484b2d7743d8c8c7f40`; CI https://github.com/hkese/TianJi/actions/runs/38322606240 passes both jobs.

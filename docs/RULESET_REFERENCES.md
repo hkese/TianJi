@@ -13,6 +13,8 @@
 
 ## 唯一啟用口徑
 
+2026-10-13 擇時／擇方／動作補充調查：R7《遁甲演義（四庫全書本）》卷二，固定版本 https://zh.wikisource.org/w/index.php?title=遁甲演義_(四庫全書本)/卷2&oldid=625940 。相關條目及未解決的規則差異見 `DIRECTIONAL_NAVIGATION_PLAN_ZH.md`。R7 目前只作調查來源，**尚未成為啟用的算法或行動規則**；以下排盤口徑未改。
+
 規則 ID `shijia-zhuanpan-chaibu-civil-kun2`，版本 `1.0.0`。
 
 1. 以輸入 UTC instant 為唯一時刻；IANA 時區決定当地民用日期及時辰，包含歷史夏令時。無 GPS、無真太陽時、無經度修正。支援當地公曆 1900–2100 年。其他流派及曆法範圍不偷偷代算。
