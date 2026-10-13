@@ -146,7 +146,7 @@ class JourneyTest {
         awaitText("本次 3 個候選")
         awaitText("歷史行程")
         compose.onNodeWithText("歷史行程").performScrollTo().performClick()
-        compose.onNode(hasText("Synthetic updated observation",substring=true) and hasClickAction()).assertExists()
+        compose.onNode(hasText("v2 · ",substring=true) and hasText("Synthetic updated observation",substring=true)).assertExists()
         compose.onNodeWithText("方法、依據及限制").performScrollTo().performClick()
         compose.onNodeWithText("古籍簡式・TRADITIONAL").performScrollTo().assertIsDisplayed()
         capture("direction-method.png")
