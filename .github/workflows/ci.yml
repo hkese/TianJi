@@ -23,10 +23,23 @@ jobs:
       - run: pip install -e './research[test]'
       - run: python -m pytest research/tests -q
       - run: ruff check research/tianji_research research/tests
+      - name: Record APK identity and keep the public signing verifier
+        run: |
+          mkdir -p verification-tools
+          cp "$ANDROID_HOME/build-tools/35.0.0/lib/apksigner.jar" verification-tools/
+          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging android/app/build/outputs/apk/debug/app-debug.apk > verification-tools/apk-badging.txt
+          "$ANDROID_HOME/build-tools/35.0.0/zipalign" -c -P 16 4 android/app/build/outputs/apk/debug/app-debug.apk
       - uses: actions/upload-artifact@v4
         with:
           name: TianJi-debug
           path: android/app/build/outputs/apk/debug/app-debug.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TianJi-verification
+          path: |
+            verification-tools/
+            android/**/build/test-results/
+            android/**/build/reports/lint-results-debug.*
   android16-device:
     runs-on: ubuntu-latest
     timeout-minutes: 30

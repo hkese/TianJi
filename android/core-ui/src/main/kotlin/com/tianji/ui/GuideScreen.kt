@@ -11,11 +11,11 @@ import androidx.compose.runtime.Composable
    Text(t("呢版唔會再將寫便條或做小樣當成奇門行程。候選有真實盤及規則依據，但唔保證心願實現。","Each itinerary has its actual chart and rule evidence. Results are not guaranteed."))
   }
   CardBlock(t("1 · 揀時區，寫心願","1 · Time zone and intention")){
-   Text(t("到設定按時區，直接揀城市；西雅圖用「西雅圖／洛杉磯」，夏令時間自動處理。然後去目標新增心願及觀察標準，限期可以不填。","Choose a city in Settings. Seattle uses Seattle / Los Angeles, with automatic daylight saving. Add an intention and observation criteria in Goals; deadlines are optional."))
+   Text(t("到設定按時區，直接揀城市；西雅圖用「西雅圖／洛杉磯」，夏令時間自動處理。返首頁直接寫低心願，按「畀我奇門指引」就得，毋須建立目標或揀取用。","Choose a city in Settings. Seattle uses Seattle / Los Angeles, with automatic daylight saving. On Home, write an intention and tap Give me Qimen guidance. No goal form or method selection is required."))
    OutlinedButton(onClick=onSettings){Text(t("去設定時區","Choose time zone"))}
   }
   CardBlock(t("2 · 搜尋時段及方位","2 · Find a time and direction")){
-   Text(t("在心願按「規劃下一步」。揀「一般出行」或「和合相處」、24 小時／72 小時／7 日，再按搜尋。每個候選有自己的盤，按時間先後顯示，最多三個。","Tap Plan next step. Choose General outing or Harmony, then 24 hours, 72 hours or seven days and search. Up to three chronological candidates have their own charts."))
+   Text(t("首頁會自動起盤、取用同搜尋，直接顯示一份指引。想改時區、用途或搜尋範圍，可以展開「進階選項」；原有多方案流程保留喺「進階／歷史」。","Home calculates and routes automatically, then shows one guide. Advanced options change the zone, purpose or range; older workflows remain under Advanced / history."))
    Text(t("搵唔到符合條件就會講明，可擴大範圍。唔會勉強配方向；亦唔代表心願做唔到。候選時段指『出發』，最後一刻不包括。","No match is shown honestly; expand the range if needed. It does not mean your intention is impossible. Windows apply to departure and exclude their end instant."))
   }
   CardBlock(t("3 · 揀行程，按指引做","3 · Follow the itinerary")){
@@ -29,9 +29,9 @@ import androidx.compose.runtime.Composable
    Text(t("『讀出呢一步』用手機已安裝嘅離線廣東話語音，唔會上傳文字。沒有語音時可在 Android 文字轉語音設定下載，文字指引照常用。","Read this step uses an installed offline voice and does not upload text. Install a voice in Android text-to-speech settings if needed; written guidance remains available."))
   }
   CardBlock(t("AI 解說與私隱","AI explanation and privacy")){
-   Text(t("候選下面可複製行程提示詞，自己貼入 ChatGPT／Codex。包括目標、限制、候選盤及規則，不包括 GPS、金鑰及日誌筆記。AI 唔會自動改盤或把回覆寫入 App。","Copy the itinerary prompt and paste it into ChatGPT / Codex yourself. It includes your goal, constraints, charts and rules, excluding GPS, keys and journal notes. Answers do not automatically change charts or app records."))
-   Text(t("資料留喺手機。備份會包含你選擇記錄嘅位置，請當私人資料保管；匯入會取代現有記錄。0.5 可更新 0.4，舊版實用方案保留為歷史。","Data stays on the phone. Backups include locations you chose to record, so keep them private. Import replaces records. Version 0.5 updates 0.4 and preserves legacy practical plans."))
+   Text(t("首頁按「連接 ChatGPT／Codex」，用裝置碼登入一次。之後按「畀我奇門指引」，心願同盤面會直接交 AI，解讀直接顯示及保存喺天機。不傳 GPS、其他心願、金鑰或日誌；可隨時改用本機指引。","Connect ChatGPT / Codex from Home with device-code sign-in. Submitting then sends only that intention and charts, and saves the interpretation in TianJi. GPS, other intentions, keys and journals are excluded. Offline mode remains available."))
+   Text(t("資料留喺手機。備份會包含你選擇記錄嘅位置，請當私人資料保管；匯入會取代現有記錄。0.6 可更新 0.4／0.5，舊版實用方案保留為歷史。","Data stays on the phone. Backups include locations you chose to record, so keep them private. Import replaces records. Version 0.6 updates 0.4 / 0.5 and preserves legacy practical plans."))
   }
-  ActionButton(t("開始建立目標","Start with an intention"),onClick=onGoals)
+  ActionButton(t("返首頁寫心願","Start with an intention"),onClick=onGoals)
  }
 }

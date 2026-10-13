@@ -55,13 +55,13 @@ class MainActivity:ComponentActivity(){override fun onCreate(savedInstanceState:
    Box(Modifier.fillMaxSize().padding(padding).consumeWindowInsets(padding),contentAlignment=Alignment.TopCenter){
     Box(Modifier.widthIn(max=760.dp).fillMaxSize()){
      NavHost(nav,"home"){
-      composable("home"){HomeScreen(data,s.timezone,{nav.navigate("goals")},{nav.navigate("plan/$it")},{nav.navigate("chart")},{nav.navigate("guide")})}
+      composable("home"){IntentionScreen(vm,{nav.navigate("plan/$it")},{nav.navigate("chart")},{nav.navigate("guide")},{nav.navigate("goals")},{nav.navigate("settings")})}
       composable("chart"){ChartScreen(s.timezone,data.charts,{vm.settings(s.copy(timezone=it))},{chart->vm.perform{vm.repo.saveChart(chart);vm.messages.send(if(s.english)"Chart saved offline" else "命盤已儲存喺手機")}}, {nav.navigate("goals")},{nav.navigate("guide")})}
       composable("goals"){GoalsScreen(data,s.timezone,{vm.perform{vm.repo.saveGoal(it)}},{vm.perform{vm.repo.deleteGoal(it)}},{vm.perform{vm.repo.saveMilestone(it)}},{nav.navigate("plan/$it")})}
       composable("plan/{goal}"){back->val goalId=back.arguments?.getString("goal")?:return@composable;PlannerScreen(goalId,data,s.timezone,{reason->vm.perform{vm.repo.newPlan(goalId,s.timezone,reason)}},{a->vm.perform{vm.repo.choose(a)}},{a->entry=a;nav.navigate("journal")},{g,a->aiReview=vm.payload(g,a) to a},{nav.popBackStack()},{request,reason->vm.perform{vm.repo.newDirectionPlan(goalId,s.timezone,reason,request)}},{id,point->vm.perform{vm.repo.advanceDirection(id,point)}})}
       composable("journal"){JournalScreen(data,s.timezone,entry,{j->vm.perform{vm.repo.journal(j)};entry=null},{entry=null})}
       composable("settings"){SettingsScreen(s,provider,{next->if(next.reminders&&!s.reminders&&Build.VERSION.SDK_INT>=33)notification.launch(Manifest.permission.POST_NOTIFICATIONS) else vm.settings(next)},vm::saveProvider,vm::testProvider,{export.launch("TianJi-backup.json")},{restore.launch(arrayOf("application/json","text/plain","application/octet-stream"))},{research=true},vm::deleteAll,{nav.navigate("guide")})}
-      composable("guide"){GuideScreen({nav.navigate("goals"){popUpTo("home");launchSingleTop=true}},{nav.navigate("settings"){popUpTo("home");launchSingleTop=true}},{nav.popBackStack()})}
+      composable("guide"){GuideScreen({nav.navigate("home"){popUpTo("home");launchSingleTop=true}},{nav.navigate("settings"){popUpTo("home");launchSingleTop=true}},{nav.popBackStack()})}
      }
      if(busy)LinearProgressIndicator(Modifier.fillMaxWidth())
     }

@@ -55,6 +55,22 @@ suspend fun advanceDirection(actionId:String,point:GeoPoint?=null)=db.withTransa
  val updated=DirectionNavigator.next(a,Instant.now(),point)
  db.openHelper.writableDatabase.execSQL("UPDATE actions SET payload=? WHERE id=?",arrayOf(Codec.encodeToString(updated),a.id))
 }
+suspend fun quickIntention(text:String,zone:String,hours:Int=0,purpose:String?=null):PlanVersion {
+ val now=Instant.now();val goal=Intention.goal(text,now,zone)
+ val plan=PlanVersion(goalId=goal.id,createdAt=now.toString(),reason="一念・奇門指引",entryMode="INTENTION")
+ val result=kotlinx.coroutines.withContext(Dispatchers.Default){DirectionNavigator.plan(goal,plan,Intention.request(text,hours,purpose),now,zone,Intention.timing(text,now,zone).first)}
+ db.withTransaction {put(goal);result.charts.forEach{put(it)};put(result.plan);result.actions.forEachIndexed{i,a->put(a.copy(selected=i==0))}}
+ return result.plan
+}
+suspend fun saveGuidance(planId:String,guidance:IntentionGuidance)=db.withTransaction {
+ val b=snapshot();val plan=b.plans.single{it.id==planId};guidance.validate();require(plan.entryMode=="INTENTION")
+ val actions=b.actions.filter{it.planVersionId==planId}
+ guidance.actionId?.let{id->require(actions.any{it.id==id && Instant.parse(it.plannedEnd)>Instant.now()})}
+ val next=plan.copy(guidance=guidance)
+ db.openHelper.writableDatabase.execSQL("UPDATE plans SET payload=? WHERE id=?",arrayOf(Codec.encodeToString(next),plan.id))
+ // Never reset a trip the user has already started while AI was responding.
+ if(actions.none{(it.itinerary?.phase?:0)>0} && guidance.actionId!=null)choose(actions.single{it.id==guidance.actionId})
+}
 suspend fun choose(action:ActionCandidate)=db.withTransaction {
  snapshot().actions.filter{it.planVersionId==action.planVersionId}.forEach { a ->
   val updated=a.copy(selected=a.id==action.id)

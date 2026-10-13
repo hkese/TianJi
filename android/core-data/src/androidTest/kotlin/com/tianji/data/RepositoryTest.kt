@@ -55,5 +55,14 @@ import org.junit.runner.RunWith
   assertTrue(data.actions.all{it.itinerary!=null && data.charts.any{c->c.id==it.chartId}})
   repo.db.close()
  }
- @Test fun credentialRoundTrip(){val context=InstrumentationRegistry.getInstrumentation().targetContext;val vault=CredentialVault(context);vault.save("test-only-not-a-real-key");assertEquals("test-only-not-a-real-key",vault.read());vault.clear();assertEquals("",vault.read())}
+ @Test fun credentialRoundTrip(){val context=InstrumentationRegistry.getInstrumentation().targetContext;val vault=CredentialVault(context);val oauth=EncryptedGrantStorage(context);vault.save("test-only-not-a-real-key");oauth.write(ChatGptGrant("synthetic-access","synthetic-refresh",12345));assertEquals("test-only-not-a-real-key",vault.read());assertEquals("synthetic-refresh",EncryptedGrantStorage(context).read()!!.refreshToken);oauth.clear();assertNull(oauth.read());assertEquals("test-only-not-a-real-key",vault.read());vault.clear();assertEquals("",vault.read())}
+ @Test fun oneIntentionAndAiAnnotationRestoreWithoutCredentials():Unit=runBlocking {
+  val context=InstrumentationRegistry.getInstrumentation().targetContext;context.deleteDatabase("tianji.db");val repo=Repository.open(context)
+  val plan=repo.quickIntention("Synthetic outdoor intention","Asia/Hong_Kong",168)
+  val action=repo.snapshot().actions.first{it.planVersionId==plan.id};assertTrue(action.selected)
+  repo.saveGuidance(plan.id,IntentionGuidance("Synthetic interpretation",action.id,"Synthetic reason","mock-only",Instant.now().toString()))
+  val backup=repo.export();assertFalse(backup.contains("refresh_token"));repo.deleteAll();repo.restore(backup)
+  val b=repo.snapshot();b.validate();assertEquals("INTENTION",b.plans.single().entryMode);assertEquals("Synthetic interpretation",b.plans.single().guidance!!.summary);assertTrue(b.actions.single{it.id==action.id}.selected)
+  repo.db.close()
+ }
 }

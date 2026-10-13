@@ -25,16 +25,18 @@ import kotlin.math.*
 }
 data class DirectionPlanResult(val plan:PlanVersion,val charts:List<ChartSnapshot>,val actions:List<ActionCandidate>)
 object DirectionNavigator {
-    fun plan(goal:Goal,plan:PlanVersion,request:DirectionRequest,now:Instant,zone:String):DirectionPlanResult {
+    fun plan(goal:Goal,plan:PlanVersion,request:DirectionRequest,now:Instant,zone:String,notBefore:Instant=now):DirectionPlanResult {
         request.validate();validateGoal(goal);require(request.stayMinutes<goal.constraints.minutes){"停留時間要少於總行程預算，請改停留時間或目標設定。"}
         val core=QimenCore()
         val end=minOf(now.plusSeconds(request.horizonHours*3600L),goal.deadline?.let{Instant.parse(it).minusSeconds(goal.constraints.minutes*60L)}?:Instant.MAX)
-        require(end>now.plusSeconds(300)){"請先延長心願限期，預留行程預算及至少五分鐘起行窗口。"}
+        if(plan.entryMode!="INTENTION")require(end>now.plusSeconds(300)){"請先延長心願限期，預留行程預算及至少五分鐘起行窗口。"}
         val question=core.calculateChart(now,zone)
         val frozen=plan.copy(goalSnapshot=goal,directionRequest=request,questionChartId=question.chart_id)
         val charts=linkedMapOf(question.chart_id to snapshot(question))
         val actions=mutableListOf<ActionCandidate>()
-        for(w in DirectionRules.windows(core,now,end,zone)) {
+        val searchStart=maxOf(now,notBefore)
+        if(end<=searchStart.plusSeconds(300))return DirectionPlanResult(frozen,charts.values.toList(),actions)
+        for(w in DirectionRules.windows(core,searchStart,end,zone)) {
             if(Duration.between(w.start,w.end).seconds<300)continue
             for(match in DirectionRules.matches(w.chart,request.purpose)) {
                 val palace=w.chart.palaces.single{it.index==match.palace}
