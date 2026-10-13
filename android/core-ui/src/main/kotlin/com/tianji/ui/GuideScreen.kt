@@ -20,7 +20,7 @@ import androidx.compose.runtime.Composable
   }
   CardBlock(t("3 · 揀行程，按指引做","3 · Follow the itinerary")){
    Text(t("揀一個候選後，頂部會顯示目前階段。手機平放睇指南針；由固定起點，向所選方位揀一個實際可行嘅目的地。到時按「開始出發」，到場按「我已到達」。","Choose a candidate to pin your current stage. Hold the phone flat to read the compass and select an accessible destination in the direction from a fixed starting point. Tap Start walking in the window, then I have arrived."))
-   Text(t("停留 5／10／15 分鐘係你揀嘅行程安排，唔係古籍吉數。計時到可返程，需要時亦可提早。返到起點按完成，之後另記心願有咩變化。","A 5, 10 or 15-minute stay is your schedule, not a ritual number. Return when the timer ends or earlier if needed. Mark completion, then separately record changes to your intention."))
+   Text(t("停留 不另停留或 5／10／15 分鐘係你揀嘅行程安排，唔係古籍吉數。計時到可返程，需要時亦可提早。返到起點按完成，之後另記心願有咩變化。","No extra stay or a 5, 10 or 15-minute stay is your schedule, not a ritual number. Return when the timer ends or earlier if needed. Mark completion, then separately record changes to your intention."))
    Text(t("原出發時段過咗就不能新開始。已開始嘅行程可以繼續記錄；App 重開會保留階段。","An expired window cannot start a new journey. An already started journey can continue, and its stage survives app restarts."))
   }
   CardBlock(t("定位、方向同道路","Location, compass and roads")){

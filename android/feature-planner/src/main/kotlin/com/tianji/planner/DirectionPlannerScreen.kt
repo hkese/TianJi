@@ -72,7 +72,7 @@ private fun departureTime(value:String,zone:String)=Instant.parse(value).atZone(
                 Text(t("目的地由你按實際道路選擇。指南針會帶你辨識方位；本版未有地圖路線或自動城市選址。","Choose an accessible destination yourself. The compass identifies the direction; this version has no street routing or automatic city selection."),style=MaterialTheme.typography.bodySmall)
                 Text(t("總行程預算 ${goal.constraints.minutes} 分鐘；包括來回及停留，實際路程由你核實。","Trip budget: ${goal.constraints.minutes} minutes including travel and stay. Check the actual route yourself."),style=MaterialTheme.typography.bodySmall)
                 val can=(goal.deadline?.let{Instant.parse(it)>clock.plusSeconds(goal.constraints.minutes*60L+300)}?:true) && stay<goal.constraints.minutes
-                if(!can)ErrorText(t("限期未預留總行程預算及五分鐘起行窗口，或停留超出預算；請先調整。","Deadline is past or under five minutes away. Edit it first."))
+                if(!can)ErrorText(t("限期未預留總行程預算及五分鐘起行窗口，或停留超出預算；請先調整。","Allow your trip budget plus a five-minute departure window, and keep the stay within budget."))
                 ActionButton(t("搜尋合適時段及方位","Find time and direction"),enabled=can){
                     focus.clearFocus(true);keyboard?.hide();shown=null;settings=false
                     onDirectionPlan(DirectionRequest(purpose,horizon,travel,stay),reason.ifBlank{"按心願擇時擇方"})
@@ -135,7 +135,7 @@ private fun departureTime(value:String,zone:String)=Instant.parse(value).atZone(
     val step=when(i.phase){
         0->if(english)"Wait for the departure window. Choose an accessible destination in direction $target from your fixed starting point. Identify the direction before leaving." else "等到出發時段，以你嘅出發位置為固定起點，揀一個喺${target}方向而且實際行到嘅地方。先辨認方位。"
         1->if(english)"Walk toward your chosen destination in direction $target along accessible roads. The arrow identifies a compass direction, not a safe road route." else "沿可通行道路前往你選定嘅${target}方位目的地。箭嘴只指方位，唔會識別道路、水面或障礙。"
-        2->if(english)"You marked arrival. Stay for your chosen ${i.stayMinutes} minutes if convenient. No sourced gesture or step count is specified. You may return early." else "你已標記到達。按自己安排停留 ${i.stayMinutes} 分鐘；本方法冇另外指定手勢或步數。需要時可以提早返程。"
+        2->if(i.stayMinutes==0){if(english)"You marked arrival and chose no extra stay. You can begin your return; no additional gesture or step count is prescribed." else "你已標記到達，亦揀咗不另停留，可以開始返程；本方法冇另外指定手勢或步數。"} else if(english)"You marked arrival. Stay for your chosen ${i.stayMinutes} minutes if convenient. No sourced gesture or step count is specified. You may return early." else "你已標記到達。按自己安排停留 ${i.stayMinutes} 分鐘；本方法冇另外指定手勢或步數。需要時可以提早返程。"
         3->if(english)"Return by a familiar route. No auspicious return time or post-return sitting direction has been calculated." else "沿熟悉路線返回起點。本方法未計算返程吉時，亦冇指定返到屋企要坐邊一方。"
         else->if(english)"Itinerary complete. Record what happened to your intention separately; finishing a walk does not mean the intention was fulfilled." else "行程已完成。另行記錄心願有咩變化；完成出行唔等於心願已達成。"
     }

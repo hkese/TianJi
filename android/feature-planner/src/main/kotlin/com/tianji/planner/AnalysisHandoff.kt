@@ -34,7 +34,9 @@ import com.tianji.ui.*
     if(preview)SelectionContainer{Text(prompt,style=MaterialTheme.typography.bodySmall,modifier=Modifier.testTag("handoff-prompt"))}
     ActionButton(if(copied)t("已複製 · 下一步開 ChatGPT","Copied · open ChatGPT next") else t("複製完整提示詞","Copy complete prompt")){
      val clipboard=context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-     clipboard.setPrimaryClip(ClipData.newPlainText("TianJi 分析提示詞",prompt));copied=true
+     val clip=ClipData.newPlainText("TianJi 分析提示詞",prompt)
+     clip.description.extras=android.os.PersistableBundle().apply{putBoolean("android.content.extra.IS_SENSITIVE",true)}
+     clipboard.setPrimaryClip(clip);copied=true
     }
     OutlinedButton(onClick={
      error=runCatching{context.startActivity(Intent(Intent.ACTION_VIEW,Uri.parse("https://chatgpt.com/")))}.isFailure
