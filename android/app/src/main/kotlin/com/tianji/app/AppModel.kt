@@ -89,7 +89,7 @@ class AppModel(val app:Application,val repo:Repository,val prefs:Preferences,val
    val client=ChatGptClient();quickClient=client
    try{
     val models=withContext(Dispatchers.IO){session.authenticated(client){client.models(it)}}
-    ensureActive();model=chat.value.model.takeIf{m->models.any{it.id==m}}?:models.first().id
+    currentCoroutineContext().ensureActive();model=chat.value.model.takeIf{m->models.any{it.id==m}}?:models.first().id
     chat.value=chat.value.copy(models=models,model=model);chatPrefs.edit().putString("model",model).apply()
     raw=withContext(Dispatchers.IO){repo.consent("intention-chatgpt-once");session.authenticated(client){client.complete(it,model,Intention.instruction,context)}}
    }finally{client.close();quickClient=null}
@@ -97,7 +97,7 @@ class AppModel(val app:Application,val repo:Repository,val prefs:Preferences,val
    val client=AiClient();quickApi=client;model=provider.value.modelName
    try{raw=withContext(Dispatchers.IO){repo.consent("intention-api-once");client.explain(provider.value,vault.read(),Intention.instruction,context)}}finally{quickApi=null}
   }
-  ensureActive();if(epoch!=quickEpoch)return
+  currentCoroutineContext().ensureActive();if(epoch!=quickEpoch)return
   val result=Intention.parseReply(raw,plan,actions,model,Instant.now())
   withContext(Dispatchers.IO){repo.saveGuidance(planId,result)}
   quickMessage.value="AI 解讀已保存。"

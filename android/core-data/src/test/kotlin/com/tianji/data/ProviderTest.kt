@@ -15,4 +15,13 @@ class ProviderTest {
  }
  @Test fun httpsConnectionTest(){runServer{s,client->s.enqueue(MockResponse().setBody("{\"data\":[]}"));client.test(AiProviderConfig(baseUrl=s.url("/v1").toString()),"test-only-key");val req=s.takeRequest();assertEquals("/v1/models",req.path);assertEquals("Bearer test-only-key",req.getHeader("Authorization"))}}
  @Test fun failureIsNotSuccessfulConnection(){runServer{s,client->s.enqueue(MockResponse().setResponseCode(401).setBody("private provider error"));try{client.test(AiProviderConfig(baseUrl=s.url("/v1").toString()),"");fail("Expected failure")}catch(e:IllegalStateException){assertFalse(e.message!!.contains("private provider error"))}}}
+ @Test fun directInterpretationUsesConfiguredApiAndCompleteAnswer(){runServer{s,client->
+  s.enqueue(MockResponse().setBody("""{"choices":[{"finish_reason":"stop","message":{"content":"synthetic complete interpretation"}}]}"""))
+  val result=client.explain(AiProviderConfig(baseUrl=s.url("/v1").toString(),modelName="test-model"),"synthetic-api-key","fixed instruction","synthetic chart")
+  assertEquals("synthetic complete interpretation",result);val r=s.takeRequest();assertEquals("/v1/chat/completions",r.path);assertEquals("Bearer synthetic-api-key",r.getHeader("Authorization"));assertTrue(r.body.readUtf8().contains("synthetic chart"))
+ }}
+ @Test fun truncatedInterpretationIsRejected(){runServer{s,client->
+  s.enqueue(MockResponse().setBody("""{"choices":[{"finish_reason":"length","message":{"content":"partial"}}]}"""))
+  assertTrue(runCatching{client.explain(AiProviderConfig(baseUrl=s.url("/v1").toString(),modelName="test-model"),"synthetic","instruction","context")}.isFailure)
+ }}
 }
