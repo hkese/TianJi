@@ -66,3 +66,16 @@ Final 0.2.2 evidence: `docs/evidence/022/` and https://github.com/hkese/TianJi/a
 | D3 / NAV-002/006/007/010 | `DirectionPlannerScreen.kt`, repository stage persistence, Chinese guide, optional installed offline TTS | Stage/domain tests, Room restore and Android 16 selection/history/restart journey. Actual physical walking stages and Cantonese playback not exercised. Stay is user scheduling. |
 | D4 / NAV-009/012 | Direction-specific manual AI prompt, canonical candidate charts/rules, private-coordinate exclusion, sensitive clipboard flag | Prompt/delimiter/privacy unit tests, native handoff/clipboard assertions. No automatic upload/response import or fabricated ritual instructions. |
 | D5 | API 36 CI, signed 0.5 debug APK, same 0.4 identity | 60 Kotlin / 21 Python, 5 Room tests, 1 full UI journey, lint/build, v2/v3 and ZIP alignment pass. See TEST_RESULTS.md for exact source, artifact hashes, failed attempts and physical-device limits. |
+
+
+## 0.6 simplified intent and direct account AI
+
+| User requirement | Implementation | Verification / boundary |
+|---|---|---|
+| Type only an intention | `IntentionScreen.kt`, `Intention.kt`, `Repository.quickIntention` | 8 domain tests, persisted question/candidate charts, default first chronological match; native UI gate recorded in TEST_RESULTS.md. No empty matches fabricated. |
+| Automatically handle purpose/time | Editable product keyword routing and local-zone today/tonight/tomorrow bounds | DST and deadline tests. This is bounded product logic, not a full semantic or divination classifier. |
+| Same kind of OAuth as keyboard | Independently implemented `ChatGpt.kt`; Keystore-backed single grant | 10 transport/lifecycle/SSE tests; no private source/token copying; real account acceptance still required. |
+| Direct in-app AI answer | AppModel direct request, structured response validation, persisted plan annotation | Current-action ID validation, privacy isolation, completed-only stream; configured API has 2 additional TLS mock tests. Text is unverified interpretation; executable chart fields are Core-owned. |
+| Keep offline and old records | New defaulted plan fields, preserved legacy screens and backups | Old-payload test, Room and UI evidence recorded separately; no SQL schema migration needed. |
+
+0.6 final evidence: `docs/evidence/060/` and CI 38489999031. 80 Kotlin, 21 Lab, 6 Room/Keystore and the full offline native journey pass. The restored-navigation Home refresh regression is fixed and covered. Live account inference and predictive efficacy are not claimed.

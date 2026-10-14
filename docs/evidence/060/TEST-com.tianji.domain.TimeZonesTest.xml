@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.tianji.domain.TimeZonesTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-14T00:25:37.911Z" hostname="runnervmmprz5" time="0.024">
+  <properties/>
+  <testcase name="chineseAndEnglishSearchFindTheSameCity" classname="com.tianji.domain.TimeZonesTest" time="0.016"/>
+  <testcase name="everyPresetIsAValidDistinctZone" classname="com.tianji.domain.TimeZonesTest" time="0.003"/>
+  <testcase name="hongKongAndUtcHaveStableOffsets" classname="com.tianji.domain.TimeZonesTest" time="0.001"/>
+  <testcase name="seattleUsesPacificDaylightRulesNotAFixedOffset" classname="com.tianji.domain.TimeZonesTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

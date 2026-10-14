@@ -1,3 +1,11 @@
+# TianJi 0.6 — 寫低心願，直接睇指引
+
+首頁輸入心願 →「畀我奇門指引」。自動起盤及取用，直接顯示方位行程；可用與粵伴鍵盤相同類型的 ChatGPT／Codex 裝置碼登入，AI 回覆在天機內顯示及保存。離線仍有本機指引，進階選項及舊版流程保留。
+
+版本 0.6.0 / versionCode 8。已完成並交付同簽署更新 APK；[最終 CI](https://github.com/hkese/TianJi/actions/runs/38489999031) 的 80 個 Kotlin、21 個 Lab、6 個 Android 16 資料測試及完整離線介面流程全部通過。驗證範圍見 [TEST_RESULTS.md](docs/TEST_RESULTS.md) 及 [PROGRESS.md](PROGRESS.md)。真實 ChatGPT 授權／生成解讀仍須由本人在手機登入驗收。最短操作說明：[USER_GUIDE_ZH.md](docs/USER_GUIDE_ZH.md)。登入協定及限制：[INTENTION_0_6.md](docs/INTENTION_0_6.md)。
+
+---
+
 # TianJi 0.5 — 傳統擇時・擇方行程
 
 0.5 改為按心願搜尋傳統時段及方位，並用中文逐步記錄出發、到達、停留、返回。規則與限制見 [DIRECTION_RULES_1_0.md](docs/DIRECTION_RULES_1_0.md)，使用說明見 [USER_GUIDE_ZH.md](docs/USER_GUIDE_ZH.md)。[Android 16 離線流程及建置驗證已通過](https://github.com/hkese/TianJi/actions/runs/38338847939)：60 個 Kotlin、21 個 Python、5 個資料層裝置測試及 1 個完整介面流程。精確範圍與 APK 驗證見 [TEST_RESULTS.md](docs/TEST_RESULTS.md)。

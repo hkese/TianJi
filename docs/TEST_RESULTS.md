@@ -1,3 +1,35 @@
+# 0.6.0 — one intention and direct ChatGPT account AI
+
+Date: 2026-10-14 UTC (2026-10-13 Pacific). Verified executable source: `f3624faf8c91def9e280981cae2dee2560341a3e`.
+CI: https://github.com/hkese/TianJi/actions/runs/38489999031 . Both build/verification and Android 16 jobs passed. Subsequent documentation-only publication does not alter the tested executable source.
+
+| Gate | Observed result |
+|---|---|
+| Kotlin unit suites | 80 passed: domain 37, Core 23, data/network 20. Exact CI XML in `evidence/060`. |
+| New intention coverage | 8 tests: editable automatic routing, full-text preservation, local tonight/tomorrow/DST, deadline-constrained matches and no-match result, private-coordinate exclusion, unknown/expired/cross-plan action rejection, strict JSON and old payload defaults. |
+| New account coverage | 10 tests: fixed-origin device start/pending/exchange, slowdown/denial/expiry/cancel, redirects and safe errors, one 401 refresh with rotation, second-401/429 no-loop, logout invalidation, completed-only and sparse-final SSE, failure/refusal rejection, actual self-identification and store=false. |
+| API-key interpretation | 2 additional TLS mock tests verify the configured endpoint/auth/context and reject truncated completion. Existing provider/validation tests retained. |
+| Research Lab | 21 passed; Ruff passed. Existing dependency deprecation warning remains. |
+| Build/lint | Gradle BUILD SUCCESSFUL, 1m53s. Lint: 0 errors / 24 warnings (preference style, dependency updates, Kotlin convenience suggestions). |
+| API 36 data | 6 Room/backup/Keystore tests passed (suite 4.703 s), including quick intention and AI annotation restoration without credentials. |
+| API 36 UI | Full native offline journey passed (test 45.657 s; suite 47.27 s), Google APIs x86_64, 720×1440 at 320dpi, Wi-Fi and data disabled. |
+| UI coverage | One-field submit with the real keyboard, account entry/return, immediate displayed direction without manual scrolling, persisted result after activity recreation, selected itinerary, and retained chart/time-zone/history/journal routes. Home, account, keyboard and guidance screenshots inspected locally. |
+| Delivered APK checks | v2/v3 signatures pass; retained 0.4/0.5 certificate matches. CI zipalign `-c -P 16 4` passed; after signing all 264 uncompressed entries remain aligned (16KB for .so, 4 bytes otherwise). All 464 non-signature ZIP entries have identical digests to the verified CI APK. |
+
+Two later device runs (38487647585 and diagnostic 38488969674) exposed a Home refresh failure after navigation and activity recreation: model state already contained the saved question/plan and success message, but Home rendered none of them. State is now collected at the activity and passed into the screen. The result card is brought into view; the test additionally requires it to be displayed without a manual scroll. See `evidence/060/ui-first-failure.txt`. Screenshots wait for a compositor frame after Compose becomes idle.
+
+Initial CI 38487301448 failed Kotlin compilation at two `ensureActive()` calls inside a suspend helper without a receiver. They now use `currentCoroutineContext().ensureActive()`. The initial run is not a successful APK/device validation. No local full Gradle build is claimed in this pruned workspace; compilation and executable test evidence come from CI.
+
+Package `com.tianji.navigator.daily`, launcher `天機・行動導航`, versionCode 8 / 0.6.0, minSdk 28 / target and compileSdk 36. Signed APK: 34,078,199 bytes; SHA-256 `f24a1b66cce4b919446ed78f07c8c0df03b17f3bbbaca2c8552947c8e743faf0`. Certificate SHA-256 `e262754c09f6cef572c56aaa785debffa3e62e09ff87f93f87f0394e2e9de240`.
+
+CI APK artifact 11861745898: ZIP SHA-256 `3dac73ed0b7ca8bbcc28e747a037f5b6e03eb4378d7730225fc5144e8b759ad0`. Verification artifact 11860944757: ZIP SHA-256 `b9358b31d53e3ca5242a57452047646d4fe0addd5a0f2d553fb86e0fd385b9d5`. Download checksums verified before extraction/signing. Device XML copies use LF line endings; test content is unchanged. Device artifact 11862035007: ZIP SHA-256 `ad1959b59e152b073a9c69118d197272f95f76797185a01e36bfda2a98c8a418`. Signing material is private and absent from source/evidence/artifacts. The final signed APK was saved for delivery.
+
+Real TianJi ChatGPT authorization, token refresh against a live account, model eligibility, live generated interpretation and physical Samsung installation/voice/GPS remain unverified. The signed APK is an identity-compatible 0.4/0.5 update; physical installer upgrade has not been exercised here. Native login uses the owner's keyboard's device-code compatibility protocol, independently implemented, with service-controlled eligibility. It is not the newer dynamic-agent SIWC contract. No keyboard credentials are imported.
+
+AI interpretation text is not verified divination. It cannot supply the executable time/direction fields, and candidate selections are checked against current stored actions. Automatic intention/date routing is limited product logic, not full natural-language or specialized Qimen inference. Core's 100 independent expert golden-chart target remains incomplete. Software checks establish no predictive or causal efficacy.
+
+---
+
 # 0.5.0 — sourced time/direction itineraries
 
 Date: 2026-10-13. Verified executable source: `5455294381c1238128d695069a1d085783e9629a`.

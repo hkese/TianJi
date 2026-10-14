@@ -3,9 +3,9 @@
 Implementation plan, 2026-10-13:
 
 1. Inspect the owner's keyboard integration and current OpenAI documentation. Complete.
-2. Add a single intention field and submit action, automatic local chart/rule routing, first matching itinerary and saved history. Implemented; verification pending.
-3. Add native ChatGPT/Codex device authorization, encrypted grant renewal, model discovery and direct completed AI interpretation. Implemented; mock and device verification pending.
-4. Run Kotlin/Lab/lint/build and Android 16 offline journey; inspect screenshots, sign with the retained daily-app key and deliver an update. Pending.
+2. Add a single intention field and submit action, automatic local chart/rule routing, first matching itinerary and saved history. Complete; domain, Room and native UI verification passed.
+3. Add native ChatGPT/Codex device authorization, encrypted grant renewal, model discovery and direct completed AI interpretation. Complete; TLS mock and device storage/UI checks passed. Real account authorization/inference remains owner acceptance.
+4. Run Kotlin/Lab/lint/build and Android 16 offline journey; inspect screenshots, sign with the retained daily-app key and deliver an update. Complete: CI 38489999031, retained signer, saved APK.
 
 ## User flow
 

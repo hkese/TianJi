@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.tianji.domain.IntentionTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-10-14T00:25:37.386Z" hostname="runnervmmprz5" time="0.382">
+  <properties/>
+  <testcase name="strictReplyAndBackwardCompatibleBackup" classname="com.tianji.domain.IntentionTest" time="0.177"/>
+  <testcase name="localTonightAndTomorrowRespectZoneAndDst" classname="com.tianji.domain.IntentionTest" time="0.001"/>
+  <testcase name="tonightDoesNotSubstituteTomorrowsMatches" classname="com.tianji.domain.IntentionTest" time="0.015"/>
+  <testcase name="simpleEntryPreservesFullIntentionAndFreezesQuestion" classname="com.tianji.domain.IntentionTest" time="0.072"/>
+  <testcase name="inventedExpiredOrCrossPlanActionsAreRejected" classname="com.tianji.domain.IntentionTest" time="0.049"/>
+  <testcase name="contextIncludesOnlyThisIntentionAndChartWithoutPositionOrOtherGoals" classname="com.tianji.domain.IntentionTest" time="0.054"/>
+  <testcase name="automaticRoutingKeepsClassicalRulesSeparate" classname="com.tianji.domain.IntentionTest" time="0.001"/>
+  <testcase name="nearDeadlineKeepsQuestionChartWithNoForcedDirection" classname="com.tianji.domain.IntentionTest" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

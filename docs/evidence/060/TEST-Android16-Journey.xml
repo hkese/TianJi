@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="com.tianji.app.JourneyTest" tests="1" failures="0" errors="0" skipped="0" time="47.27" timestamp="2026-10-14T00:29:47" hostname="localhost">
+  <properties>
+    <property name="device" value="emulator-5554 - 16" />
+    <property name="flavor" value="" />
+    <property name="project" value=":android:app" />
+  </properties>
+  <testcase name="offlineJourney" classname="com.tianji.app.JourneyTest" time="45.657" />
+</testsuite>

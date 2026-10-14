@@ -1,5 +1,12 @@
 # Known limitations
 
+## 0.6 one-intention and direct-AI scope
+- One-field entry, automatic routing/date hints, native device-code account login and direct interpretation are implemented. Build, 80 Kotlin / 21 Lab tests, 6 Android 16 data tests and the complete native offline journey passed in CI 38489999031. Exact scope is in `docs/TEST_RESULTS.md`.
+- A real account has not authorized TianJi in this environment. Live login/refresh, model entitlement and interpretation quality require phone acceptance; TLS mock tests do not establish subscription access. The integration follows the owner's existing Codex device-code protocol, not a claim of official partner registration.
+- Automatic keyword routing supports the existing harmony/general-outing profiles only. Tonight starts at 18:00 as a scheduling convention; complex date sentences are not fully understood. Routing and range are editable in Advanced.
+- Free-form AI interpretation is labelled and unverified. App-calculated time/direction/action fields remain authoritative; failed or incomplete AI replies leave offline guidance intact.
+- Core goldens, full-pattern judgment, routing/maps, birth charts and ritual gesture/count features remain incomplete as described below.
+
 ## 0.5 verified software scope and remaining limits
 - CI 38338847939 passes the build, 60 Kotlin / 21 Python tests, 5 Room tests and one complete offline Android 16 UI journey. These checks establish the tested software behaviour, not predictive efficacy. See `docs/TEST_RESULTS.md`.
 - Time/direction selection is a limited classical profile, not full professional divination. Void/horse/seasonal-strength synthesis and 100 expert human goldens remain unfinished. Harmony can have no match even in a seven-day search.

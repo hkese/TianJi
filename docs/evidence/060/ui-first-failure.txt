@@ -1,0 +1,16 @@
+CI 38487647585, executable source 66ebd9c661eefe57744cdf17ef4947e52574b43b.
+Build, 80 Kotlin tests and 21 Lab tests passed. API 36 Room: 6 passed.
+UI: 1 failure, ComposeTimeoutException at JourneyTest.kt:236 waiting for 今次心願 after intention submit.
+The flow before this point passed. This run is not counted as a successful complete device journey.
+A follow-up diagnostic run captures synthetic state on timeout. No real account or user-intention content is used in this test.
+
+Diagnostic CI 38488969674 at e3e549c519ee61e03024b70212f50295bf049466 repeated the failure.
+Its test-only log records busy=false, quick=false, status=本機指引已準備好。,
+an INTENTION plan and its referenced question chart in AppModel state.
+The displayed semantics contain neither the status nor result card.
+Thus calculation/persistence completed, but Home did not render updated model state.
+The corrective source collects Home/account/quick state at the activity lifecycle,
+passes immutable values into the navigation screen, and brings the result card into view.
+The existing end-to-end test still requires the result, displayed direction,
+activity recreation persistence and opening the selected itinerary; no assertions were relaxed.
+Screenshots also wait for the compositor after Compose becomes idle.

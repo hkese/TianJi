@@ -1,0 +1,5 @@
+CI 38487301448; source 3150b1c62e8bbcf0c0a7cd99993da0f7fc1a2d5e
+Initial build failed in :android:app:compileDebugKotlin.
+AppModel.kt lines 92 and 100 called ensureActive() without a receiver inside a suspend helper.
+Corrected to currentCoroutineContext().ensureActive() in 66ebd9c661eefe57744cdf17ef4947e52574b43b.
+The initial failed build is not counted as a successful validation.

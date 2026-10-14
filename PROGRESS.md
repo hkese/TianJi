@@ -1,3 +1,17 @@
+# 0.6.0 — one intention and direct account AI (verified debug delivery)
+
+- Implemented one-field Home, automatic product routing/time hints, real question/candidate charts, one selected guide and optional advanced/history screens.
+- Implemented independent native ChatGPT/Codex device-code login matching the owner's keyboard protocol, Keystore grant storage, catalog/refresh/cancel/logout, completed-only streaming and in-app persisted interpretation. Existing configured API can also interpret directly.
+- Authenticated text requests exclude GPS, other intentions and journals. Executable directions/times remain app-calculated fields; AI can choose only an existing unexpired action.
+- Initial CI 38487301448 found two compile errors in cancellation checks; these were fixed. CI 38487647585 and 38488969674 then passed build/unit/Lab checks and all six data tests, but exposed a real Home refresh failure after activity recreation/navigation. Diagnostic state confirmed the new plan and chart were saved while Home still showed old content. State collection is now hoisted to the activity, the result is brought into view, and final CI 38489999031 passed after the correction. No failed device run is counted as a successful journey.
+- Original daily-app signing key recovered privately; no key material is committed. Live account authorization/inference remains a phone acceptance step.
+
+- Final executable source: `f3624faf8c91def9e280981cae2dee2560341a3e`; https://github.com/hkese/TianJi/actions/runs/38489999031 . 80 Kotlin tests, 21 Lab tests, Ruff, lint/build, 6 API 36 data tests and the complete offline UI journey pass. Native Home/account/keyboard/result screenshots reviewed; the result is displayed without a manual scroll and survives recreation.
+- Final signed APK: 34,078,199 bytes; SHA-256 `f24a1b66cce4b919446ed78f07c8c0df03b17f3bbbaca2c8552947c8e743faf0`. Retained 0.4/0.5 certificate, versionCode 8, minSdk 28 / target 36. v2/v3 verification and 16KB native-entry alignment pass; all 464 non-signature entries match the final CI build. Saved for delivery.
+- Live account authorization/inference and physical-phone installer/sensors remain unverified. Tests establish software behaviour, not predictive efficacy. Core's independent human-golden target remains incomplete.
+
+---
+
 # 0.5.0 — sourced time/direction itineraries (verified debug delivery)
 
 - Selected `classical-direction-civil/1.0`: general outings use Qi-Men conjunction; harmony uses Ren Dun / Jade Maiden. Fixed exclusions and limits are documented in `docs/DIRECTION_RULES_1_0.md`.
