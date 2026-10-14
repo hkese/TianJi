@@ -14,6 +14,9 @@ class JourneyTest {
 
     private fun capture(name: String) {
         compose.waitForIdle()
+        // Compose semantics may precede the compositor's displayed frame.
+        android.os.SystemClock.sleep(250)
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync()
         val shot = InstrumentationRegistry.getInstrumentation().uiAutomation.takeScreenshot()
         java.io.File(compose.activity.getExternalFilesDir(null), name).outputStream().use {
             shot.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it)
@@ -244,6 +247,8 @@ class JourneyTest {
         capture("intention-keyboard.png")
         compose.onNodeWithTag("intention-submit").performClick()
         awaitText("今次心願")
+        awaitText("本機指引已準備好。")
+        compose.onNodeWithTag("intention-direction").assertIsDisplayed()
         compose.onNodeWithTag("intention-direction").performScrollTo().assertIsDisplayed()
         capture("intention-guidance.png")
         compose.activityRule.scenario.recreate()

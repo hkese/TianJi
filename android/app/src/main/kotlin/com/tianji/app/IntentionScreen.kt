@@ -7,6 +7,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.PersistableBundle
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -14,7 +17,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.*
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tianji.data.*
 import com.tianji.domain.*
 import com.tianji.home.HomeScreen
@@ -23,15 +25,13 @@ import com.tianji.ui.*
 import kotlinx.coroutines.delay
 import java.time.*
 
-@OptIn(ExperimentalLayoutApi::class)
-@Composable fun IntentionScreen(vm:AppModel,onPlan:(String)->Unit,onChart:()->Unit,onGuide:()->Unit,onGoals:()->Unit,onSettings:()->Unit){
- val state by vm.state.collectAsStateWithLifecycle();val chat by vm.chat.collectAsStateWithLifecycle()
- val working by vm.quickBusy.collectAsStateWithLifecycle();val message by vm.quickMessage.collectAsStateWithLifecycle()
- val busy by vm.busy.collectAsStateWithLifecycle()
+@OptIn(ExperimentalLayoutApi::class,ExperimentalFoundationApi::class)
+@Composable fun IntentionScreen(vm:AppModel,state:UiState,chat:ChatUiState,working:Boolean,message:String,busy:Boolean,onPlan:(String)->Unit,onChart:()->Unit,onGuide:()->Unit,onGoals:()->Unit,onSettings:()->Unit){
  var text by rememberSaveable{mutableStateOf("")};var advanced by rememberSaveable{mutableStateOf(false)}
  var history by rememberSaveable{mutableStateOf(false)};var account by rememberSaveable{mutableStateOf(false)}
  var hours by rememberSaveable{mutableIntStateOf(0)};var purpose by rememberSaveable{mutableStateOf<String?>(null)}
  var details by rememberSaveable{mutableStateOf(false)}
+ var revealResult by remember{mutableStateOf(false)};val resultFocus=remember{BringIntoViewRequester()}
  var now by remember{mutableStateOf(Instant.now())};LaunchedEffect(Unit){while(true){now=Instant.now();delay(1000)}}
  val focus=LocalFocusManager.current;val keyboard=LocalSoftwareKeyboardController.current
  val data=state.data;val zone=state.settings.timezone
@@ -42,9 +42,10 @@ import java.time.*
  val selected=actions.firstOrNull{it.selected}
  val snapshot=data.charts.firstOrNull{it.id==plan?.questionChartId}
  val question=remember(snapshot?.id){snapshot?.let{Codec.decodeFromString<Chart>(it.chartJson)}}
+ LaunchedEffect(plan?.id){if(plan!=null && revealResult){withFrameNanos{};resultFocus.bringIntoView();revealResult=false}}
  Page(t("你而家有咩心願？","What's your intention?"),t("寫低就得，天機幫你起盤同整理指引。","Write it down. TianJi prepares the chart and guidance.")){
   OutlinedTextField(value=text,onValueChange={if(it.length<=1000)text=it},label={Text(t("我想……","I'd like…"))},placeholder={Text(t("例如：希望今晚相處和氣","For example: a harmonious evening"))},minLines=2,maxLines=5,modifier=Modifier.fillMaxWidth().testTag("intention-input"))
-  Button(onClick={focus.clearFocus(true);keyboard?.hide();details=false;vm.quickIntention(text,hours,purpose)},enabled=text.isNotBlank()&&!working&&!busy&&!chat.working,modifier=Modifier.fillMaxWidth().heightIn(min=56.dp).testTag("intention-submit")){Text(if(working)t("整理緊指引…","Preparing…")else t("畀我奇門指引","Give me Qimen guidance"))}
+  Button(onClick={focus.clearFocus(true);keyboard?.hide();details=false;revealResult=true;vm.quickIntention(text,hours,purpose)},enabled=text.isNotBlank()&&!working&&!busy&&!chat.working,modifier=Modifier.fillMaxWidth().heightIn(min=56.dp).testTag("intention-submit")){Text(if(working)t("整理緊指引…","Preparing…")else t("畀我奇門指引","Give me Qimen guidance"))}
   Text(when(chat.mode){"CHATGPT"->t("按上面按鈕會將今次心願及盤面交畀 ChatGPT 解讀；位置及日誌不會傳送。","The button sends this intention and its charts to ChatGPT. Location and journals stay private.");"API"->t("按上面按鈕會將今次心願及盤面傳送至你設定嘅 AI 供應商。","The button sends this intention and its charts to your configured AI provider.");else->t("目前用本機指引，毋須網絡。登入 ChatGPT 可直接加 AI 解讀。","Offline guidance is active. Sign in to add AI interpretation here.")},style=MaterialTheme.typography.bodySmall)
   TextButton(onClick={account=true},modifier=Modifier.testTag("intention-account")){Text(if(chat.connected)t("ChatGPT 已連接・管理 AI","ChatGPT connected · manage AI")else t("連接 ChatGPT／Codex","Connect ChatGPT / Codex"))}
   if(working){LinearProgressIndicator(Modifier.fillMaxWidth());TextButton(onClick=vm::cancelQuick){Text(t("取消等候，保留本機指引","Cancel waiting, keep offline guidance"))}}
@@ -71,7 +72,7 @@ import java.time.*
     val chart=data.charts.first{it.id==selected.chartId}.let{Codec.decodeFromString<Chart>(it.chartJson)}
     val palace=chart.palaces.single{it.index==selected.itinerary!!.palace}
     val expired=now>=Instant.parse(selected.plannedEnd)
-    CardBlock(if(expired)t("呢個出發時段已過","This departure window has ended")else t("跟住咁做","Your direction guide")){
+    Box(Modifier.bringIntoViewRequester(resultFocus)){CardBlock(if(expired)t("呢個出發時段已過","This departure window has ended")else t("跟住咁做","Your direction guide")){
      Text("${palace.direction} ${Navigator.bearing(palace.index)}°",style=MaterialTheme.typography.displaySmall,modifier=Modifier.testTag("intention-direction"))
      Text(t("出發：","Depart: ")+displayTime(selected.plannedStart,chart.input.timezone)+" → "+displayTime(selected.plannedEnd,chart.input.timezone))
      Text(zoneCity(chart.input.timezone,English.current)+t("・以時段結束前出發計。"," · Depart before the end of this window."),style=MaterialTheme.typography.bodySmall)
@@ -81,10 +82,10 @@ import java.time.*
       Text(t("③ 到場後可按自己安排返回，無需額外手勢或指定步數。","③ Return when convenient. No additional gesture or step count is specified."))
       ActionButton(t("打開方位指引","Open direction guide")){onPlan(goal.id)}
      }else Text(t("請再按「畀我奇門指引」，用新時間重新起盤。","Use Give me Qimen guidance again to calculate for the new time."))
-    }
-   }else CardBlock(t("今次未有匹配嘅出行時段","No matching departure window")){
+    }}
+   }else Box(Modifier.bringIntoViewRequester(resultFocus)){CardBlock(t("今次未有匹配嘅出行時段","No matching departure window")){
     Text(t("今次時間範圍未符合所用規則。唔代表心願做唔到；起念盤仍可交 AI 解讀。","No match in this time range. This does not mean your intention cannot happen; AI can still interpret the question chart."),modifier=Modifier.testTag("intention-no-match"))
-   }
+   }}
    TextButton(onClick={details=!details}){Text(t("睇盤面同依據","Chart and reasoning"))}
    if(details)CardBlock(t("今次點樣取用","Method used")){
     Text(if(plan.directionRequest?.purpose=="HARMONY")t("按心願文字辨識為和合；搜尋人遁／玉女守門。","The intention was routed to harmony: Ren Dun / Jade Maiden.")else t("按一般出行法搜尋三奇配吉門；唔代表已具備呢類心願嘅完整專門占法。","Uses the general outing profile, not a complete specialized reading for every kind of intention."))

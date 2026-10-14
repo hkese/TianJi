@@ -36,6 +36,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 class MainActivity:ComponentActivity(){override fun onCreate(savedInstanceState:Bundle?){super.onCreate(savedInstanceState);enableEdgeToEdge();val model=ViewModelProvider(this,object:ViewModelProvider.Factory{override fun <T:ViewModel> create(modelClass:Class<T>):T{@Suppress("UNCHECKED_CAST")return AppModel(application,GlobalContext.get().get(),GlobalContext.get().get(),GlobalContext.get().get()) as T}})[AppModel::class.java];setContent{TianJiApp(model)}}}
 @Composable fun TianJiApp(vm:AppModel){
  val state by vm.state.collectAsStateWithLifecycle();val provider by vm.provider.collectAsStateWithLifecycle();val busy by vm.busy.collectAsStateWithLifecycle();val s=state.settings;val data=state.data
+ // Collect once at the activity lifecycle so Home, account and result updates
+ // remain consistent across navigation and activity recreation.
+ val chat by vm.chat.collectAsStateWithLifecycle();val quickBusy by vm.quickBusy.collectAsStateWithLifecycle();val quickMessage by vm.quickMessage.collectAsStateWithLifecycle()
  Theme(s){
   val view=LocalView.current
   val dark=MaterialTheme.colorScheme.background.luminance()<0.5f
@@ -55,7 +58,7 @@ class MainActivity:ComponentActivity(){override fun onCreate(savedInstanceState:
    Box(Modifier.fillMaxSize().padding(padding).consumeWindowInsets(padding),contentAlignment=Alignment.TopCenter){
     Box(Modifier.widthIn(max=760.dp).fillMaxSize()){
      NavHost(nav,"home"){
-      composable("home"){IntentionScreen(vm,{nav.navigate("plan/$it")},{nav.navigate("chart")},{nav.navigate("guide")},{nav.navigate("goals")},{nav.navigate("settings")})}
+      composable("home"){IntentionScreen(vm,state,chat,quickBusy,quickMessage,busy,{nav.navigate("plan/$it")},{nav.navigate("chart")},{nav.navigate("guide")},{nav.navigate("goals")},{nav.navigate("settings")})}
       composable("chart"){ChartScreen(s.timezone,data.charts,{vm.settings(s.copy(timezone=it))},{chart->vm.perform{vm.repo.saveChart(chart);vm.messages.send(if(s.english)"Chart saved offline" else "命盤已儲存喺手機")}}, {nav.navigate("goals")},{nav.navigate("guide")})}
       composable("goals"){GoalsScreen(data,s.timezone,{vm.perform{vm.repo.saveGoal(it)}},{vm.perform{vm.repo.deleteGoal(it)}},{vm.perform{vm.repo.saveMilestone(it)}},{nav.navigate("plan/$it")})}
       composable("plan/{goal}"){back->val goalId=back.arguments?.getString("goal")?:return@composable;PlannerScreen(goalId,data,s.timezone,{reason->vm.perform{vm.repo.newPlan(goalId,s.timezone,reason)}},{a->vm.perform{vm.repo.choose(a)}},{a->entry=a;nav.navigate("journal")},{g,a->aiReview=vm.payload(g,a) to a},{nav.popBackStack()},{request,reason->vm.perform{vm.repo.newDirectionPlan(goalId,s.timezone,reason,request)}},{id,point->vm.perform{vm.repo.advanceDirection(id,point)}})}

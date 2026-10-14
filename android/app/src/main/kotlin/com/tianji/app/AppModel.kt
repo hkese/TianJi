@@ -64,11 +64,13 @@ class AppModel(val app:Application,val repo:Repository,val prefs:Preferences,val
   if(quickBusy.value || busy.value)return
   val epoch=++quickEpoch;quickBusy.value=true;quickMessage.value="正在起盤及整理方位…"
   quickJob=viewModelScope.launch{
+   var saved=false
    try{
     val plan=withContext(Dispatchers.IO){repo.quickIntention(text,state.value.settings.timezone,hours,purpose)}
+    saved=true
     ensureActive();if(epoch!=quickEpoch)return@launch
     explainQuick(plan.id,epoch)
-   }catch(e:CancellationException){throw e}catch(e:Exception){if(epoch==quickEpoch)quickMessage.value=safeAiError(e)}finally{if(epoch==quickEpoch)quickBusy.value=false}
+   }catch(e:CancellationException){throw e}catch(e:Exception){if(epoch==quickEpoch)quickMessage.value=if(saved)safeAiError(e)else text("今次起盤未完成，請重試；仍未儲存新指引。","The chart could not be completed. Please retry; no new guide was saved.")}finally{if(epoch==quickEpoch)quickBusy.value=false}
   }
  }
  fun retryIntentionAi(planId:String){
