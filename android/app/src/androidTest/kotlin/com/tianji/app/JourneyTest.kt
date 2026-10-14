@@ -38,8 +38,18 @@ class JourneyTest {
     }
 
     private fun awaitText(text: String) {
-        compose.waitUntil(120000) {
-            compose.onAllNodesWithText(text, useUnmergedTree = true).fetchSemanticsNodes().isNotEmpty()
+        try {
+            compose.waitUntil(120000) {
+                compose.onAllNodesWithText(text, useUnmergedTree = true).fetchSemanticsNodes().isNotEmpty()
+            }
+        } catch (failure: ComposeTimeoutException) {
+            capture("failed-screen.png")
+            compose.onRoot(useUnmergedTree = true).printToLog("TianJiTestState")
+            compose.runOnIdle {
+                val model = androidx.lifecycle.ViewModelProvider(compose.activity)[AppModel::class.java]
+                android.util.Log.e("TianJiTestState", "busy=${model.busy.value}; quick=${model.quickBusy.value}; status=${model.quickMessage.value}; plans=${model.state.value.data.plans.map { it.entryMode to it.questionChartId }}; charts=${model.state.value.data.charts.map { it.id }}")
+            }
+            throw failure
         }
     }
 
