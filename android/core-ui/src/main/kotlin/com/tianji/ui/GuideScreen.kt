@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
    Text(t("呢版唔會再將寫便條或做小樣當成奇門行程。候選有真實盤及規則依據，但唔保證心願實現。","Each itinerary has its actual chart and rule evidence. Results are not guaranteed."))
   }
   CardBlock(t("1 · 揀時區，寫心願","1 · Time zone and intention")){
-   Text(t("到設定按時區，直接揀城市；西雅圖用「西雅圖／洛杉磯」，夏令時間自動處理。返首頁直接寫低心願，按「畀我奇門指引」就得，毋須建立目標或揀取用。","Choose a city in Settings. Seattle uses Seattle / Los Angeles, with automatic daylight saving. On Home, write an intention and tap Give me Qimen guidance. No goal form or method selection is required."))
+   Text(t("到設定按時區，直接揀城市；西雅圖用「西雅圖／洛杉磯」，夏令時間自動處理。返首頁按「直接畀我指引」，唔寫任何嘢都可以查今日趨吉避凶。有特定事情先按「有一件事想問」，寫一句再查。","Choose a city in Settings. Seattle uses Seattle / Los Angeles, with automatic daylight saving. On Home, write an intention and tap Give me Qimen guidance. No goal form or method selection is required."))
    OutlinedButton(onClick=onSettings){Text(t("去設定時區","Choose time zone"))}
   }
   CardBlock(t("2 · 搜尋時段及方位","2 · Find a time and direction")){
@@ -29,9 +29,9 @@ import androidx.compose.runtime.Composable
    Text(t("『讀出呢一步』用手機已安裝嘅離線廣東話語音，唔會上傳文字。沒有語音時可在 Android 文字轉語音設定下載，文字指引照常用。","Read this step uses an installed offline voice and does not upload text. Install a voice in Android text-to-speech settings if needed; written guidance remains available."))
   }
   CardBlock(t("AI 解說與私隱","AI explanation and privacy")){
-   Text(t("首頁按「連接 ChatGPT／Codex」，用裝置碼登入一次。之後按「畀我奇門指引」，心願同盤面會直接交 AI，解讀直接顯示及保存喺天機。不傳 GPS、其他心願、金鑰或日誌；可隨時改用本機指引。","Connect ChatGPT / Codex from Home with device-code sign-in. Submitting then sends only that intention and charts, and saves the interpretation in TianJi. GPS, other intentions, keys and journals are excluded. Offline mode remains available."))
+   Text(t("首頁按「連接 ChatGPT／Codex」，用裝置碼登入一次。之後按「直接畀我指引」，心願同盤面會直接交 AI，解讀直接顯示及保存喺天機。不傳 GPS、其他心願、金鑰或日誌；可隨時改用本機指引。","Connect ChatGPT / Codex from Home with device-code sign-in. Submitting then sends only that intention and charts, and saves the interpretation in TianJi. GPS, other intentions, keys and journals are excluded. Offline mode remains available."))
    Text(t("資料留喺手機。備份會包含你選擇記錄嘅位置，請當私人資料保管；匯入會取代現有記錄。0.6 可更新 0.4／0.5，舊版實用方案保留為歷史。","Data stays on the phone. Backups include locations you chose to record, so keep them private. Import replaces records. Version 0.6 updates 0.4 / 0.5 and preserves legacy practical plans."))
   }
-  ActionButton(t("返首頁寫心願","Start with an intention"),onClick=onGoals)
+  ActionButton(t("返首頁睇指引","Start with an intention"),onClick=onGoals)
  }
 }

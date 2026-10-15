@@ -62,7 +62,7 @@ class ChatGptClient(client:OkHttpClient=OkHttpClient()) {
     // Logical cancellation is immediate; socket cleanup always runs off caller.
     fun cancel(){cancelled=true;cleanup.execute{http.dispatcher.cancelAll()}}
     fun close(){cancelled=true;cleanup.execute{try{http.dispatcher.cancelAll();http.connectionPool.evictAll()}finally{http.dispatcher.executorService.shutdown()}}}
-    private fun request(url:String)=Request.Builder().url(url).header("User-Agent","TianJi/0.6.1").header("originator","tianji-navigator")
+    private fun request(url:String)=Request.Builder().url(url).header("User-Agent","TianJi/0.7.0").header("originator","tianji-navigator")
     private fun jsonBody(data:JsonObject)=data.toString().toRequestBody("application/json".toMediaType())
     private fun form(vararg args:Pair<String,String>)=FormBody.Builder().apply{args.forEach{add(it.first,it.second)}}.build()
     private fun call(request:Request):Response {check(!cancelled){"已取消。"};return http.newCall(request).execute()}

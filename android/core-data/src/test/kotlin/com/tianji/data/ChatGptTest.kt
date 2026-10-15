@@ -106,7 +106,7 @@ class ChatGptTest {
   val output=buildJsonArray{add(buildJsonObject{put("type","message");put("content",buildJsonArray{add(buildJsonObject{put("type","output_text");put("text","done")})})})}
   s.enqueue(MockResponse().setHeader("Content-Type","text/event-stream").setBody(complete(output)))
   assertEquals("done",c.complete("synthetic-token","test-model","instruction","synthetic context"))
-  val req=s.takeRequest();assertEquals("/backend-api/codex/responses",req.path);assertEquals("tianji-navigator",req.getHeader("originator"));assertEquals("TianJi/0.6.1",req.getHeader("User-Agent"))
+  val req=s.takeRequest();assertEquals("/backend-api/codex/responses",req.path);assertEquals("tianji-navigator",req.getHeader("originator"));assertEquals("TianJi/0.7.0",req.getHeader("User-Agent"))
   val body=Codec.parseToJsonElement(req.body.readUtf8()).jsonObject;assertEquals(JsonPrimitive(false),body["store"]);assertEquals(JsonPrimitive(true),body["stream"]);assertFalse(body.containsKey("tools"))
  }}
 }

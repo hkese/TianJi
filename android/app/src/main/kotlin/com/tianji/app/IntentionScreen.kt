@@ -17,6 +17,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.*
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.text.style.TextOverflow
 import com.tianji.data.*
 import com.tianji.domain.*
 import com.tianji.home.HomeScreen
@@ -27,10 +28,10 @@ import java.time.*
 
 @OptIn(ExperimentalLayoutApi::class,ExperimentalFoundationApi::class)
 @Composable fun IntentionScreen(vm:AppModel,state:UiState,chat:ChatUiState,working:Boolean,message:String,busy:Boolean,onPlan:(String)->Unit,onChart:()->Unit,onGuide:()->Unit,onGoals:()->Unit,onSettings:()->Unit){
- var text by rememberSaveable{mutableStateOf("")};var advanced by rememberSaveable{mutableStateOf(false)}
- var history by rememberSaveable{mutableStateOf(false)};var account by rememberSaveable{mutableStateOf(false)}
+ var text by rememberSaveable{mutableStateOf("")};var custom by rememberSaveable{mutableStateOf(false)}
+ var advanced by rememberSaveable{mutableStateOf(false)};var history by rememberSaveable{mutableStateOf(false)};var account by rememberSaveable{mutableStateOf(false)}
  var hours by rememberSaveable{mutableIntStateOf(0)};var purpose by rememberSaveable{mutableStateOf<String?>(null)}
- var details by rememberSaveable{mutableStateOf(false)}
+ var details by rememberSaveable{mutableStateOf(false)};var readingOpen by rememberSaveable{mutableStateOf(false)}
  var revealResult by remember{mutableStateOf(false)};val resultFocus=remember{BringIntoViewRequester()}
  var now by remember{mutableStateOf(Instant.now())};LaunchedEffect(Unit){while(true){now=Instant.now();delay(1000)}}
  val focus=LocalFocusManager.current;val keyboard=LocalSoftwareKeyboardController.current
@@ -38,71 +39,87 @@ import java.time.*
  if(history){Column{TextButton(onClick={history=false}){Text(t("返回心願","Back to intention"))};Box(Modifier.weight(1f)){HomeScreen(data,zone,onGoals,onPlan,onChart,onGuide)}};return}
  if(account){ChatAccountScreen(vm,chat,{account=false},onSettings);return}
  val plan=data.plans.filter{it.entryMode=="INTENTION"}.maxByOrNull{it.createdAt}
- val actions=data.actions.filter{it.planVersionId==plan?.id}
- val selected=actions.firstOrNull{it.selected}
+ val selected=data.actions.firstOrNull{it.planVersionId==plan?.id && it.selected}
  val snapshot=data.charts.firstOrNull{it.id==plan?.questionChartId}
  val question=remember(snapshot?.id){snapshot?.let{Codec.decodeFromString<Chart>(it.chartJson)}}
  LaunchedEffect(plan?.id){if(plan!=null && revealResult){withFrameNanos{};resultFocus.bringIntoView();revealResult=false}}
- Page(t("你而家有咩心願？","What's your intention?"),t("寫低就得，天機幫你起盤同整理指引。","Write it down. TianJi prepares the chart and guidance.")){
-  OutlinedTextField(value=text,onValueChange={if(it.length<=1000)text=it},label={Text(t("我想……","I'd like…"))},placeholder={Text(t("例如：希望今晚相處和氣","For example: a harmonious evening"))},minLines=2,maxLines=5,modifier=Modifier.fillMaxWidth().testTag("intention-input"))
-  Button(onClick={focus.clearFocus(true);keyboard?.hide();details=false;revealResult=true;vm.quickIntention(text,hours,purpose)},enabled=text.isNotBlank()&&!working&&!busy&&!chat.working,modifier=Modifier.fillMaxWidth().heightIn(min=56.dp).testTag("intention-submit")){Text(if(working)t("整理緊指引…","Preparing…")else t("畀我奇門指引","Give me Qimen guidance"))}
-  Text(when(chat.mode){"CHATGPT"->t("按上面按鈕會將今次心願及盤面交畀 ChatGPT 解讀；位置及日誌不會傳送。","The button sends this intention and its charts to ChatGPT. Location and journals stay private.");"API"->t("按上面按鈕會將今次心願及盤面傳送至你設定嘅 AI 供應商。","The button sends this intention and its charts to your configured AI provider.");else->t("目前用本機指引，毋須網絡。登入 ChatGPT 可直接加 AI 解讀。","Offline guidance is active. Sign in to add AI interpretation here.")},style=MaterialTheme.typography.bodySmall)
-  TextButton(onClick={account=true},modifier=Modifier.testTag("intention-account")){Text(if(chat.connected)t("ChatGPT 已連接・管理 AI","ChatGPT connected · manage AI")else t("連接 ChatGPT／Codex","Connect ChatGPT / Codex"))}
+ Page(t("今日奇門指引","Your Qimen guide"),t("睇清楚下一步，再跟住做。","See your next step, then follow the guide.")){
+  Text(zoneCity(zone,English.current),style=MaterialTheme.typography.labelLarge)
+  if(custom)OutlinedTextField(value=text,onValueChange={if(it.length<=1000)text=it},label={Text(t("我想……","I'd like…"))},placeholder={Text(t("例如：希望今晚相處和氣","For example: a harmonious evening"))},minLines=2,maxLines=5,modifier=Modifier.fillMaxWidth().testTag("intention-input"))
+  Button(onClick={focus.clearFocus(true);keyboard?.hide();details=false;readingOpen=false;revealResult=true;vm.quickIntention(DirectGuide.intention(if(custom)text else ""),hours,purpose)},enabled=(!custom || text.isNotBlank())&&!working&&!busy&&!chat.working,modifier=Modifier.fillMaxWidth().heightIn(min=56.dp).testTag("intention-submit")){Text(if(working)t("整理緊指引…","Preparing…")else t("直接畀我指引","Guide me now"))}
+  TextButton(onClick={custom=!custom},modifier=Modifier.testTag("intention-custom")){Text(if(custom)t("改用今日趨吉避凶","Use today's general guide")else t("有一件事想問？寫一句就得","Have something specific in mind?"))}
+  Text(when(chat.mode){"CHATGPT"->t("按上面按鈕，會將今次心願同盤面交 ChatGPT 解讀。","Submitting sends this intention and its charts to ChatGPT.");"API"->t("按上面按鈕，會將今次心願同盤面交你設定嘅 AI 解讀。","Submitting sends this intention and its charts to your AI provider.");else->t("本機已可起盤同出指引，毋須網絡。","Charts and guidance work offline.")},style=MaterialTheme.typography.bodySmall)
   if(working){LinearProgressIndicator(Modifier.fillMaxWidth());TextButton(onClick=vm::cancelQuick){Text(t("取消等候，保留本機指引","Cancel waiting, keep offline guidance"))}}
-  if(message.isNotBlank())Text(message,style=MaterialTheme.typography.bodyMedium,modifier=Modifier.testTag("intention-status"))
+  if(message.isNotBlank())Text(message,style=MaterialTheme.typography.bodySmall,modifier=Modifier.testTag("intention-status"))
   if(plan!=null && question!=null){
    val goal=plan.goalSnapshot!!
+   if(selected!=null){
+    val source=data.charts.first{it.id==selected.chartId}
+    val chart=remember(source.id){Codec.decodeFromString<Chart>(source.chartJson)}
+    val guide=DirectGuide.from(selected,chart,now,English.current)
+    Box(Modifier.bringIntoViewRequester(resultFocus)){CardBlock(t("下一步","Your next step")){
+     Text(goal.description.ifBlank{goal.title},style=MaterialTheme.typography.labelLarge,maxLines=2,overflow=TextOverflow.Ellipsis,modifier=Modifier.testTag("guide-intention"))
+     Text(when(guide.state){"WAIT"->t("先等到下方時段，暫時未出發","Wait for the window below");"READY"->t("而家喺出發時段內","You can depart during this window");"ACTIVE"->t("行程進行中，繼續跟返呢一步","Your journey is in progress");"DONE"->t("行程已完成，記低之後有咩變化","Journey completed; record what happened");else->t("呢份指引已過時，請重新整理","This guide has expired; refresh it")},style=MaterialTheme.typography.titleMedium,modifier=Modifier.testTag("guide-next-step"))
+     if(guide.state!="EXPIRED" && guide.state!="DONE"){
+      Text("${guide.direction} ${guide.bearing}°",style=MaterialTheme.typography.displaySmall,modifier=Modifier.testTag("intention-direction"))
+      Text(guide.window,style=MaterialTheme.typography.titleMedium)
+      Text(zoneCity(chart.input.timezone,English.current)+t("・呢個係出發時段"," · Departure window"),style=MaterialTheme.typography.bodySmall)
+      if(guide.state=="WAIT" || guide.state=="READY"){
+       Text(t("到時由固定起點，向${guide.direction}方行去你熟悉、可以到達嘅地方。","During that window, travel ${guide.direction} from a fixed starting point to an accessible place you know."))
+       Text(t("到場後可自行安排返回，再記低心願有咩變化。","Return when convenient and record what happened."),style=MaterialTheme.typography.bodySmall)
+      }
+      ActionButton(if(guide.state=="ACTIVE")t("繼續行程","Continue journey")else t("開指南針，跟住行","Open compass and follow")){onPlan(goal.id)}
+     }else if(guide.state=="DONE")ActionButton(t("記低心願結果","Record the outcome")){onPlan(goal.id)}
+     else Text(t("按上面「直接畀我指引」，用現在時間重新起盤。","Tap Guide me now to calculate a fresh chart."))
+    }}
+    if(guide.avoid.isNotEmpty())CardBlock(t("同一時段先避用","Avoid for that same window")){
+     Text(guide.avoid.joinToString("、"){it.direction},style=MaterialTheme.typography.headlineSmall,modifier=Modifier.testTag("guide-avoid"))
+     Text(t("今次出行先唔選上面方位；只適用於上方時段。","Do not select those directions for this outing; this applies only to the window above."))
+     Text(t("按所用奇門簡式篩選，唔代表全天凶方或一定出事。","A limited traditional screening, not an all-day danger forecast."),style=MaterialTheme.typography.bodySmall)
+    }
+   }else Box(Modifier.bringIntoViewRequester(resultFocus)){CardBlock(t("下一步：今次先唔按此法出行","Next step: no outing selected")){
+    Text(goal.description.ifBlank{goal.title},modifier=Modifier.testTag("guide-intention"))
+    Text(t("今次搜尋範圍未有符合所用規則嘅時段，先唔揀出行方向。唔代表今日會出事。","No window matches the selected rules and range. No direction is selected; this does not mean something bad will happen."),modifier=Modifier.testTag("intention-no-match"))
+    if(goal.title==DirectGuide.DAILY_INTENTION){
+     ActionButton(t("睇下一個可用時段","Find the next available window"),enabled=!working&&!busy){revealResult=true;vm.quickIntention("趨吉避凶",168,plan.directionRequest!!.purpose)}
+     Text(t("改查未來 7 日；會寫清楚實際日期。","Searches the next 7 days and shows the actual date."),style=MaterialTheme.typography.bodySmall)
+    }else Text(t("可改心願日期再查，或在進階選項擴大範圍。","Change the intention date or extend the range in Advanced."))
+   }}
    CardBlock(t("今次心願","This intention")){
-    Text(goal.description.ifBlank{goal.title},style=MaterialTheme.typography.titleMedium)
     Text(displayTime(plan.createdAt,question.input.timezone)+" · "+zoneCity(question.input.timezone,English.current),style=MaterialTheme.typography.bodySmall)
     val guidance=plan.guidance
-    if(guidance!=null){
-     Text(t("AI 奇門解讀","AI Qimen interpretation"),style=MaterialTheme.typography.labelLarge)
-     SelectionContainer{Column(verticalArrangement=Arrangement.spacedBy(8.dp)){Text(guidance.summary);if(guidance.reason.isNotBlank())Text(guidance.reason)}}
-     Text(guidance.model+t("・解讀文字供參考，行程以本機計算卡為準。"," · Interpretation only; the calculated itinerary below is authoritative."),style=MaterialTheme.typography.bodySmall)
-    }else{
-     val reading=remember(question.chart_id){TraditionalReading.from(question)}
-     Text(t("本機盤面簡讀","Offline chart reading"),style=MaterialTheme.typography.labelLarge)
-     Text(if(English.current)reading.themeEn else reading.themeZh)
-     Text(t("已按起意時間起盤。下方直接列出本方法符合條件嘅方位行程。","Calculated for the intention time. The matching direction itinerary is below."))
+    if(guidance!=null){Text(t("AI 奇門解讀","AI Qimen interpretation"),style=MaterialTheme.typography.labelLarge);SelectionContainer{Text(guidance.summary)};if(readingOpen && guidance.reason.isNotBlank())Text(guidance.reason)}
+    else Text(t("上面先列本機計好嘅行動指引。","Your calculated next step is shown above."))
+    if(chat.mode!="OFFLINE" && !working)TextButton(onClick={vm.retryIntentionAi(plan.id)},modifier=Modifier.testTag("intention-ai-retry")){Text(if(guidance==null)t("加 AI 解讀","Add AI interpretation")else t("更新 AI 解讀","Refresh AI interpretation"))}
+    TextButton(onClick={readingOpen=!readingOpen}){Text(t("點解係咁？","Why this guide?"))}
+    if(readingOpen){
+     if(guidance==null){val reading=remember(question.chart_id){TraditionalReading.from(question)};Text(if(English.current)reading.themeEn else reading.themeZh)}
+     guidance?.let{Text(it.model+t("・AI 解讀供參考，執行時間同方向以上方卡為準。"," · Interpretation only; follow the calculated card above."),style=MaterialTheme.typography.bodySmall)}
     }
-    if(chat.mode!="OFFLINE" && !working)TextButton(onClick={vm.retryIntentionAi(plan.id)},modifier=Modifier.testTag("intention-ai-retry")){Text(t("直接解讀呢個盤","Interpret this chart here"))}
    }
-   if(selected!=null){
-    val chart=data.charts.first{it.id==selected.chartId}.let{Codec.decodeFromString<Chart>(it.chartJson)}
-    val palace=chart.palaces.single{it.index==selected.itinerary!!.palace}
-    val expired=now>=Instant.parse(selected.plannedEnd)
-    Box(Modifier.bringIntoViewRequester(resultFocus)){CardBlock(if(expired)t("呢個出發時段已過","This departure window has ended")else t("跟住咁做","Your direction guide")){
-     Text("${palace.direction} ${Navigator.bearing(palace.index)}°",style=MaterialTheme.typography.displaySmall,modifier=Modifier.testTag("intention-direction"))
-     Text(t("出發：","Depart: ")+displayTime(selected.plannedStart,chart.input.timezone)+" → "+displayTime(selected.plannedEnd,chart.input.timezone))
-     Text(zoneCity(chart.input.timezone,English.current)+t("・以時段結束前出發計。"," · Depart before the end of this window."),style=MaterialTheme.typography.bodySmall)
-     if(!expired){
-      Text(t("① 到上面時段，由固定出發點向${palace.direction}方出行。","① During the window, travel ${palace.direction} from your fixed starting point."))
-      Text(t("② 揀你知道可以到達嘅地方；打開指引可睇指南針。","② Choose a place you know is accessible; open the guide for a compass."))
-      Text(t("③ 到場後可按自己安排返回，無需額外手勢或指定步數。","③ Return when convenient. No additional gesture or step count is specified."))
-      ActionButton(t("打開方位指引","Open direction guide")){onPlan(goal.id)}
-     }else Text(t("請再按「畀我奇門指引」，用新時間重新起盤。","Use Give me Qimen guidance again to calculate for the new time."))
-    }}
-   }else Box(Modifier.bringIntoViewRequester(resultFocus)){CardBlock(t("今次未有匹配嘅出行時段","No matching departure window")){
-    Text(t("今次時間範圍未符合所用規則。唔代表心願做唔到；起念盤仍可交 AI 解讀。","No match in this time range. This does not mean your intention cannot happen; AI can still interpret the question chart."),modifier=Modifier.testTag("intention-no-match"))
-   }}
    TextButton(onClick={details=!details}){Text(t("睇盤面同依據","Chart and reasoning"))}
    if(details)CardBlock(t("今次點樣取用","Method used")){
-    Text(if(plan.directionRequest?.purpose=="HARMONY")t("按心願文字辨識為和合；搜尋人遁／玉女守門。","The intention was routed to harmony: Ren Dun / Jade Maiden.")else t("按一般出行法搜尋三奇配吉門；唔代表已具備呢類心願嘅完整專門占法。","Uses the general outing profile, not a complete specialized reading for every kind of intention."))
-    selected?.let{a->Text(a.rationale);val c=Codec.decodeFromString<Chart>(data.charts.first{it.id==a.chartId}.chartJson);val p=c.palaces.first{it.index==a.itinerary!!.palace};Text("${p.index}宮・${p.door}・${p.star}・${p.deity}・天${p.heaven_stem}／地${p.earth_stem}")}
-    Text(t("時家問事盤；來源《煙波釣叟歌》《遁甲演義》卷二。未有出生盤、全盤旺衰判斷、地圖選址或返回吉時。","Time-of-question chart; sourced from Yanbo Diaosou Ge and Dunjia Yanyi vol. 2. No birth chart, full strength synthesis, map destination or auspicious return calculation."))
+    Text(if(plan.directionRequest?.purpose=="HARMONY")t("今次採用和合簡式：人遁／玉女守門。","Harmony profile: Ren Dun / Jade Maiden.")else t("今次採用一般出行簡式：三奇配吉門。","General outing profile: Qi-Men conjunction."))
+    selected?.let{a->
+     val c=Codec.decodeFromString<Chart>(data.charts.first{it.id==a.chartId}.chartJson);val p=c.palaces.first{it.index==a.itinerary!!.palace}
+     Text(a.rationale);Text("${p.index}宮・${p.door}・${p.star}・${p.deity}・天${p.heaven_stem}／地${p.earth_stem}")
+     DirectionRules.decisions(c,a.itinerary!!.purpose).filter{it.excluded.isNotEmpty()}.forEach{d->Text("${c.palaces.single{it.index==d.palace}.direction}（${d.palace}宮）：${d.excluded.joinToString("、")}")}
+     Text(t("以上避用資料只屬此行程的出發時段。","These exclusions belong only to this departure window."))
+    }
+    Text(t("時家問事盤；來源《煙波釣叟歌》《遁甲演義》卷二。未有完整旺衰、出生盤、地圖選址、手勢步數或返回吉時。","Time-of-question chart. Limited sourced method; no full synthesis, birth chart, map destination, gestures or auspicious return time."))
     Text("${question.ruleset.id}/${question.ruleset.version}\n${question.chart_id}",style=MaterialTheme.typography.labelSmall)
    }
   }
-  TextButton(onClick={advanced=!advanced},modifier=Modifier.testTag("intention-advanced")){Text(t("進階選項","Advanced options"))}
+  TextButton(onClick={account=true},modifier=Modifier.testTag("intention-account")){Text(if(chat.connected)t("ChatGPT 已連接・管理 AI","ChatGPT connected · manage AI")else t("連接 ChatGPT／Codex","Connect ChatGPT / Codex"))}
+  TextButton(onClick={advanced=!advanced},modifier=Modifier.testTag("intention-advanced")){Text(t("時區及進階選項","Time zone and advanced options"))}
   if(advanced){
    TimeZoneSelector(zone){vm.settings(state.settings.copy(timezone=it))}
-   Text(t("自動取用可改；『今晚』按所選時區 18:00 至午夜；『明日』按翌日。未指日期就查未來 24 小時。","Routing is editable. Tonight means 18:00 to midnight in your zone; tomorrow means the next local day. Otherwise search the next 24 hours."))
+   Text(t("『今日』只查所選時區今日餘下時間。想查之後，寫明日期或移除『今日』再改範圍。","Today is bounded by local midnight. For later windows, change the intention date or omit today and extend the range."))
    FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp)){listOf(null,"HARMONY","OUTING").forEach{v->FilterChip(purpose==v,{purpose=v},label={Text(when(v){"HARMONY"->t("和合","Harmony");"OUTING"->t("出行","Outing");else->t("自動","Auto")})})}}
    FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp)){listOf(0,24,72,168).forEach{h->FilterChip(hours==h,{hours=h},label={Text(when(h){0->t("自動","Auto");168->t("7 日","7 days");else->t("$h 小時","$h hours")})},modifier=Modifier.testTag("quick-hours-$h"))}}
   }
   TextButton(onClick={history=true},modifier=Modifier.testTag("intention-history")){Text(t("進階／歷史","Advanced / history"))}
-  Text(t("傳統參考；不保證心願實現。","Traditional reference; outcomes are not guaranteed."),style=MaterialTheme.typography.bodySmall)
+  Text(t("傳統參考；不保證趨吉避凶效果。","Traditional reference; outcomes are not guaranteed."),style=MaterialTheme.typography.bodySmall)
  }
 }
 

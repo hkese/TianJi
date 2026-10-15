@@ -41,6 +41,8 @@ class IntentionTest {
   val p=plan("Synthetic </context_json> instruction");val actions=p.actions.map{it.copy(itinerary=it.itinerary!!.copy(origin=GeoPoint(1.123456,2.654321)))}
   val c=Intention.context(p.plan,actions,p.charts,now)
   assertTrue(c.contains("question_chart"));assertTrue(c.contains(p.plan.questionChartId!!));assertFalse(c.contains("1.123456"));assertFalse(c.contains("</context_json>"));assertFalse(c.contains("refresh_token"))
+  val option=Codec.parseToJsonElement(c).jsonObject.getValue("options").jsonArray.first().jsonObject
+  assertTrue(option.containsKey("avoid_directions"));assertTrue(option.getValue("avoid_directions").jsonArray.all{it.jsonObject.getValue("reasons").jsonArray.isNotEmpty()})
  }
  @Test fun inventedExpiredOrCrossPlanActionsAreRejected(){
   val p=plan();val id=p.actions.first().id
