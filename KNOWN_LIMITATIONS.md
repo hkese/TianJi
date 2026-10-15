@@ -1,5 +1,11 @@
 # Known limitations
 
+## 0.7 direct-guide scope
+- The owner confirms ChatGPT connection works. Live generated interpretation quality remains unverified.
+- Direct guidance exposes the existing limited classical outing/harmony profiles. Avoidance is only the selected candidate window's computed exclusion list, not a whole-day danger map or complete professional synthesis. No predictive effectiveness is established.
+- Today is bounded by local midnight and the default trip allowance. A missing daily match offers a same-purpose next-window search; it does not create a candidate or classify the day as dangerous.
+- Final source passes build/lint, 94 Kotlin / 21 Lab tests and all 10 Android 16 tests in CI 38823712581. Signed APK saved for delivery. Physical 0.7 phone installation/sensors remain unverified; exact scope is in docs/TEST_RESULTS.md. Previous validation/golden/sensor limits below remain. Historical connection-pending notes below are superseded by the owner's current confirmation.
+
 ## 0.6.1 login-recovery limits
 - Temporary network/server errors retain the same pending login until expiry; encrypted pending/exchange state survives model/process reconstruction. Terminal denial/expiry and an already-consumed authorization code may still require fresh authorization.
 - The original phone exception is unknown. Initial new native testing exposed TLS-close network I/O on Main; that defect is corrected and the same regression passes in CI 38779648069. Live account success is not established by synthetic TLS/AppModel tests.

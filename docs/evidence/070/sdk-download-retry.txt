@@ -1,0 +1,6 @@
+Final-source CI 38823712581 attempt 1, API 36 job 116726115647, failed before app tests:
+Warning: An error occurred while preparing SDK package Android Emulator: Error on ZipFile unknown archive.
+adb could not connect to TCP port 5554.
+No app test result was produced in this job. The same job was re-run after the workflow finished; no code or assertions changed for the infrastructure retry.
+Feature source d9110e0a33f75ad7147e52cb7b3a21532cd7d8e2 already passed build and full device gates in CI 38823431880. Final source 16d580aeb4030e7ab4e744262088dab2024fdf21 additionally updates native help text.
+Final-source retry job 116727618878 passed: all 7 data tests and 3 App tests, with no source or assertion changes for retry. CI run 38823712581 completed successfully. The SDK failure above is not counted as a successful test run.

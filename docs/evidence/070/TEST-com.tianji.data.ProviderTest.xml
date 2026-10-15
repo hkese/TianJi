@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.tianji.data.ProviderTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-15T23:29:31.154Z" hostname="runnervm8k3b6" time="0.353">
+  <properties/>
+  <testcase name="failureIsNotSuccessfulConnection" classname="com.tianji.data.ProviderTest" time="0.109"/>
+  <testcase name="directInterpretationUsesConfiguredApiAndCompleteAnswer" classname="com.tianji.data.ProviderTest" time="0.067"/>
+  <testcase name="truncatedInterpretationIsRejected" classname="com.tianji.data.ProviderTest" time="0.067"/>
+  <testcase name="httpsConnectionTest" classname="com.tianji.data.ProviderTest" time="0.108"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.tianji.domain.DirectGuideTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-15T23:29:13.764Z" hostname="runnervm8k3b6" time="1.801">
+  <properties/>
+  <testcase name="oneTapDailyGoalStopsAtLocalMidnightWithoutBorrowingTomorrowsWindows" classname="com.tianji.domain.DirectGuideTest" time="0.444"/>
+  <testcase name="rejectsAnotherChartAndExcludedDirectionRatherThanRenderingForgedAdvice" classname="com.tianji.domain.DirectGuideTest" time="0.647"/>
+  <testcase name="neverSaysDepartNowBeforeWindowAndExpiresAtExclusiveEnd" classname="com.tianji.domain.DirectGuideTest" time="0.333"/>
+  <testcase name="readableWindowDisambiguatesDstAndLabelsTomorrowInItsChartZone" classname="com.tianji.domain.DirectGuideTest" time="0.004"/>
+  <testcase name="existingJourneyContinuesAfterDepartureWindowWithoutNewDeparture" classname="com.tianji.domain.DirectGuideTest" time="0.183"/>
+  <testcase name="avoidOnlyUsesExcludedPalacesFromThatActionsOwnChart" classname="com.tianji.domain.DirectGuideTest" time="0.188"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

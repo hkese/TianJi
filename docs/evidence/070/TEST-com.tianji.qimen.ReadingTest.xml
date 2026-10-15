@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.tianji.qimen.ReadingTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-15T23:29:04.765Z" hostname="runnervm8k3b6" time="0.758">
+  <properties/>
+  <testcase name="blockedChartsCannotBeInterpreted" classname="com.tianji.qimen.ReadingTest" time="0.007"/>
+  <testcase name="readingUsesActualHeavenStemIncludingHostedCenter" classname="com.tianji.qimen.ReadingTest" time="0.751"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

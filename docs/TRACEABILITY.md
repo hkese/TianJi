@@ -83,3 +83,15 @@ Final 0.2.2 evidence: `docs/evidence/022/` and https://github.com/hkese/TianJi/a
 ## 0.6.1 authorization recovery
 
 NAV-009: `DeviceAuthorization.kt`, `ChatGpt.kt` and AppModel retain the same pending login through temporary errors, persist encrypted device/exchange stages, restore after reconstruction, distinguish catalog failure from login failure and close TLS sockets off Main. Unit TLS/state-machine tests and 2 actual AppModel/Keystore API 36 regressions pass, alongside 7 data tests and the full UI journey. Final CI 38779648069, evidence `docs/evidence/061/`. The owner's exact initial phone exception and a live authenticated completion remain unverified.
+
+
+## 0.7 direct daily guide
+
+| Requirement | Implementation | Verification / boundary |
+|---|---|---|
+| NAV-002/005, direct 趨吉避凶 guidance | `DirectGuide.kt`, `IntentionScreen.kt`: one-tap default daily goal, optional intention, action before interpretation, readable local window and explicit journey state, selected compass CTA | Six `DirectGuideTest` cases; native daily-no-input, keyboard, recreation and selected-compass journey. No second option selection required. |
+| NAV-005/012, avoidance provenance | Actual `DirectionRules.decisions` exclusions for each candidate's own chart/profile, same departure window only; expired/completed/overdue-active avoidance suppressed | Matching chart/profile validation, excluded candidate rejection and boundary tests. No-match is not a danger classification; no all-day or efficacy claim. |
+| NAV-002/007, daily bounds and continuation | Local-midnight bound with trip allowance, same-purpose next-window search and three-step native guide | Midnight/DST regression and native help review; no fabricated filler candidate. |
+| NAV-009, connected interpretation | Existing authorization retained; AI context includes own-candidate exclusions; executable app fields remain calculated | Privacy/context regression and retained TLS/AppModel recovery tests. Owner confirms connection works; generated interpretation quality remains unverified. |
+
+Final executable source `16d580aeb4030e7ab4e744262088dab2024fdf21`; CI 38823712581. 94 Kotlin, 21 Lab, 7 Android 16 data and 3 App tests pass with build/lint. First emulator SDK download failed before app tests; unchanged retry passed. Same-signer 0.7.0 APK saved for delivery. Exact artifacts/hashes, XML and limitations: `TEST_RESULTS.md`, `evidence/070/`.

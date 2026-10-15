@@ -1,3 +1,27 @@
+# 0.7.0 — direct daily guide
+
+Date: 2026-10-15. Final executable source: `16d580aeb4030e7ab4e744262088dab2024fdf21`.
+CI: https://github.com/hkese/TianJi/actions/runs/38823712581 . Build and final Android 16 gates passed. The first native job failed during emulator SDK download before app tests; the same job passed on retry without code or assertion changes. See evidence/070/sdk-download-retry.txt. Feature source `d9110e0a33f75ad7147e52cb7b3a21532cd7d8e2` also passed both gates in CI 38823431880; final source additionally updates the native help. Later documentation-only publication does not alter the tested executable source.
+
+| Gate | Observed result |
+|---|---|
+| Kotlin | 94 passed: domain 43, Core 23, data/network 28; zero failures/errors. Exact unit XML retained in evidence/070. |
+| New guide cases | Six regressions: future/ready/exclusive expiry boundaries, started/completed journey handling, own-chart/profile exclusion provenance, forged chart/direction rejection, daily local-midnight bounds, readable DST and tomorrow labels. Existing AI-context test now checks actual avoidance data and privacy. |
+| Research Lab | 21 passed; Ruff passed; one existing dependency deprecation warning. |
+| Android build/lint | Gradle BUILD SUCCESSFUL in 2m34s. Lint: 0 errors / 27 warnings, preference/KTX style and dependency-update suggestions. |
+| API 36 data | 7 Room/Keystore/backup tests passed, suite 2.096 s. |
+| API 36 app | 3 tests passed, suite 47.457 s: offlineJourney 41.55 s; recreatedModelResumesExchangeAndKeepsLoginWhenCatalogFails 1.764 s; browserAuthorizationSurvivesTemporaryPollingFailure 3.362 s. |
+| Device environment | Google APIs x86_64 / API 36, 720×1440 at 320dpi (360dp), Wi-Fi/data disabled. Authentication tests use local synthetic TLS. No live account test is claimed by CI. |
+| Native coverage | One-tap daily guide without entering text, same-window exclusions, saved result after activity recreation, optional intention with the real keyboard, selected compass itinerary, retained timezone/chart/goals/history/journal paths and authorization recovery. |
+| Signed APK | 0.7.0 / versionCode 10, package com.tianji.navigator.daily, minSdk 28 / target 36. 34,127,351 bytes; SHA-256 `db41bc4a1719c4c6b2f7fd162a721bcc9b411a87d7c62c7853e8a71d25c71e61`. |
+| Signing/content | v2/v3 verify; retained certificate `e262754c09f6cef572c56aaa785debffa3e62e09ff87f93f87f0394e2e9de240`. All 464 non-signature entries match final CI; all 264 stored entries retain alignment, native .so at 16KB and other entries at 4 bytes. CI zipalign passed. |
+
+APK artifact 12014048811: ZIP SHA-256 `85214d8723b7270b690d011333303a83d79dd1a44e7601ce77353c1f1c1cff48`. Verification artifact 12014048822: ZIP SHA-256 `9966511f025eb6653a4ba40994f6baa36702e300346d0881644e8b8c4b999c7e`. Final device artifact 12014447082: ZIP SHA-256 `d66f3dd6280daae11c94e7ee41b992aa6845fc01442e48d5aac7f5e6ff0bd7b6`. Download digests verified before extraction/signing. Device XML copies use LF line endings; test content is unchanged. Signing key is private. The final signed APK is saved for delivery. Same signer/package permits an identity-compatible update from 0.4–0.6.1; a physical 0.7 installer upgrade was not exercised here.
+
+The owner now confirms the ChatGPT connection works. That is phone acceptance of connection, not independent verification of generated interpretation or predictive efficacy. Home, daily result and exclusion screens from the passing feature-source device artifact and final-source three-step native help were visually reviewed. No phone/private screenshots are published. The displayed avoidance list comes only from existing exclusions for the candidate's own chart and purpose, only for that departure window. Missing matches are not danger classifications. Core's independent human-golden target remains unfinished. Physical compass/GPS performance and 0.7 phone upgrade remain unverified.
+
+---
+
 # 0.6.1 — device authorization recovery
 
 Date: 2026-10-15. Executable source: `fc77d7b0e2113e765e130d385ed40fd33825a93e`.

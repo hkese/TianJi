@@ -1,3 +1,15 @@
+# 0.7.0 — direct daily guidance (verified debug delivery)
+
+- Owner reports ChatGPT now connects. The remaining problem is usability: wanting a direct next step for 趨吉避凶.
+- Implemented one-tap daily guide without typing, optional specific intention, action-first result, explicit wait/ready/active/done/expired states, readable local windows and same-window excluded directions from the actual candidate chart/profile. AI explanation follows the action.
+- Daily goal respects local midnight. Empty results stay empty; a daily next-window button searches up to seven days without switching the selected purpose. Existing login/backup/history remain.
+- Three-step native help now matches the primary flow; no second option selection is required before opening the compass.
+- Final executable source `16d580aeb4030e7ab4e744262088dab2024fdf21` passes CI 38823712581: 94 Kotlin tests, 21 Lab tests, Ruff, build/lint (0 errors / 27 warnings), 7 Android 16 data tests and 3 App tests. An initial emulator SDK download failed before app tests; retry passed without code/assertion changes. Feature source also passed CI 38823431880.
+- Home, result, avoidance and final three-step help visually reviewed. Signed 0.7.0 / versionCode 10 APK saved for delivery: 34,127,351 bytes; SHA-256 `db41bc4a1719c4c6b2f7fd162a721bcc9b411a87d7c62c7853e8a71d25c71e61`. Retained signer/package, v2/v3 and ZIP alignment pass; all 464 non-signature entries match final CI. Login remains stored on compatible update.
+- Phone acceptance confirms connection, not generated interpretation quality or predictive efficacy. Physical 0.7 installation and compass/GPS remain unverified; expert-golden target remains unfinished. See docs/DIRECT_GUIDE_0_7.md and docs/TEST_RESULTS.md.
+
+---
+
 # 0.6.1 — login recovery (verified debug delivery)
 
 - Phone feedback confirms browser-side authorization succeeded while the app stayed signed out. Exact phone exception is unknown. Fixed a confirmed abort-on-first-network-error defect and missing pending-authorization recovery.

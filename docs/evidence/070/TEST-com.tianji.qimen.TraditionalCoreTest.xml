@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.tianji.qimen.TraditionalCoreTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-10-15T23:29:05.529Z" hostname="runnervm8k3b6" time="3.605">
+  <properties/>
+  <testcase name="unsupportedDatesFailExplicitly" classname="com.tianji.qimen.TraditionalCoreTest" time="0.002"/>
+  <testcase name="externalCrossImplementationCorpus" classname="com.tianji.qimen.TraditionalCoreTest" time="0.505"/>
+  <testcase name="independentPublishedShanghaiChart" classname="com.tianji.qimen.TraditionalCoreTest" time="0.008"/>
+  <testcase name="civilZoneUsesSameAbsoluteSolarTermAndDistinctLocalPillars" classname="com.tianji.qimen.TraditionalCoreTest" time="0.007"/>
+  <testcase name="ziHourMidnightAndLeapDay" classname="com.tianji.qimen.TraditionalCoreTest" time="0.011"/>
+  <testcase name="dstGapRejectedAndOverlapBothInstantsPreserved" classname="com.tianji.qimen.TraditionalCoreTest" time="0.005"/>
+  <testcase name="hko2026IndependentMajorSolarTerms" classname="com.tianji.qimen.TraditionalCoreTest" time="0.048"/>
+  <testcase name="exhaustiveYearInvariantsAndCenterCases" classname="com.tianji.qimen.TraditionalCoreTest" time="3.012"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
