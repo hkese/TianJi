@@ -57,8 +57,11 @@ class ChatGptClient(client:OkHttpClient=OkHttpClient()) {
         .connectTimeout(15,TimeUnit.SECONDS).readTimeout(60,TimeUnit.SECONDS).callTimeout(120,TimeUnit.SECONDS)
         .followRedirects(false).followSslRedirects(false).retryOnConnectionFailure(false).build()
     @Volatile private var cancelled=false
-    fun cancel(){cancelled=true;http.dispatcher.cancelAll()}
-    fun close(){cancel();http.connectionPool.evictAll();http.dispatcher.executorService.shutdown()}
+    // TLS close can write a close-notify record. Android forbids that network I/O
+    // on Main, including when ViewModel cancellation invokes a finally block.
+    // Logical cancellation is immediate; socket cleanup always runs off caller.
+    fun cancel(){cancelled=true;cleanup.execute{http.dispatcher.cancelAll()}}
+    fun close(){cancelled=true;cleanup.execute{try{http.dispatcher.cancelAll();http.connectionPool.evictAll()}finally{http.dispatcher.executorService.shutdown()}}}
     private fun request(url:String)=Request.Builder().url(url).header("User-Agent","TianJi/0.6.1").header("originator","tianji-navigator")
     private fun jsonBody(data:JsonObject)=data.toString().toRequestBody("application/json".toMediaType())
     private fun form(vararg args:Pair<String,String>)=FormBody.Builder().apply{args.forEach{add(it.first,it.second)}}.build()
@@ -141,6 +144,7 @@ class ChatGptClient(client:OkHttpClient=OkHttpClient()) {
         }
     }
     companion object {
+        private val cleanup=java.util.concurrent.Executors.newCachedThreadPool{task->Thread(task,"tianji-network-cleanup").apply{isDaemon=true}}
         const val AUTH="https://auth.openai.com"
         const val CODEX="https://chatgpt.com/backend-api/codex"
         const val CLIENT="app_EMoamEEZ73f0CkXaXp7hrann"
