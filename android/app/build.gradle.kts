@@ -2,7 +2,7 @@ plugins { id("com.android.application"); kotlin("android"); kotlin("plugin.seria
 android {
  namespace = "com.tianji.app"
  compileSdk = 36
- defaultConfig { minSdk = 28; testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"; applicationId = "com.tianji.navigator.daily"; targetSdk = 36; versionCode = 8; versionName = "0.6.0" }
+ defaultConfig { minSdk = 28; testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"; applicationId = "com.tianji.navigator.daily"; targetSdk = 36; versionCode = 9; versionName = "0.6.1" }
  compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }
  buildFeatures { compose = true }
 }
@@ -37,4 +37,7 @@ debugImplementation("androidx.compose.ui:ui-test-manifest")
 testImplementation("junit:junit:4.13.2")
 androidTestImplementation("androidx.test.ext:junit:1.2.1")
 androidTestImplementation("androidx.test:runner:1.6.2")
+androidTestImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
+androidTestImplementation("com.squareup.okhttp3:okhttp-tls:4.12.0")
+androidTestImplementation("androidx.room:room-runtime:2.7.1")
 }

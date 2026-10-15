@@ -40,6 +40,34 @@ class ChatGptTest {
   assertTrue(runCatching{c.poll(d.copy(expiresAt=0))}.isFailure)
   c.cancel();assertTrue(runCatching{c.begin()}.isFailure);assertEquals(2,s.requestCount)
  }}
+ @Test fun pollServerFailureIsRecoverableWithoutReplacingCode(){server{s,c->
+  val d=DeviceLogin("test-code","test-device",System.currentTimeMillis()+60000,3)
+  s.enqueue(MockResponse().setResponseCode(503).setBody("private body"))
+  val error=runCatching{c.poll(d)}.exceptionOrNull() as LoginFailure
+  assertTrue(error.recoverable);assertEquals("POLL",error.stage);assertFalse(error.message!!.contains("private body"))
+  s.enqueue(MockResponse().setResponseCode(403));assertNull(c.poll(d));assertEquals("",d.authorizationCode)
+  assertEquals(s.takeRequest().body.readUtf8(),s.takeRequest().body.readUtf8())
+ }}
+ @Test fun droppedPollingConnectionCanBeRetriedWithSameDevice(){server{s,c->
+  val d=DeviceLogin("test-code","test-device",System.currentTimeMillis()+60000,3)
+  s.enqueue(MockResponse().setSocketPolicy(SocketPolicy.DISCONNECT_AFTER_REQUEST))
+  val error=runCatching{c.poll(d)}.exceptionOrNull() as LoginFailure
+  assertTrue(error.recoverable);assertEquals("POLL",error.stage)
+  s.enqueue(MockResponse().setResponseCode(403));assertNull(c.poll(d))
+  assertEquals(s.takeRequest().body.readUtf8(),s.takeRequest().body.readUtf8())
+ }}
+ @Test fun exchangeFailureResumesFromSavedAuthorizationInsteadOfPollingAgain(){server{s,c->
+  val d=DeviceLogin("test","device",System.currentTimeMillis()+60000,3)
+  s.enqueue(MockResponse().setBody("""{"authorization_code":"saved-code","code_verifier":"saved-verifier"}"""))
+  s.enqueue(MockResponse().setResponseCode(503))
+  var saved:DeviceLogin?=null
+  val error=runCatching{c.poll(d){saved=it.copy()}}.exceptionOrNull() as LoginFailure
+  assertEquals("EXCHANGE",error.stage);assertTrue(error.recoverable);assertEquals("saved-code",saved!!.authorizationCode)
+  s.enqueue(MockResponse().setBody(tokens()))
+  assertEquals("test-access",c.poll(saved!!)!!.accessToken)
+  assertEquals("/api/accounts/deviceauth/token",s.takeRequest().path)
+  assertEquals("/oauth/token",s.takeRequest().path);assertEquals("/oauth/token",s.takeRequest().path)
+ }}
  @Test fun redirectsAndPrivateErrorBodiesAreNotUsed(){server{s,c->
   s.enqueue(MockResponse().setResponseCode(302).setHeader("Location","https://unrelated.invalid/steal").setBody("secret-example"))
   val e=runCatching{c.models("test-token")}.exceptionOrNull()!!;assertFalse(e.message.orEmpty().contains("secret-example"));assertEquals(1,s.requestCount)
@@ -78,7 +106,7 @@ class ChatGptTest {
   val output=buildJsonArray{add(buildJsonObject{put("type","message");put("content",buildJsonArray{add(buildJsonObject{put("type","output_text");put("text","done")})})})}
   s.enqueue(MockResponse().setHeader("Content-Type","text/event-stream").setBody(complete(output)))
   assertEquals("done",c.complete("synthetic-token","test-model","instruction","synthetic context"))
-  val req=s.takeRequest();assertEquals("/backend-api/codex/responses",req.path);assertEquals("tianji-navigator",req.getHeader("originator"));assertEquals("TianJi/0.6.0",req.getHeader("User-Agent"))
+  val req=s.takeRequest();assertEquals("/backend-api/codex/responses",req.path);assertEquals("tianji-navigator",req.getHeader("originator"));assertEquals("TianJi/0.6.1",req.getHeader("User-Agent"))
   val body=Codec.parseToJsonElement(req.body.readUtf8()).jsonObject;assertEquals(JsonPrimitive(false),body["store"]);assertEquals(JsonPrimitive(true),body["stream"]);assertFalse(body.containsKey("tools"))
  }}
 }

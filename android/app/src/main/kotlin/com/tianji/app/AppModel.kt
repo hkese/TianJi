@@ -11,41 +11,72 @@ import kotlinx.coroutines.flow.*
 import kotlinx.serialization.json.*
 import java.util.UUID
 import java.time.Instant
-data class ChatUiState(val connected:Boolean=false,val working:Boolean=false,val userCode:String="",val loginUrl:String="",val expiresAt:Long=0,val error:String="",val models:List<ChatGptModel> = emptyList(),val model:String="",val mode:String="OFFLINE")
+data class ChatUiState(val connected:Boolean=false,val working:Boolean=false,val userCode:String="",val loginUrl:String="",val expiresAt:Long=0,val error:String="",val models:List<ChatGptModel> = emptyList(),val model:String="",val mode:String="OFFLINE",val loginStatus:String="",val browserRequest:Long=0)
 class TianJiApplication:Application(){override fun onCreate(){super.onCreate();org.koin.core.context.startKoin{androidContext(this@TianJiApplication);modules(org.koin.dsl.module{single{Repository.open(get())};single{Preferences(get())};single{CredentialVault(get())}})}}}
 data class UiState(val data:Backup=Backup(),val settings:Settings=Settings(),val loaded:Boolean=false)
-class AppModel(val app:Application,val repo:Repository,val prefs:Preferences,val vault:CredentialVault):ViewModel(){
+class AppModel(val app:Application,val repo:Repository,val prefs:Preferences,val vault:CredentialVault,private val chatClientFactory:()->ChatGptClient={ChatGptClient()}):ViewModel(){
  val state=combine(repo.state,prefs.flow){data,s->UiState(data,s,true)}.stateIn(viewModelScope,SharingStarted.Eagerly,UiState())
  val messages=Channel<String>(Channel.BUFFERED);val busy=MutableStateFlow(false);val provider=MutableStateFlow(AiProviderConfig());private val ai=AiClient()
  private val chatPrefs=app.getSharedPreferences("intention-ai",0)
  private val session=ChatGptSession(EncryptedGrantStorage(app))
+ private val pendingLogin=DeviceLoginRecovery(EncryptedPendingLoginStorage(app))
  val chat=MutableStateFlow(ChatUiState(model=chatPrefs.getString("model","")?:"",mode=chatPrefs.getString("mode","OFFLINE")?:"OFFLINE"))
  val quickBusy=MutableStateFlow(false);val quickMessage=MutableStateFlow("")
  private var accountJob:Job?=null;private var quickJob:Job?=null
  private var accountClient:ChatGptClient?=null;private var quickClient:ChatGptClient?=null;private var quickApi:AiClient?=null
  private var accountEpoch=0;private var quickEpoch=0
- init{perform{provider.value=repo.provider();chat.value=chat.value.copy(connected=session.connected())}}
+ init{perform{provider.value=repo.provider();val connected=session.connected();chat.value=chat.value.copy(connected=connected);if(connected)pendingLogin.clear() else withContext(Dispatchers.Main){resumeChatGpt()}}}
  fun aiMode(mode:String){require(mode in listOf("OFFLINE","CHATGPT","API"));cancelQuick();chat.value=chat.value.copy(mode=mode);chatPrefs.edit().putString("mode",mode).apply()}
  fun selectModel(id:String){require(chat.value.models.any{it.id==id});cancelQuick();chat.value=chat.value.copy(model=id);chatPrefs.edit().putString("model",id).apply()}
  private fun safeAiError(e:Exception):String=when(e){is AccountFailure->e.message?:"ChatGPT 未能回覆。";is java.io.IOException->"連線未完成，請檢查網絡或重新登入；本機指引已保留。";else->"AI 未提供符合本盤嘅完整解讀；本機指引已保留，可以重試。"}
- fun cancelAccount(){accountEpoch++;session.invalidatePending();accountClient?.cancel();accountJob?.cancel();accountClient=null;chat.value=chat.value.copy(working=false,userCode="",loginUrl="")}
- fun loginChatGpt(){
-  cancelAccount();val epoch=accountEpoch;val grantTicket=session.invalidatePending();val client=ChatGptClient();accountClient=client
-  chat.value=chat.value.copy(working=true,error="")
+ private fun loginError(e:Exception,stage:String):String {
+  if(e is LoginFailure)return "${e.message}（${e.stage}）"
+  if(stage=="MODELS")return "已登入；模型清單未能更新，可以按「更新模型清單」再試。（MODELS）"
+  val detail=when(e){
+   is java.net.SocketTimeoutException->"登入連線逾時"
+   is java.net.UnknownHostException->"暫時未能連接登入網址"
+   is javax.net.ssl.SSLException->"登入安全連線未能建立"
+   is AccountFailure->e.message?:"登入服務拒絕請求"
+   is java.io.IOException->"登入連線中斷"
+   else->if(stage=="STORE")"登入憑證未能儲存" else "登入服務未提供完整回覆"
+  }
+  return "$detail，請重試。（$stage）"
+ }
+ fun cancelAccount(keepPending:Boolean=false){accountEpoch++;session.invalidatePending();accountClient?.cancel();accountJob?.cancel();accountClient=null;if(!keepPending)pendingLogin.clear();chat.value=chat.value.copy(working=false,userCode="",loginUrl="",loginStatus="")}
+ fun loginChatGpt()=startAccount(false)
+ fun resumeChatGpt(){if(!chat.value.working && !chat.value.connected)startAccount(true)}
+ private fun startAccount(resume:Boolean){
+  cancelAccount(keepPending=resume);val epoch=accountEpoch;val grantTicket=session.invalidatePending();val client=chatClientFactory();accountClient=client
+  chat.value=chat.value.copy(working=true,error="",loginStatus=if(resume)"檢查緊未完成嘅授權…" else "連接緊 OpenAI 登入服務…")
   accountJob=viewModelScope.launch{
+   var ticket:Long?=null;var stage="START"
    try{
-    val device=withContext(Dispatchers.IO){client.begin()};ensureActive();if(epoch!=accountEpoch)return@launch
-    chat.value=chat.value.copy(userCode=device.userCode,loginUrl=device.verificationUrl,expiresAt=device.expiresAt)
-    var grant:ChatGptGrant?=null
-    while(grant==null){delay(device.intervalSeconds*1000L);grant=withContext(Dispatchers.IO){client.poll(device)}}
+    val recovered=if(resume)withContext(Dispatchers.IO){pendingLogin.resume()}else null
     ensureActive();if(epoch!=accountEpoch)return@launch
-    val authorized=requireNotNull(grant)
-    withContext(Dispatchers.IO){session.save(authorized,grantTicket)}
-    chat.value=chat.value.copy(connected=true,userCode="",loginUrl="",mode="CHATGPT")
-    chatPrefs.edit().putString("mode","CHATGPT").apply()
+    if(resume && recovered==null)return@launch
+    val device:DeviceLogin
+    if(recovered!=null){device=recovered.first;ticket=recovered.second}else{
+     device=withContext(Dispatchers.IO){client.begin()};ensureActive();if(epoch!=accountEpoch)return@launch
+     ticket=withContext(Dispatchers.IO){pendingLogin.start(device)}
+    }
+    ensureActive();if(epoch!=accountEpoch)return@launch
+    val activeTicket=requireNotNull(ticket)
+    chat.value=chat.value.copy(userCode=device.userCode,loginUrl=device.verificationUrl,expiresAt=device.expiresAt,
+     loginStatus="等緊 OpenAI 授權；網頁顯示已登入後，返天機就得。",browserRequest=if(resume)0 else System.currentTimeMillis())
+    stage="POLL"
+    val authorized=DeviceAuthorization.await(device,{
+     withContext(Dispatchers.IO){val result=client.poll(device){pendingLogin.remember(it,activeTicket)};if(result==null)pendingLogin.remember(device,activeTicket);result}
+    },{status->if(epoch==accountEpoch)chat.value=chat.value.copy(loginStatus=status)})
+    ensureActive();if(epoch!=accountEpoch)return@launch
+    stage="STORE";chat.value=chat.value.copy(loginStatus="授權已收到，儲存緊登入…")
+    withContext(Dispatchers.IO){session.save(authorized,grantTicket);pendingLogin.clear(activeTicket)}
+    ensureActive();if(epoch!=accountEpoch)return@launch
+    chat.value=chat.value.copy(connected=true,userCode="",loginUrl="",mode="CHATGPT",loginStatus="已登入，更新緊模型清單…")
+    chatPrefs.edit().putString("mode","CHATGPT").apply();stage="MODELS"
     loadModels(client,epoch)
-   }catch(e:CancellationException){throw e}catch(e:Exception){if(epoch==accountEpoch)chat.value=chat.value.copy(error=safeAiError(e))}
-   finally{client.close();if(epoch==accountEpoch){accountClient=null;chat.value=chat.value.copy(working=false,userCode="",loginUrl="")}}
+   }catch(e:CancellationException){throw e}catch(e:Exception){
+    if(epoch==accountEpoch){withContext(Dispatchers.IO){pendingLogin.clear(ticket)};chat.value=chat.value.copy(error=loginError(e,stage),loginStatus="")}
+   }finally{client.close();if(epoch==accountEpoch){accountClient=null;chat.value=chat.value.copy(working=false,userCode="",loginUrl="",loginStatus="")}}
   }
  }
  private suspend fun loadModels(client:ChatGptClient,epoch:Int){
@@ -55,7 +86,7 @@ class AppModel(val app:Application,val repo:Repository,val prefs:Preferences,val
   chat.value=chat.value.copy(models=models,model=selected,error="");chatPrefs.edit().putString("model",selected).apply()
  }
  fun refreshChatModels(){
-  if(chat.value.working)return;cancelAccount();val epoch=accountEpoch;val client=ChatGptClient();accountClient=client;chat.value=chat.value.copy(working=true,error="")
+  if(chat.value.working)return;cancelAccount();val epoch=accountEpoch;val client=chatClientFactory();accountClient=client;chat.value=chat.value.copy(working=true,error="")
   accountJob=viewModelScope.launch{try{loadModels(client,epoch)}catch(e:CancellationException){throw e}catch(e:Exception){if(epoch==accountEpoch)chat.value=chat.value.copy(error=safeAiError(e))}finally{client.close();if(epoch==accountEpoch){accountClient=null;chat.value=chat.value.copy(working=false)}}}
  }
  fun logoutChatGpt(){cancelAccount();cancelQuick();chat.value=ChatUiState();chatPrefs.edit().clear().apply();viewModelScope.launch(Dispatchers.IO){session.logout()}}
@@ -104,7 +135,7 @@ class AppModel(val app:Application,val repo:Repository,val prefs:Preferences,val
   withContext(Dispatchers.IO){repo.saveGuidance(planId,result)}
   quickMessage.value="AI 解讀已保存。"
  }
- override fun onCleared(){cancelAccount();cancelQuick();super.onCleared()}
+ override fun onCleared(){cancelAccount(keepPending=true);cancelQuick();super.onCleared()}
  fun perform(block:suspend ()->Unit){if(busy.value)return;busy.value=true;viewModelScope.launch{try{withContext(Dispatchers.IO){block()}}catch(e:Exception){messages.send(if(state.value.settings.english)"Could not complete this action. Check the input, deadline, file or connection." else "未能完成。請檢查輸入、限期、檔案或連線。")}finally{busy.value=false}}}
  fun settings(s:Settings)=perform{prefs.save(s);ReminderWorker.configure(app,s.reminders)}
  fun saveProvider(p:AiProviderConfig,key:String)=perform{if(p.baseUrl!=provider.value.baseUrl)vault.clear();if(key.isNotBlank())vault.save(key);repo.provider(p);provider.value=p}

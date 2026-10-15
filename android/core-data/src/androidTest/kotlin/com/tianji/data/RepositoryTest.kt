@@ -65,4 +65,16 @@ import org.junit.runner.RunWith
   val b=repo.snapshot();b.validate();assertEquals("INTENTION",b.plans.single().entryMode);assertEquals("Synthetic interpretation",b.plans.single().guidance!!.summary);assertTrue(b.actions.single{it.id==action.id}.selected)
   repo.db.close()
  }
+ @Test fun pendingLoginIsEncryptedRestorableAndOutsideAppBackup():Unit=runBlocking {
+  val context=InstrumentationRegistry.getInstrumentation().targetContext
+  val storage=EncryptedPendingLoginStorage(context);storage.clear()
+  val login=DeviceLogin("synthetic-code","synthetic-device",System.currentTimeMillis()+60000,3,"synthetic-auth","synthetic-verifier")
+  val first=DeviceLoginRecovery(storage);first.start(login)
+  val raw=context.getSharedPreferences("encrypted_credentials_chatgpt-pending",0).getString("value","")!!
+  assertFalse(raw.contains("synthetic"));assertFalse(raw.contains("verifier"))
+  val recovered=DeviceLoginRecovery(EncryptedPendingLoginStorage(context));val restored=recovered.resume()!!
+  assertEquals(login,restored.first)
+  val repo=Repository.open(context);assertFalse(repo.export().contains("synthetic-verifier"));repo.db.close()
+  recovered.clear(restored.second);assertNull(storage.read())
+ }
 }

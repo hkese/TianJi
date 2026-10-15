@@ -15,10 +15,12 @@ import java.util.concurrent.TimeUnit
 
 @Serializable data class ChatGptGrant(val accessToken:String,val refreshToken:String,val expiresAt:Long)
 data class ChatGptModel(val id:String,val label:String)
-data class DeviceLogin(val userCode:String,val deviceId:String,val expiresAt:Long,var intervalSeconds:Int) {
+@Serializable data class DeviceLogin(val userCode:String,val deviceId:String,val expiresAt:Long,var intervalSeconds:Int,
+    var authorizationCode:String="",var codeVerifier:String="") {
     val verificationUrl get()="https://auth.openai.com/codex/device"
 }
 class AccountFailure(val status:Int,message:String):IOException(message)
+class LoginFailure(val stage:String,val recoverable:Boolean,message:String):IOException(message)
 interface GrantStorage {fun read():ChatGptGrant?;fun write(grant:ChatGptGrant);fun clear()}
 class EncryptedGrantStorage(context:Context):GrantStorage {
     private val vault=CredentialVault(context,"chatgpt")
@@ -57,7 +59,7 @@ class ChatGptClient(client:OkHttpClient=OkHttpClient()) {
     @Volatile private var cancelled=false
     fun cancel(){cancelled=true;http.dispatcher.cancelAll()}
     fun close(){cancel();http.connectionPool.evictAll();http.dispatcher.executorService.shutdown()}
-    private fun request(url:String)=Request.Builder().url(url).header("User-Agent","TianJi/0.6.0").header("originator","tianji-navigator")
+    private fun request(url:String)=Request.Builder().url(url).header("User-Agent","TianJi/0.6.1").header("originator","tianji-navigator")
     private fun jsonBody(data:JsonObject)=data.toString().toRequestBody("application/json".toMediaType())
     private fun form(vararg args:Pair<String,String>)=FormBody.Builder().apply{args.forEach{add(it.first,it.second)}}.build()
     private fun call(request:Request):Response {check(!cancelled){"已取消。"};return http.newCall(request).execute()}
@@ -74,18 +76,27 @@ class ChatGptClient(client:OkHttpClient=OkHttpClient()) {
         require(user.length in 1..128 && id.length in 1..4096){"登入服務未提供有效代碼。"}
         return DeviceLogin(user,id,System.currentTimeMillis()+data.long("expires_in",900).coerceIn(30,900)*1000,data.long("interval",5).toInt().coerceIn(3,60))
     }
-    fun poll(login:DeviceLogin):ChatGptGrant? {
-        require(System.currentTimeMillis()<login.expiresAt){"登入代碼已過期，請重新登入。"}
-        val(code,data)=json(request("$AUTH/api/accounts/deviceauth/token").post(jsonBody(buildJsonObject{put("device_auth_id",login.deviceId);put("user_code",login.userCode)})).build())
-        val error=data.string("error")
-        if(error in listOf("access_denied","expired_token"))throw IOException("登入被取消或已過期，請重新開始。")
-        if(code==429 || error=="slow_down"){login.intervalSeconds=(login.intervalSeconds+5).coerceAtMost(60);return null}
-        if(code in listOf(403,404) || error=="authorization_pending")return null
-        if(code !in 200..299)throw failure(code)
-        val authCode=data.string("authorization_code");val verifier=data.string("code_verifier")
-        require(authCode.isNotBlank() && verifier.isNotBlank()){"登入資料不完整，請重新開始。"}
-        val(status,tokens)=json(request("$AUTH/oauth/token").post(form("grant_type" to "authorization_code","client_id" to CLIENT,"code" to authCode,"code_verifier" to verifier,"redirect_uri" to "$AUTH/deviceauth/callback")).build())
-        if(status !in 200..299)throw failure(status)
+    private fun loginJson(request:Request,stage:String):Pair<Int,JsonObject> = try{json(request)}catch(e:IOException){
+        throw LoginFailure(stage,true,if(stage=="POLL")"接收授權暫時中斷，會用同一代碼繼續。" else "網頁授權已收到，正在重新連接登入服務。")
+    }
+    fun poll(login:DeviceLogin,onAuthorization:(DeviceLogin)->Unit={}):ChatGptGrant? {
+        if(System.currentTimeMillis()>=login.expiresAt)throw LoginFailure("EXPIRED",false,"登入代碼已過期，請重新登入。")
+        if(login.authorizationCode.isBlank()){
+            val(code,data)=loginJson(request("$AUTH/api/accounts/deviceauth/token").post(jsonBody(buildJsonObject{put("device_auth_id",login.deviceId);put("user_code",login.userCode)})).build(),"POLL")
+            val error=data.string("error")
+            if(error in listOf("access_denied","expired_token"))throw LoginFailure("DENIED",false,"授權被取消或已過期，請重新登入。")
+            if(code==429 || error=="slow_down"){login.intervalSeconds=(login.intervalSeconds+5).coerceAtMost(60);return null}
+            if(code in listOf(403,404) || error=="authorization_pending")return null
+            if(code in 500..599)throw LoginFailure("POLL",true,"登入服務暫時未能回應，會保留代碼再試。")
+            if(code !in 200..299)throw LoginFailure("POLL_HTTP_$code",false,failure(code).message!!)
+            val authCode=data.string("authorization_code");val verifier=data.string("code_verifier")
+            if(authCode.isBlank() || verifier.isBlank())throw LoginFailure("POLL_FORMAT",false,"登入服務未提供完整授權資料，請重新登入。")
+            login.authorizationCode=authCode;login.codeVerifier=verifier
+            onAuthorization(login) // Persist the exact exchange stage before another network call.
+        }
+        val(status,tokens)=loginJson(request("$AUTH/oauth/token").post(form("grant_type" to "authorization_code","client_id" to CLIENT,"code" to login.authorizationCode,"code_verifier" to login.codeVerifier,"redirect_uri" to "$AUTH/deviceauth/callback")).build(),"EXCHANGE")
+        if(status in 500..599 || status==429)throw LoginFailure("EXCHANGE",true,"授權已收到，登入服務暫時繁忙，會繼續嘗試。")
+        if(status !in 200..299)throw LoginFailure("EXCHANGE_HTTP_$status",false,if(status==400)"網頁授權已收到，但回傳憑證已失效，請重新登入。" else failure(status).message!!)
         return grant(tokens)
     }
     fun refresh(previous:ChatGptGrant):ChatGptGrant {

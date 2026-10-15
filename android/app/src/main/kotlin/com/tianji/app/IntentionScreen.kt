@@ -108,8 +108,9 @@ import java.time.*
 
 @Composable private fun ChatAccountScreen(vm:AppModel,state:ChatUiState,onBack:()->Unit,onSettings:()->Unit){
  val context=LocalContext.current
+ var lastBrowserRequest by rememberSaveable{mutableLongStateOf(0)}
  fun openLogin(){runCatching{context.startActivity(Intent(Intent.ACTION_VIEW,Uri.parse(state.loginUrl)))}}
- LaunchedEffect(state.userCode){if(state.userCode.isNotBlank())openLogin()}
+ LaunchedEffect(state.browserRequest){if(state.browserRequest!=0L && state.browserRequest!=lastBrowserRequest && state.userCode.isNotBlank()){lastBrowserRequest=state.browserRequest;openLogin()}}
  Page(t("連接你嘅 AI","Connect your AI"),t("登入一次，之後直接喺天機睇解讀。","Sign in once; read interpretations in TianJi.")){
   TextButton(onClick=onBack){Text(t("返回心願","Back to intention"))}
   CardBlock("ChatGPT／Codex"){
@@ -132,7 +133,8 @@ import java.time.*
     ActionButton(t("開啟 OpenAI 登入頁","Open OpenAI sign-in"),onClick=::openLogin)
     Text(t("授權後返天機，App 會自動完成連接。代碼過期可重新登入。","Return after authorizing; the app finishes connecting. Restart sign-in if the code expires."))
    }
-   if(state.working){LinearProgressIndicator(Modifier.fillMaxWidth());TextButton(onClick=vm::cancelAccount){Text(t("取消連接","Cancel connection"))}}
+   if(state.working){LinearProgressIndicator(Modifier.fillMaxWidth());TextButton(onClick={vm.cancelAccount()}){Text(t("取消連接","Cancel connection"))}}
+   if(state.loginStatus.isNotBlank())Text(state.loginStatus,modifier=Modifier.testTag("login-status"))
    ErrorText(state.error)
    Text(t("模型及用量由你帳戶決定。登入成功唔等於每個模型都獲准使用。","Models and usage depend on your account. Sign-in alone does not establish access to every model."),style=MaterialTheme.typography.bodySmall)
   }
