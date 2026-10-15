@@ -1,3 +1,28 @@
+# 0.6.1 — device authorization recovery
+
+Date: 2026-10-15. Executable source: `fc77d7b0e2113e765e130d385ed40fd33825a93e`.
+CI: https://github.com/hkese/TianJi/actions/runs/38779648069 . Both build/verification and Android 16 gates passed. Later documentation-only publication does not alter the tested executable source.
+
+| Gate | Observed result |
+|---|---|
+| Kotlin | 88 passed: domain 37, Core 23, data/network 28; zero failures/errors in CI XML. |
+| New regression coverage | 3 TLS tests: actual dropped polling socket, server failure with identical device-code reuse, cached authorization-code exchange recovery. 5 recovery tests: retries, expiry/slowdown bounds, terminal denial/cancellation, reconstruction, stale-write/cancel guards. |
+| Research Lab | 21 passed; Ruff passed. One existing dependency deprecation warning. |
+| Build/lint | Gradle BUILD SUCCESSFUL in 2m41s; lint 0 errors / 27 warnings (preference/KTX style and dependency-version suggestions). |
+| API 36 data | 7 Room/Keystore/backup tests passed (suite 4.726 s), including encrypted pending-stage restoration and backup exclusion. |
+| API 36 app | 3 tests passed (suite 46.891 s): complete offline journey 41.073 s; recreated AppModel resumes exchange, retains login through catalog failure and retries catalog 1.679 s; temporary polling failure completes the same login 3.349 s. |
+| Device environment | Google APIs x86_64 / API 36, 720×1440 at 320dpi, Wi-Fi/data disabled. Auth tests use local synthetic HTTPS only. Current account-page screenshot reviewed locally; no real account or phone screenshots published. |
+| APK | Package `com.tianji.navigator.daily`, versionCode 9 / 0.6.1, minSdk 28 / target 36. 34,110,967 bytes. SHA-256 `f08f82d86d17897bb1556b8af49d23a8b3e8bf9d0e7e00996358faceb612e700`. |
+| Signing/content | v2/v3 verified, retained certificate `e262754c09f6cef572c56aaa785debffa3e62e09ff87f93f87f0394e2e9de240`; 464 non-signature entries identical to CI. 264 uncompressed entries remain aligned: native .so at 16KB, others 4 bytes. CI zipalign passed. |
+
+APK artifact 11995596276: ZIP SHA-256 `8c278bc73fcbe934b48c3188bf81748c575315f9fed0cd1d5649f26c48dea6a0`. Verification artifact 11995915239: ZIP SHA-256 `dbea3ae21b77097596dc9b1613a1d82f2d5197ee8f15355a77ac812f68872d36`. Archive checksums verified before extraction. Device artifact 11996445306: ZIP SHA-256 `cf76e31ccc89b226a602b447a2fa38b3f99df773bd9f1875d3f0d61c984da2b6`. All archive hashes verified. Device XML copies use LF line endings; test content is unchanged. Signing key remains private. Final signed APK saved for delivery; same signer/package permits identity-compatible 0.4–0.6 updates, but physical installer upgrade has not been exercised here.
+
+The owner's screenshot establishes browser-side authorization success and an app-side failure, but not its exact exception/HTTP stage. Confirmed abort-on-IOException and missing pending recovery defects were fixed. The new tests use synthetic local HTTPS and actual Android AppModel/Keystore where stated; they do not establish a live successful authorization or prediction. See LOGIN_RECOVERY_0_6_1.md. If an authorization code was consumed by the server before its response was lost, a fresh login may still be necessary; credentials cannot be recreated by the client. Physical Samsung installation, service entitlement and live generated interpretations remain phone acceptance.
+
+Initial CI 38778439413 passed build/unit/Lab gates, but the new native reconstruction regression exposed `NetworkOnMainThreadException` from TLS close-notify during `ChatGptClient.close`. Cleanup now runs on a dedicated background executor, with immediate logical cancellation. The same regression remains in the device gate; no StrictMode relaxation or assertion removal. See `evidence/061/initial-android16-failure.txt`.
+
+---
+
 # 0.6.0 — one intention and direct ChatGPT account AI
 
 Date: 2026-10-14 UTC (2026-10-13 Pacific). Verified executable source: `f3624faf8c91def9e280981cae2dee2560341a3e`.

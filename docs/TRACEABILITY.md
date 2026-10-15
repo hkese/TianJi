@@ -79,3 +79,7 @@ Final 0.2.2 evidence: `docs/evidence/022/` and https://github.com/hkese/TianJi/a
 | Keep offline and old records | New defaulted plan fields, preserved legacy screens and backups | Old-payload test, Room and UI evidence recorded separately; no SQL schema migration needed. |
 
 0.6 final evidence: `docs/evidence/060/` and CI 38489999031. 80 Kotlin, 21 Lab, 6 Room/Keystore and the full offline native journey pass. The restored-navigation Home refresh regression is fixed and covered. Live account inference and predictive efficacy are not claimed.
+
+## 0.6.1 authorization recovery
+
+NAV-009: `DeviceAuthorization.kt`, `ChatGpt.kt` and AppModel retain the same pending login through temporary errors, persist encrypted device/exchange stages, restore after reconstruction, distinguish catalog failure from login failure and close TLS sockets off Main. Unit TLS/state-machine tests and 2 actual AppModel/Keystore API 36 regressions pass, alongside 7 data tests and the full UI journey. Final CI 38779648069, evidence `docs/evidence/061/`. The owner's exact initial phone exception and a live authenticated completion remain unverified.

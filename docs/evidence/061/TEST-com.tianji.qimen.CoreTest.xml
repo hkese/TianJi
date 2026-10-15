@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.tianji.qimen.CoreTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-10-15T17:44:28.548Z" hostname="runnervm8k3b6" time="0.251">
+  <properties/>
+  <testcase name="invalidZoneRejected" classname="com.tianji.qimen.CoreTest" time="0.091"/>
+  <testcase name="unpairedCoordinatesRejected" classname="com.tianji.qimen.CoreTest" time="0.001"/>
+  <testcase name="civilBoundaryInputsRemainHonest" classname="com.tianji.qimen.CoreTest" time="0.096"/>
+  <testcase name="batchEqualsReplay" classname="com.tianji.qimen.CoreTest" time="0.008"/>
+  <testcase name="timezoneIsPartOfInputHash" classname="com.tianji.qimen.CoreTest" time="0.01"/>
+  <testcase name="deterministicBlockedOutput" classname="com.tianji.qimen.CoreTest" time="0.003"/>
+  <testcase name="invalidLatitudeRejected" classname="com.tianji.qimen.CoreTest" time="0.001"/>
+  <testcase name="crossLanguageFixture" classname="com.tianji.qimen.CoreTest" time="0.038"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.tianji.data.DeviceAuthorizationTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-15T17:44:57.151Z" hostname="runnervm8k3b6" time="0.037">
+  <properties/>
+  <testcase name="expiredRecoveryIsDiscardedAndStaleCancellationCannotDeleteNewAttempt" classname="com.tianji.data.DeviceAuthorizationTest" time="0.009"/>
+  <testcase name="recreationRestoresExactExchangeStageAndCancelInvalidatesOldWrites" classname="com.tianji.data.DeviceAuthorizationTest" time="0.001"/>
+  <testcase name="transientPollingFailureKeepsSameLoginUntilSuccess" classname="com.tianji.data.DeviceAuthorizationTest" time="0.023"/>
+  <testcase name="denialAndCoroutineCancellationAreNeverRetried" classname="com.tianji.data.DeviceAuthorizationTest" time="0.002"/>
+  <testcase name="retriesAreBoundedByExpiryAndHonorSlowdown" classname="com.tianji.data.DeviceAuthorizationTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

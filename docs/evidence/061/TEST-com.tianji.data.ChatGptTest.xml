@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.tianji.data.ChatGptTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2026-10-15T17:44:55.008Z" hostname="runnervm8k3b6" time="2.141">
+  <properties/>
+  <testcase name="account401RefreshesOnceAndRotatesToken" classname="com.tianji.data.ChatGptTest" time="0.765"/>
+  <testcase name="requestUsesSelfIdentityAndDoesNotStoreContext" classname="com.tianji.data.ChatGptTest" time="0.228"/>
+  <testcase name="sparseCompletionAcceptsFinishedPartsOnly" classname="com.tianji.data.ChatGptTest" time="0.007"/>
+  <testcase name="deviceCodePendingExchangeAndFixedOrigins" classname="com.tianji.data.ChatGptTest" time="0.157"/>
+  <testcase name="slowdownDenialExpiryAndCancellation" classname="com.tianji.data.ChatGptTest" time="0.125"/>
+  <testcase name="redirectsAndPrivateErrorBodiesAreNotUsed" classname="com.tianji.data.ChatGptTest" time="0.137"/>
+  <testcase name="completedSnapshotIsAuthoritative" classname="com.tianji.data.ChatGptTest" time="0.0"/>
+  <testcase name="exchangeFailureResumesFromSavedAuthorizationInsteadOfPollingAgain" classname="com.tianji.data.ChatGptTest" time="0.243"/>
+  <testcase name="deltasFailureAndRefusalNeverBecomeACompletedAnswer" classname="com.tianji.data.ChatGptTest" time="0.002"/>
+  <testcase name="second401AndQuotaDoNotLoop" classname="com.tianji.data.ChatGptTest" time="0.213"/>
+  <testcase name="logoutInvalidatesPendingGrant" classname="com.tianji.data.ChatGptTest" time="0.0"/>
+  <testcase name="droppedPollingConnectionCanBeRetriedWithSameDevice" classname="com.tianji.data.ChatGptTest" time="0.192"/>
+  <testcase name="pollServerFailureIsRecoverableWithoutReplacingCode" classname="com.tianji.data.ChatGptTest" time="0.067"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

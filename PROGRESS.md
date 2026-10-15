@@ -1,3 +1,15 @@
+# 0.6.1 — login recovery (verified debug delivery)
+
+- Phone feedback confirms browser-side authorization succeeded while the app stayed signed out. Exact phone exception is unknown. Fixed a confirmed abort-on-first-network-error defect and missing pending-authorization recovery.
+- Added bounded retries, encrypted pending/exchange-stage recovery, explicit login stage messages, and new-request-only browser opening. A model-catalog error retains a successfully stored login.
+- Added synthetic TLS, state-machine, Keystore and actual AppModel recovery tests. Initial CI 38778439413 passed build/unit/Lab gates but the new native reconstruction test exposed TLS-close network I/O on Main. The cleanup fix passed CI 38779648069 at executable source `fc77d7b0e2113e765e130d385ed40fd33825a93e`. No live account success is claimed.
+
+- Final CI: 88 Kotlin tests, 21 Lab tests, Ruff, lint/build (0 errors / 27 warnings), 7 API 36 data tests and 3 API 36 app tests all pass. The native tests exercise actual AppModel/Keystore polling recovery, reconstruction, catalog-error separation and the retained offline UI journey. No StrictMode relaxation or assertions removed.
+- Same-signer APK 0.6.1 / versionCode 9 saved for delivery: 34,110,967 bytes; SHA-256 `f08f82d86d17897bb1556b8af49d23a8b3e8bf9d0e7e00996358faceb612e700`. v2/v3 verify; all 464 non-signature entries match CI and all 264 uncompressed entries retain required ZIP alignment.
+- Original phone exception remains unknown; live authorization/inference and physical Samsung update remain owner acceptance. A failed 0.6.0 login has no saved pending record and requires one fresh authorization after updating.
+
+---
+
 # 0.6.0 — one intention and direct account AI (verified debug delivery)
 
 - Implemented one-field Home, automatic product routing/time hints, real question/candidate charts, one selected guide and optional advanced/history screens.

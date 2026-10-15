@@ -1,3 +1,11 @@
+# TianJi 0.6.1 — 修正登入恢復
+
+修正裝置碼登入遇到一次斷線便放棄、App 重建後無法繼續，以及 Android 主執行緒關閉 TLS 連線的錯誤。未過期待完成授權會加密保存及自動重試；模型清單失敗會保留已登入狀態。
+
+[最終 CI](https://github.com/hkese/TianJi/actions/runs/38779648069) 通過 88 個 Kotlin、21 個 Lab、7 個 Android 16 資料測試及 3 個 App 測試。已交付同簽署 0.6.1 / versionCode 9 更新。舊版已失敗的登入需要在更新後完成一次新授權；[操作說明](docs/USER_GUIDE_ZH.md)、[修正範圍](docs/LOGIN_RECOVERY_0_6_1.md)及[驗證記錄](docs/TEST_RESULTS.md)。真實帳戶登入及生成回覆仍須在手機驗收。
+
+---
+
 # TianJi 0.6 — 寫低心願，直接睇指引
 
 首頁輸入心願 →「畀我奇門指引」。自動起盤及取用，直接顯示方位行程；可用與粵伴鍵盤相同類型的 ChatGPT／Codex 裝置碼登入，AI 回覆在天機內顯示及保存。離線仍有本機指引，進階選項及舊版流程保留。

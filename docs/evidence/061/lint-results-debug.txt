@@ -1,0 +1,170 @@
+/home/runner/work/TianJi/TianJi/android/app/src/main/kotlin/com/tianji/app/AppModel.kt:161: Warning: Consider using apply() instead; commit writes its data to persistent storage immediately, whereas apply will handle it in the background [ApplySharedPref]
+ fun deleteAll(){cancelAccount();cancelQuick();perform{ReminderWorker.configure(app,false);repo.deleteAll();vault.clear();session.logout();chatPrefs.edit().clear().commit();chat.value=ChatUiState();app.getSharedPreferences("research-pseudonym",0).edit().clear().commit();provider.value=AiProviderConfig();prefs.save(state.value.settings.copy(reminders=false));messages.send(text("本機資料已刪除","Local data deleted"))}}
+                                                                                                                                                                    ~~~~~~~~
+/home/runner/work/TianJi/TianJi/android/app/src/main/kotlin/com/tianji/app/AppModel.kt:161: Warning: Consider using apply() instead; commit writes its data to persistent storage immediately, whereas apply will handle it in the background [ApplySharedPref]
+ fun deleteAll(){cancelAccount();cancelQuick();perform{ReminderWorker.configure(app,false);repo.deleteAll();vault.clear();session.logout();chatPrefs.edit().clear().commit();chat.value=ChatUiState();app.getSharedPreferences("research-pseudonym",0).edit().clear().commit();provider.value=AiProviderConfig();prefs.save(state.value.settings.copy(reminders=false));messages.send(text("本機資料已刪除","Local data deleted"))}}
+                                                                                                                                                                                                                                                                      ~~~~~~~~
+
+   Explanation for issues of type "ApplySharedPref":
+   Consider using apply() instead of commit on shared preferences. Whereas
+   commit blocks and writes its data to persistent storage immediately, apply
+   will handle it in the background.
+
+/home/runner/work/TianJi/TianJi/gradle/wrapper/gradle-wrapper.properties:3: Warning: A newer version of Gradle than 8.13 is available: 8.14.6 [AndroidGradlePluginVersion]
+distributionUrl=https\://services.gradle.org/distributions/gradle-8.13-bin.zip
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "AndroidGradlePluginVersion":
+   This detector looks for usage of the Android Gradle Plugin where the
+   version you are using is not the current stable release. Using older
+   versions is fine, and there are cases where you deliberately want to stick
+   with an older version. However, you may simply not be aware that a more
+   recent version is available, and that is what this lint check helps find.
+
+/home/runner/work/TianJi/TianJi/android/app/build.gradle.kts:16: Warning: A newer version of androidx.core:core-ktx than 1.16.0 is available: 1.19.1 [GradleDependency]
+implementation("androidx.core:core-ktx:1.16.0")
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/TianJi/TianJi/android/app/build.gradle.kts:17: Warning: A newer version of androidx.compose:compose-bom than 2025.04.01 is available: 2026.09.00 [GradleDependency]
+implementation(platform("androidx.compose:compose-bom:2025.04.01"))
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/TianJi/TianJi/android/app/build.gradle.kts:21: Warning: A newer version of androidx.activity:activity-compose than 1.10.1 is available: 1.13.0 [GradleDependency]
+implementation("androidx.activity:activity-compose:1.10.1")
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/TianJi/TianJi/android/app/build.gradle.kts:22: Warning: A newer version of androidx.lifecycle:lifecycle-runtime-compose than 2.9.0 is available: 2.11.0 [GradleDependency]
+implementation("androidx.lifecycle:lifecycle-runtime-compose:2.9.0")
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/TianJi/TianJi/android/app/build.gradle.kts:31: Warning: A newer version of androidx.navigation:navigation-compose than 2.9.0 is available: 2.10.2 [GradleDependency]
+implementation("androidx.navigation:navigation-compose:2.9.0")
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/TianJi/TianJi/android/app/build.gradle.kts:32: Warning: A newer version of androidx.lifecycle:lifecycle-viewmodel-compose than 2.9.0 is available: 2.11.0 [GradleDependency]
+implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.0")
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/TianJi/TianJi/android/app/build.gradle.kts:34: Warning: A newer version of androidx.compose:compose-bom than 2025.04.01 is available: 2026.09.00 [GradleDependency]
+androidTestImplementation(platform("androidx.compose:compose-bom:2025.04.01"))
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/TianJi/TianJi/android/app/build.gradle.kts:38: Warning: A newer version of androidx.test.ext:junit than 1.2.1 is available: 1.3.0 [GradleDependency]
+androidTestImplementation("androidx.test.ext:junit:1.2.1")
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/TianJi/TianJi/android/app/build.gradle.kts:39: Warning: A newer version of androidx.test:runner than 1.6.2 is available: 1.7.0 [GradleDependency]
+androidTestImplementation("androidx.test:runner:1.6.2")
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/TianJi/TianJi/android/app/build.gradle.kts:42: Warning: A newer version of androidx.room:room-runtime than 2.7.1 is available: 2.8.5 [GradleDependency]
+androidTestImplementation("androidx.room:room-runtime:2.7.1")
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "GradleDependency":
+   This detector looks for usages of libraries where the version you are using
+   is not the current stable release. Using older versions is fine, and there
+   are cases where you deliberately want to stick with an older version.
+   However, you may simply not be aware that a more recent version is
+   available, and that is what this lint check helps find.
+
+/home/runner/work/TianJi/TianJi/android/app/build.gradle.kts:14: Warning: A newer version of org.jetbrains.kotlinx:kotlinx-serialization-json than 1.8.0 is available: 1.11.0 [NewerVersionAvailable]
+implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0")
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/TianJi/TianJi/android/app/build.gradle.kts:15: Warning: A newer version of org.jetbrains.kotlinx:kotlinx-coroutines-android than 1.10.1 is available: 1.11.0 [NewerVersionAvailable]
+implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.1")
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/TianJi/TianJi/android/app/build.gradle.kts:33: Warning: A newer version of io.insert-koin:koin-android than 4.0.4 is available: 4.2.2 [NewerVersionAvailable]
+implementation("io.insert-koin:koin-android:4.0.4")
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/TianJi/TianJi/android/app/build.gradle.kts:40: Warning: A newer version of com.squareup.okhttp3:mockwebserver than 4.12.0 is available: 5.5.0 [NewerVersionAvailable]
+androidTestImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/TianJi/TianJi/android/app/build.gradle.kts:41: Warning: A newer version of com.squareup.okhttp3:okhttp-tls than 4.12.0 is available: 5.5.0 [NewerVersionAvailable]
+androidTestImplementation("com.squareup.okhttp3:okhttp-tls:4.12.0")
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "NewerVersionAvailable":
+   This detector checks with a central repository to see if there are newer
+   versions available for the dependencies used by this project. This is
+   similar to the GradleDependency check, which checks for newer versions
+   available in the Android SDK tools and libraries, but this works with any
+   MavenCentral dependency, and connects to the library every time, which
+   makes it more flexible but also much slower.
+
+/home/runner/work/TianJi/TianJi/android/app/src/main/kotlin/com/tianji/app/AppModel.kt:29: Warning: Use the KTX extension function SharedPreferences.edit instead? [UseKtx]
+ fun aiMode(mode:String){require(mode in listOf("OFFLINE","CHATGPT","API"));cancelQuick();chat.value=chat.value.copy(mode=mode);chatPrefs.edit().putString("mode",mode).apply()}
+                                                                                                                                ~~~~~~~~~~~~~~~~
+/home/runner/work/TianJi/TianJi/android/app/src/main/kotlin/com/tianji/app/AppModel.kt:30: Warning: Use the KTX extension function SharedPreferences.edit instead? [UseKtx]
+ fun selectModel(id:String){require(chat.value.models.any{it.id==id});cancelQuick();chat.value=chat.value.copy(model=id);chatPrefs.edit().putString("model",id).apply()}
+                                                                                                                         ~~~~~~~~~~~~~~~~
+/home/runner/work/TianJi/TianJi/android/app/src/main/kotlin/com/tianji/app/AppModel.kt:75: Warning: Use the KTX extension function SharedPreferences.edit instead? [UseKtx]
+    chatPrefs.edit().putString("mode","CHATGPT").apply();stage="MODELS"
+    ~~~~~~~~~~~~~~~~
+/home/runner/work/TianJi/TianJi/android/app/src/main/kotlin/com/tianji/app/AppModel.kt:86: Warning: Use the KTX extension function SharedPreferences.edit instead? [UseKtx]
+  chat.value=chat.value.copy(models=models,model=selected,error="");chatPrefs.edit().putString("model",selected).apply()
+                                                                    ~~~~~~~~~~~~~~~~
+/home/runner/work/TianJi/TianJi/android/app/src/main/kotlin/com/tianji/app/AppModel.kt:92: Warning: Use the KTX extension function SharedPreferences.edit instead? [UseKtx]
+ fun logoutChatGpt(){cancelAccount();cancelQuick();chat.value=ChatUiState();chatPrefs.edit().clear().apply();viewModelScope.launch(Dispatchers.IO){session.logout()}}
+                                                                            ~~~~~~~~~~~~~~~~
+/home/runner/work/TianJi/TianJi/android/app/src/main/kotlin/com/tianji/app/AppModel.kt:126: Warning: Use the KTX extension function SharedPreferences.edit instead? [UseKtx]
+    chat.value=chat.value.copy(models=models,model=model);chatPrefs.edit().putString("model",model).apply()
+                                                          ~~~~~~~~~~~~~~~~
+/home/runner/work/TianJi/TianJi/android/app/src/main/kotlin/com/tianji/app/AppModel.kt:156: Warning: Use the KTX extension function SharedPreferences.edit instead? [UseKtx]
+  repo.consent("research-export");val local=app.getSharedPreferences("research-pseudonym",0);val subject=local.getString("id",null)?:UUID.randomUUID().toString().also{check(local.edit().putString("id",it).commit())};val data=repo.snapshot()
+                                                                                                                                                                             ~~~~~~~~~~~~
+/home/runner/work/TianJi/TianJi/android/app/src/main/kotlin/com/tianji/app/AppModel.kt:161: Warning: Use the KTX extension function SharedPreferences.edit instead? [UseKtx]
+ fun deleteAll(){cancelAccount();cancelQuick();perform{ReminderWorker.configure(app,false);repo.deleteAll();vault.clear();session.logout();chatPrefs.edit().clear().commit();chat.value=ChatUiState();app.getSharedPreferences("research-pseudonym",0).edit().clear().commit();provider.value=AiProviderConfig();prefs.save(state.value.settings.copy(reminders=false));messages.send(text("本機資料已刪除","Local data deleted"))}}
+                                                                                                                                                                                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/TianJi/TianJi/android/app/src/main/kotlin/com/tianji/app/IntentionScreen.kt:112: Warning: Use the KTX extension function String.toUri instead? [UseKtx]
+ fun openLogin(){runCatching{context.startActivity(Intent(Intent.ACTION_VIEW,Uri.parse(state.loginUrl)))}}
+                                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "UseKtx":
+   The Android KTX libraries decorates the Android platform SDK as well as
+   various libraries with more convenient extension functions available from
+   Kotlin, allowing you to use default parameters, named parameters, and
+   more.
+
+   Available options:
+
+   **remove-defaults** (default is true):
+   Whether to skip arguments that match the defaults provided by the extension.
+
+   Extensions often provide default values for some of the parameters. For example:
+   ```kotlin
+   fun Path.readLines(charset: Charset = Charsets.UTF_8): List<String> { return Files.readAllLines(this, charset) }
+   ```
+   This lint check will by default automatically omit parameters that match the default, so if your code was calling
+
+   ```kotlin
+   Files.readAllLines(file, Charset.UTF_8)
+   ```
+   lint would replace this with
+   ```kotlin
+   file.readLines()
+   ```
+   rather than
+
+   ```kotlin
+   file.readLines(Charset.UTF_8
+   ```
+   You can turn this behavior off using this option.
+
+   To configure this option, use a `lint.xml` file with an <option> like this:
+
+   ```xml
+   <lint>
+       <issue id="UseKtx">
+           <option name="remove-defaults" value="true" />
+       </issue>
+   </lint>
+   ```
+
+   **require-present** (default is true):
+   Whether to only offer extensions already available.
+
+   This option lets you only have lint suggest extension replacements if those extensions are already available on the class path (in other words, you're already depending on the library containing the extension method.)
+
+   To configure this option, use a `lint.xml` file with an <option> like this:
+
+   ```xml
+   <lint>
+       <issue id="UseKtx">
+           <option name="require-present" value="true" />
+       </issue>
+   </lint>
+   ```
+
+0 errors, 27 warnings

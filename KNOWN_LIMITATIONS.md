@@ -1,5 +1,10 @@
 # Known limitations
 
+## 0.6.1 login-recovery limits
+- Temporary network/server errors retain the same pending login until expiry; encrypted pending/exchange state survives model/process reconstruction. Terminal denial/expiry and an already-consumed authorization code may still require fresh authorization.
+- The original phone exception is unknown. Initial new native testing exposed TLS-close network I/O on Main; that defect is corrected and the same regression passes in CI 38779648069. Live account success is not established by synthetic TLS/AppModel tests.
+
+
 ## 0.6 one-intention and direct-AI scope
 - One-field entry, automatic routing/date hints, native device-code account login and direct interpretation are implemented. Build, 80 Kotlin / 21 Lab tests, 6 Android 16 data tests and the complete native offline journey passed in CI 38489999031. Exact scope is in `docs/TEST_RESULTS.md`.
 - A real account has not authorized TianJi in this environment. Live login/refresh, model entitlement and interpretation quality require phone acceptance; TLS mock tests do not establish subscription access. The integration follows the owner's existing Codex device-code protocol, not a claim of official partner registration.

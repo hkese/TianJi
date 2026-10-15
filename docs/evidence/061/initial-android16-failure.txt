@@ -1,0 +1,14 @@
+CI 38778439413, executable source a85c0745941f759ffef68c771fc7ee56e62a3bcf.
+Build, lint, 88 Kotlin and 21 Research Lab tests passed.
+The added native LoginRecoveryTest failed during ViewModel reconstruction/cancellation:
+android.os.NetworkOnMainThreadException
+  ConscryptEngineSocket.close -> RealConnectionPool.evictAll
+  ChatGptClient.close(ChatGpt.kt:61)
+  AppModel.startAccount finally(AppModel.kt:79)
+  ViewModelStore.clear -> LoginRecoveryTest.recreatedModelResumesExchangeAndKeepsLoginWhenCatalogFails
+Instrumentation then reported a process crash. This run is not a passed device gate.
+
+TLS close may send close-notify, so socket cancellation and pool eviction must run off Main.
+The corrective source marks the client logically cancelled immediately, then performs
+socket cancellation/close and dispatcher shutdown on a dedicated background executor.
+The same native regression remains in place; no StrictMode relaxation or assertion removal.
